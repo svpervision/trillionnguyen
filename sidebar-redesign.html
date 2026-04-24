@@ -161,7 +161,7 @@
 <nav id="nav" aria-label="Main navigation">
   <div class="nav-pill">
     <a href="index.html" class="nav-logo" aria-label="Trillion Nguyen — home">
-      <img src="images/logo.webp" alt="" role="presentation">
+      <img loading="lazy" decoding="async" src="images/logo.webp" alt="" role="presentation">
     </a>
     <div class="nav-right">
       <ul class="nav-links" role="list">
@@ -187,7 +187,7 @@
     <div class="cs-meta-cell"><span class="cs-meta-label">Scope of Work</span><span class="cs-meta-value">User Research · Competitive Analysis · IA · Wireframing · Prototyping · UI Design · Design System Alignment</span></div>
   </div>
 </section>
-<div class="cs-cover"><img src="images/sidebar-cover.webp" alt="Cover"></div>
+<div class="cs-cover"><img loading="lazy" decoding="async" src="images/sidebar-cover.webp" alt="Cover"></div>
 <div class="cs-body">
 <div class="cs-section reveal">
   <div class="cs-section-grid">
@@ -209,7 +209,7 @@
     </div>
     <div class="cs-section-right">
       <h2 class="cs-section-title">Understanding the Problem</h2>
-      <p class="cs-text">Discovery started by understanding why the floating action bar had stopped working. Through <strong>session recordings and user interviews</strong>, a clear pattern emerged — users were frequently scrolling past the bar, accidentally triggering it, or losing track of it entirely when deep in content-heavy views. It wasn't an obvious failure; it was a slow erosion of usability as the app grew around a navigation pattern that hadn't scaled with it.</p><p class="cs-text">We also conducted a <strong>competitive analysis</strong> across tools like Notion, Linear, and Figma to understand how leading products handle persistent navigation — what patterns users have come to expect, how sidebar collapse is communicated, and how navigation state is preserved across sessions.</p><div class="cs-img-grid reveal"><div class="cs-img"><img src="images/sidebar-expanded.webp" alt="Expanded sidebar"><p class="cs-img-caption">Expanded sidebar</p></div><div class="cs-img"><img src="images/sidebar-collapsed.webp" alt="Collapsed sidebar — icon rail"><p class="cs-img-caption">Collapsed sidebar — icon rail</p></div></div>
+      <p class="cs-text">Discovery started by understanding why the floating action bar had stopped working. Through <strong>session recordings and user interviews</strong>, a clear pattern emerged — users were frequently scrolling past the bar, accidentally triggering it, or losing track of it entirely when deep in content-heavy views. It wasn't an obvious failure; it was a slow erosion of usability as the app grew around a navigation pattern that hadn't scaled with it.</p><p class="cs-text">We also conducted a <strong>competitive analysis</strong> across tools like Notion, Linear, and Figma to understand how leading products handle persistent navigation — what patterns users have come to expect, how sidebar collapse is communicated, and how navigation state is preserved across sessions.</p><div class="cs-img-grid reveal"><div class="cs-img"><img loading="lazy" decoding="async" src="images/sidebar-expanded.webp" alt="Expanded sidebar"><p class="cs-img-caption">Expanded sidebar</p></div><div class="cs-img"><img loading="lazy" decoding="async" src="images/sidebar-collapsed.webp" alt="Collapsed sidebar — icon rail"><p class="cs-img-caption">Collapsed sidebar — icon rail</p></div></div>
     </div>
   </div>
 </div>
@@ -222,7 +222,7 @@
     <div class="cs-section-right">
       <h2 class="cs-section-title">The Solution</h2>
       <p class="cs-text">The redesign moved navigation off the floating layer and into a <strong>fixed sidebar anchored to the left</strong> of the screen. A persistent collapse toggle at the top gives users direct control over their layout — reducing the sidebar to an icon-only rail when space is needed, and expanding it fully when context matters. An edge handle in the collapsed state offers a low-friction re-entry point without requiring users to hunt for a button.</p><p class="cs-text"><strong>Collapse state is persisted per session</strong> — so the app remembers the layout each user prefers, eliminating the repetitive setup that plagued the floating bar experience.</p><div class="cs-img cs-img-single reveal">
-  <img src="images/sidebar-flyout.webp" alt="Flyout menu on hover in collapsed state">
+  <img loading="lazy" decoding="async" src="images/sidebar-flyout.webp" alt="Flyout menu on hover in collapsed state">
   <p class="cs-img-caption">Flyout menu on hover in collapsed state</p>
 </div>
     </div>
@@ -237,7 +237,7 @@
     <div class="cs-section-right">
       <h2 class="cs-section-title">Testing & Validation</h2>
       <p class="cs-text">A clickable prototype was built early to validate the collapse interaction before investing in high-fidelity design. The prototype focused specifically on the trigger mechanics — where users expected to click, how the transition felt, and whether the icon rail was sufficient for navigation in the collapsed state.</p><p class="cs-text">Stakeholder walkthroughs with PMs and engineering surfaced early feasibility questions around animation performance and state management. These conversations shaped the handoff spec and helped us align on interaction behavior before a single line of production code was written.</p><div class="cs-img cs-img-single reveal">
-  <img src="images/sidebar-spec.webp" alt="Anatomy and documentation of the sidebar">
+  <img loading="lazy" decoding="async" src="images/sidebar-spec.webp" alt="Anatomy and documentation of the sidebar">
   <p class="cs-img-caption">Anatomy and documentation of the sidebar</p>
 </div>
     </div>
