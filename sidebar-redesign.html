@@ -210,7 +210,24 @@
     </div>
     <div class="cs-section-right">
       <h2 class="cs-section-title">Understanding the Problem</h2>
-      <p class="cs-text">Discovery started by understanding why the floating action bar had stopped working. Through <strong>session recordings and user interviews</strong>, a clear pattern emerged — users were frequently scrolling past the bar, accidentally triggering it, or losing track of it entirely when deep in content-heavy views. It wasn't an obvious failure; it was a slow erosion of usability as the app grew around a navigation pattern that hadn't scaled with it.</p><p class="cs-text">We also conducted a <strong>competitive analysis</strong> across tools like Notion, Linear, and Figma to understand how leading products handle persistent navigation — what patterns users have come to expect, how sidebar collapse is communicated, and how navigation state is preserved across sessions.</p><div class="cs-img-grid reveal"><div class="cs-img"><img loading="lazy" decoding="async" src="images/sidebar-expanded.webp" alt="Expanded sidebar"><p class="cs-img-caption">Expanded sidebar</p></div><div class="cs-img"><img loading="lazy" decoding="async" src="images/sidebar-collapsed.webp" alt="Collapsed sidebar — icon rail"><p class="cs-img-caption">Collapsed sidebar — icon rail</p></div></div>
+      <p class="cs-text">Discovery started by understanding why the floating action bar had stopped working. Through <strong>session recordings and user interviews</strong>, a clear pattern emerged — users were frequently scrolling past the bar, accidentally triggering it, or losing track of it entirely when deep in content-heavy views. It wasn't an obvious failure; it was a slow erosion of usability as the app grew around a navigation pattern that hadn't scaled with it.</p><p class="cs-text">We also conducted a <strong>competitive analysis</strong> across tools like Notion, Linear, and Figma to understand how leading products handle persistent navigation — what patterns users have come to expect, how sidebar collapse is communicated, and how navigation state is preserved across sessions.</p>
+
+<div style="margin-top:32px; margin-bottom:2px;">
+  <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+    <span style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.16em; text-transform:uppercase; color:var(--cream3);">Before — Floating Top Nav</span>
+    <span style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.1em; color:var(--cream3);">Navigation competed with content</span>
+  </div>
+  <div class="cs-img reveal">
+    <img src="images/sidebar-before.webp" alt="Before — floating top navigation bar" loading="lazy" decoding="async">
+    <p class="cs-img-caption">Existing UI — floating action bar overlapping content, cluttered as the product scaled</p>
+  </div>
+  <div style="display:flex; align-items:center; justify-content:space-between; margin:16px 0 8px;">
+    <span style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.16em; text-transform:uppercase; color:var(--accent);">After — Collapsible Sidebar</span>
+    <span style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.1em; color:var(--cream3);">Navigation integrated, content breathes</span>
+  </div>
+</div>
+
+<div class="cs-img-grid reveal"><div class="cs-img"><img loading="lazy" decoding="async" src="images/sidebar-expanded.webp" alt="Expanded sidebar"><p class="cs-img-caption">Expanded sidebar</p></div><div class="cs-img"><img loading="lazy" decoding="async" src="images/sidebar-collapsed.webp" alt="Collapsed sidebar — icon rail"><p class="cs-img-caption">Collapsed sidebar — icon rail</p></div></div>
     </div>
   </div>
 </div>
