@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Trillion Nguyen — Product Designer specializing in design systems, mobile, and interaction design. Based in Ontario, CA.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Trillion Nguyen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Barlow:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#0f0e0c; --max-w:1140px; --bg2:#141310; --bg3:#1a1916; --cream:#f0ece2; --cream2:#c8c2b4; --cream3:#8e8a82; --accent:#c4622d; --accent2:#e07840; --border:rgba(240,236,226,0.08); --border2:rgba(240,236,226,0.14); }
+  *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--cream); font-family:"Barlow",sans-serif; font-weight:300; overflow-x:hidden; cursor:none; }
+  .cursor { width:24px; height:24px; border:1.5px solid var(--accent); border-radius:50%; position:fixed; top:-12px; left:-12px; pointer-events:none; z-index:9999; will-change:transform; background:transparent; }
+  body::before { content:""; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E"); opacity:0.032; pointer-events:none; z-index:100; }
+  nav { position:fixed; top:0; left:0; right:0; z-index:50; display:flex; justify-content:center; align-items:center; padding:20px max(48px,calc((100vw - var(--max-w)) / 2)); pointer-events:none; }
+  .nav-pill { display:flex; align-items:center; justify-content:space-between; width:100%; max-width:100%; padding:8px 0; border-radius:100px; border:1px solid transparent; background:transparent; pointer-events:all; transition:max-width 0.6s cubic-bezier(0.4,0,0.2,1),padding 0.6s cubic-bezier(0.4,0,0.2,1),background 0.5s ease,border-color 0.5s ease; }
+  nav.scrolled .nav-pill { max-width:580px; justify-content:space-between; align-items:center; padding:0 16px 0 20px; height:48px; background:rgba(15,14,12,0.92); border-color:var(--border2); backdrop-filter:blur(20px); }
+  .nav-right { display:flex; align-items:center; gap:20px; height:100%; }
+  .nav-logo { display:flex; align-items:center; height:26px; text-decoration:none; opacity:0.85; transition:opacity 0.2s; flex-shrink:0; }
+  .nav-logo:hover { opacity:1; }
+  .nav-logo img { height:22px; width:auto; filter:invert(1) brightness(0.85); }
+  .nav-links { display:flex; gap:24px; list-style:none; align-items:center; height:100%; }
+  .nav-links li { display:flex; align-items:center; height:100%; }
+  .nav-links a { font-family:"DM Mono",monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--cream3); text-decoration:none; transition:color 0.2s; white-space:nowrap; }
+  .nav-links a:hover { color:var(--cream); }
+  .nav-cta { font-family:"DM Mono",monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); border:1px solid rgba(196,98,45,0.4); padding:7px 16px; border-radius:100px; transition:background 0.2s,color 0.2s; text-decoration:none; flex-shrink:0; }
+  .nav-cta:hover { background:var(--accent); color:var(--bg); }
+  footer { border-top:1px solid var(--border); padding:48px max(48px,calc((100vw - var(--max-w)) / 2)); display:flex; justify-content:space-between; align-items:center; }
+  .footer-left { font-family:"Barlow Condensed",sans-serif; font-size:18px; font-weight:600; letter-spacing:0.04em; color:var(--cream2); }
+  .footer-links { display:flex; gap:32px; }
+  .footer-links a { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:var(--cream3); text-decoration:none; transition:color 0.2s; }
+  .footer-links a:hover { color:var(--accent); }
+  .footer-copy { font-family:"DM Mono",monospace; font-size:9px; color:var(--cream3); }
+  .skip-link { position:fixed; top:-100px; left:24px; z-index:9999; background:var(--accent); color:var(--bg); font-family:"DM Mono",monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; padding:10px 20px; border-radius:100px; text-decoration:none; transition:top 0.2s; }
+  .skip-link:focus { top:24px; }
+  :focus-visible { outline:2px solid var(--accent); outline-offset:4px; border-radius:2px; }
+  .reveal { opacity:0; transform:translateY(24px); transition:opacity 0.7s cubic-bezier(0.23,1,0.32,1),transform 0.7s cubic-bezier(0.23,1,0.32,1); }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  @media (prefers-reduced-motion:reduce) { .cursor { display:none; } body { cursor:auto; } .reveal { opacity:1 !important; transform:none !important; transition:none !important; } }
+  @media (max-width:640px) {
+    nav { padding:16px 20px; }
+    nav.scrolled .nav-pill { max-width:calc(100vw - 40px); padding:0 12px 0 16px; height:44px; }
+    .nav-links { display:none; }
+    footer { flex-direction:column; gap:20px; text-align:center; padding:36px 24px; }
+    .footer-links { flex-wrap:wrap; justify-content:center; gap:14px; }
+  }
+
+  /* PAGE HEADER */
+  .page-header {
+    padding: 140px max(48px,calc((100vw - var(--max-w)) / 2)) 80px;
+    border-bottom: 1px solid var(--border);
+  }
+  .page-eyebrow { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:16px; display:block; }
+  .page-title { font-family:"Barlow Condensed",sans-serif; font-size:clamp(52px,7vw,88px); font-weight:700; line-height:0.9; letter-spacing:0.02em; text-transform:uppercase; color:var(--cream); }
+
+  /* ABOUT GRID */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 80px;
+    align-items: start;
+    padding: 80px max(48px,calc((100vw - var(--max-w)) / 2));
+  }
+
+  /* LEFT — story + history */
+  .about-story { display:flex; flex-direction:column; gap:48px; }
+
+  .about-section-label { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:20px; display:block; padding-bottom:12px; border-bottom:1px solid var(--border); }
+
+  .about-headline { font-family:"Barlow Condensed",sans-serif; font-size:clamp(32px,3.5vw,48px); font-weight:600; letter-spacing:0.03em; text-transform:uppercase; color:var(--cream); line-height:1.0; margin-bottom:24px; }
+
+  .about-text { font-size:15px; font-weight:300; color:var(--cream3); line-height:1.85; margin-bottom:16px; max-width:600px; }
+  .about-text strong { color:var(--cream2); font-weight:400; }
+
+  .about-cta { display:inline-flex; align-items:center; gap:10px; font-family:"DM Mono",monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); border:1px solid rgba(196,98,45,0.4); padding:8px 18px; border-radius:100px; text-decoration:none; margin-top:8px; transition:background 0.2s,color 0.2s; }
+  .about-cta:hover { background:var(--accent); color:var(--bg); }
+
+  /* WORK HISTORY */
+  .history-block { display:flex; flex-direction:column; }
+  .history-row { display:grid; grid-template-columns:1fr auto; align-items:baseline; gap:16px; padding:16px 0; border-bottom:1px solid var(--border); }
+  .history-row:first-child { border-top:1px solid var(--border); }
+  .history-role-name { font-size:14px; font-weight:400; color:var(--cream2); display:block; margin-bottom:2px; }
+  .history-co { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:var(--cream3); }
+  .history-dates { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.08em; color:var(--cream3); white-space:nowrap; }
+
+  /* SKILLS */
+  .skills-grid { display:flex; flex-wrap:wrap; gap:8px; margin-top:4px; }
+  .skill-tag { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:var(--cream3); border:1px solid var(--border2); padding:5px 12px; border-radius:100px; }
+
+  /* RIGHT — photo sticky */
+  .about-photo-col { position:sticky; top:100px; }
+  .about-photo-wrap { position:relative; overflow:hidden; }
+  .about-photo-wrap img { width:100%; display:block; aspect-ratio:3/4; object-fit:cover; object-position:center top; filter:grayscale(15%) brightness(0.8); transition:filter 0.5s; }
+  .about-photo-wrap:hover img { filter:grayscale(0%) brightness(0.9); }
+  .about-photo-label { position:absolute; bottom:20px; left:20px; font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:var(--cream2); background:rgba(15,14,12,0.75); padding:6px 12px; backdrop-filter:blur(8px); }
+
+  @media (max-width:900px) {
+    .about-grid { grid-template-columns:1fr; gap:48px; }
+    .about-photo-col { position:static; }
+    .about-photo-wrap img { aspect-ratio:4/3; }
+  }
+  @media (max-width:640px) {
+    .page-header { padding:110px 24px 56px; }
+    .about-grid { padding:56px 24px; gap:40px; }
+    .about-text { font-size:14px; }
+  }
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div class="cursor" id="cursor"></div>
+<nav id="nav" aria-label="Main navigation">
+  <div class="nav-pill">
+    <a href="index.html" class="nav-logo" aria-label="Trillion Nguyen — home">
+      <img src="images/logo.webp" alt="" role="presentation">
+    </a>
+    <div class="nav-right">
+      <ul class="nav-links" role="list">
+        <li><a href="index.html#work">Work</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="other-work.html">Other Work</a></li>
+      </ul>
+      <a href="mailto:trillionnguyen@gmail.com" class="nav-cta" aria-label="Send email">Contact</a>
+    </div>
+  </div>
+</nav>
+<main id="main-content">
+
+<header class="page-header">
+  <span class="page-eyebrow">Product Designer · Ontario, CA</span>
+  <h1 class="page-title">About<br>Trillion.</h1>
+</header>
+
+<div class="about-grid">
+
+  <!-- LEFT -->
+  <div class="about-story">
+
+    <!-- Story -->
+    <div class="reveal">
+      <span class="about-section-label">The Story</span>
+      <h2 class="about-headline">Born Between Cultures,<br>Designing for Humans.</h2>
+      <p class="about-text">
+        I was born in sunny Southern California, but my story took a detour early on when my family moved to the Philippines. The vibrant culture and tight-knit communities of my childhood left an indelible mark on me. When we returned to the U.S., I faced a new challenge: acclimating to the social norms of American life. I often felt like an outsider, caught between two worlds — but this struggle became the catalyst for something extraordinary.
+      </p>
+      <p class="about-text">
+        <strong>Design became my way to communicate</strong> — to express myself when words felt insufficient. It was a language that transcended cultural barriers, allowing me to connect, share, and create. Growing up in California, I was surrounded by the ever-present pulse of fashion, art, and music. These influences fueled my desire to design not just objects, but experiences that evoke emotion and resonate deeply.
+      </p>
+      <p class="about-text">
+        With this passion driving me, I earned a degree in Graphic Design and naturally gravitated toward product design — drawn by curiosity, a desire to help people, and the challenge of designing things that actually work for the humans using them.
+      </p>
+      <p class="about-text">
+        Over the years I've helped create intuitive, scalable tools for athletes, schools, and brands. I've collaborated with cross-functional teams to bring meaningful designs to life — designs that simplify complexity, empower users, and drive impact. For me, <strong>every project is a chance to challenge myself, grow, and craft something truly meaningful.</strong>
+      </p>
+      <p class="about-text">
+        I'm also a proud parent to two daughters who inspire me daily. I want them to see the value of hard work, creativity, and resilience — and to know that their mom played a role in shaping the products they interact with.
+      </p>
+      <a href="https://www.trillionnguyen.com/s/TrillionNguyen_ProductDesignerCV.pdf" class="about-cta" target="_blank" rel="noopener">Download Resume →</a>
+    </div>
+
+    <!-- Experience -->
+    <div class="reveal">
+      <span class="about-section-label">Experience</span>
+      <div class="history-block">
+        <div class="history-row">
+          <div>
+            <span class="history-role-name">Product Designer</span>
+            <span class="history-co">Aspect</span>
+          </div>
+          <span class="history-dates">2024 – 2025</span>
+        </div>
+        <div class="history-row">
+          <div>
+            <span class="history-role-name">Senior Product Designer</span>
+            <span class="history-co">Teamworks</span>
+          </div>
+          <span class="history-dates">2020 – 2024</span>
+        </div>
+        <div class="history-row">
+          <div>
+            <span class="history-role-name">Product Designer</span>
+            <span class="history-co">Noteworth</span>
+          </div>
+          <span class="history-dates">2018 – 2020</span>
+        </div>
+        <div class="history-row">
+          <div>
+            <span class="history-role-name">UI/UX Designer</span>
+            <span class="history-co">Mopro</span>
+          </div>
+          <span class="history-dates">2015 – 2018</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills -->
+    <div class="reveal">
+      <span class="about-section-label">Skills & Tools</span>
+      <div class="skills-grid">
+        <span class="skill-tag">Product Design</span>
+        <span class="skill-tag">Design Systems</span>
+        <span class="skill-tag">Interaction Design</span>
+        <span class="skill-tag">Mobile Design</span>
+        <span class="skill-tag">Accessibility</span>
+        <span class="skill-tag">User Research</span>
+        <span class="skill-tag">Prototyping</span>
+        <span class="skill-tag">Wireframing</span>
+        <span class="skill-tag">Figma</span>
+        <span class="skill-tag">Design Tokens</span>
+        <span class="skill-tag">Usability Testing</span>
+        <span class="skill-tag">Cross-functional Collaboration</span>
+        <span class="skill-tag">Stakeholder Alignment</span>
+        <span class="skill-tag">AI-assisted Workflows</span>
+        <span class="skill-tag">Lovable</span>
+        <span class="skill-tag">Claude API</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT — photo -->
+  <div class="about-photo-col reveal">
+    <div class="about-photo-wrap">
+      <img
+        src="images/about-photo.webp"
+        alt="Trillion Nguyen — Product Designer based in Ontario, CA"
+      >
+      <span class="about-photo-label">Ontario, CA · b. 1986</span>
+    </div>
+  </div>
+
+</div>
+
+</main>
+<footer role="contentinfo">
+  <span class="footer-left">Trillion Nguyen</span>
+  <div class="footer-links">
+    <a href="index.html">Work</a>
+    <a href="about.html">About</a>
+    <a href="other-work.html">Other Work</a>
+    <a href="https://www.linkedin.com/in/trillionnguyen/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="mailto:trillionnguyen@gmail.com">Contact</a>
+  </div>
+  <span class="footer-copy">© 2026</span>
+</footer><script>
+  const cursor = document.getElementById("cursor");
+  document.addEventListener("mousemove", e => {
+    cursor.style.transform = `translate(${e.clientX}px,${e.clientY}px)`;
+  });
+  document.addEventListener("mouseleave", () => cursor.style.opacity = "0");
+  document.addEventListener("mouseenter", () => cursor.style.opacity = "1");
+  const nav = document.getElementById("nav");
+  window.addEventListener("scroll", () => {
+    nav.classList.toggle("scrolled", window.scrollY > 80);
+  });
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add("visible"), i * 60);
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05 });
+  document.querySelectorAll(".reveal").forEach(el => obs.observe(el));
+  setTimeout(() => {
+    document.querySelectorAll(".reveal:not(.visible)").forEach(el => el.classList.add("visible"));
+  }, 800);
+</script>
+</body>
+</html>

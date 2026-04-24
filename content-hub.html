@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Trillion Nguyen — Product Designer specializing in design systems, mobile, and interaction design. Based in Ontario, CA.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Content Hub — Trillion Nguyen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Barlow:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#0f0e0c; --max-w:1140px; --bg2:#141310; --bg3:#1a1916; --cream:#f0ece2; --cream2:#c8c2b4; --cream3:#8e8a82; --accent:#c4622d; --accent2:#e07840; --border:rgba(240,236,226,0.08); --border2:rgba(240,236,226,0.14); }
+  *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--cream); font-family:"Barlow",sans-serif; font-weight:300; overflow-x:hidden; cursor:none; }
+  .cursor { width:24px; height:24px; border:1.5px solid var(--accent); border-radius:50%; position:fixed; top:-12px; left:-12px; pointer-events:none; z-index:9999; will-change:transform; background:transparent; }
+  body::before { content:""; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E"); opacity:0.032; pointer-events:none; z-index:100; }
+
+  nav { position:fixed; top:0; left:0; right:0; z-index:50; display:flex; justify-content:center; align-items:center; padding:20px max(48px,calc((100vw - var(--max-w)) / 2)); pointer-events:none; }
+  .nav-pill { display:flex; align-items:center; justify-content:space-between; width:100%; max-width:100%; padding:8px 0; border-radius:100px; border:1px solid transparent; background:transparent; pointer-events:all; transition:max-width 0.6s cubic-bezier(0.4,0,0.2,1),padding 0.6s cubic-bezier(0.4,0,0.2,1),background 0.5s ease,border-color 0.5s ease; }
+  nav.scrolled .nav-pill { max-width:580px; justify-content:space-between; align-items:center; padding:0 16px 0 20px; height:48px; background:rgba(15,14,12,0.92); border-color:var(--border2); backdrop-filter:blur(20px); }
+  .nav-right { display:flex; align-items:center; gap:20px; height:100%; }
+  .nav-logo { display:flex; align-items:center; height:26px; text-decoration:none; opacity:0.85; transition:opacity 0.2s; flex-shrink:0; }
+  .nav-logo:hover { opacity:1; }
+  .nav-logo img { height:22px; width:auto; filter:invert(1) brightness(0.85); }
+  .nav-links { display:flex; gap:24px; list-style:none; align-items:center; height:100%; }
+  .nav-links li { display:flex; align-items:center; height:100%; }
+  .nav-links a { font-family:"DM Mono",monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--cream3); text-decoration:none; transition:color 0.2s; white-space:nowrap; }
+  .nav-links a:hover { color:var(--cream); }
+  .nav-cta { font-family:"DM Mono",monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); border:1px solid rgba(196,98,45,0.4); padding:7px 16px; border-radius:100px; transition:background 0.2s,color 0.2s; text-decoration:none; flex-shrink:0; }
+  .nav-cta:hover { background:var(--accent); color:var(--bg); }
+
+  /* PAGE LAYOUT */
+  .cs-hero { padding:130px max(48px,calc((100vw - var(--max-w)) / 2)) 72px; }
+  .cs-back { font-family:"DM Mono",monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--cream3); text-decoration:none; display:inline-flex; align-items:center; gap:8px; margin-bottom:52px; transition:color 0.2s; }
+  .cs-back:hover { color:var(--accent); }
+  .cs-eyebrow { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; display:block; }
+  .cs-title { font-family:"Barlow Condensed",sans-serif; font-size:clamp(52px,7vw,88px); font-weight:700; line-height:0.9; letter-spacing:0.02em; text-transform:uppercase; color:var(--cream); margin-bottom:24px; }
+  .cs-intro { font-size:16px; font-weight:300; color:var(--cream3); line-height:1.7; max-width:640px; margin-bottom:56px; }
+  .cs-meta { display:grid; grid-template-columns:repeat(4,auto); gap:0; border-top:1px solid var(--border); border-left:1px solid var(--border); margin-top:0; }
+  .cs-meta-cell { padding:20px 28px; border-right:1px solid var(--border); border-bottom:1px solid var(--border); }
+  .cs-meta-label { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.16em; text-transform:uppercase; color:var(--cream3); margin-bottom:6px; display:block; }
+  .cs-meta-value { font-size:13px; font-weight:400; color:var(--cream2); line-height:1.5; }
+
+  /* COVER */
+  .cs-cover {
+    width: 100%;
+    padding: 0 max(48px, calc((100vw - var(--max-w)) / 2));
+    background: var(--bg);
+    margin-bottom: 0;
+  }
+  .cs-cover img {
+    width: 100%;
+    max-height: 600px;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+    border: 1px solid var(--border);
+  }
+
+  /* BODY SECTIONS */
+  .cs-body { padding:0 max(48px,calc((100vw - var(--max-w)) / 2)); }
+  .cs-section { padding:72px 0; border-bottom:1px solid var(--border); }
+  .cs-section + .cs-section { margin-top:2px; }
+  .cs-section:last-child { border-bottom:none; }
+  .cs-section-grid { display:grid; grid-template-columns:200px 1fr; gap:64px; }
+  .cs-section-left { padding-top:4px; }
+  .cs-section-label { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:8px; }
+  .cs-section-num { font-family:"Barlow Condensed",sans-serif; font-size:13px; font-weight:400; letter-spacing:0.06em; color:var(--cream3); }
+  .cs-section-right { display:flex; flex-direction:column; gap:20px; }
+  .cs-img-single { margin-top:2px; margin-bottom:2px; }
+  .cs-section-title { font-family:"Barlow Condensed",sans-serif; font-size:clamp(26px,3vw,38px); font-weight:600; letter-spacing:0.03em; text-transform:uppercase; color:var(--cream); line-height:1.0; margin-bottom:4px; }
+  .cs-text { font-size:15px; font-weight:300; color:var(--cream3); line-height:1.8; max-width:680px; }
+  .cs-text + .cs-text { margin-top:-4px; }
+  .cs-text strong { color:var(--cream2); font-weight:400; }
+  .cs-pullquote { border-left:2px solid var(--accent); padding:8px 0 8px 28px; margin:8px 0; }
+  .cs-pullquote p { font-family:"Barlow Condensed",sans-serif; font-size:clamp(20px,2.2vw,28px); font-weight:500; letter-spacing:0.03em; text-transform:uppercase; color:var(--cream); line-height:1.2; }
+
+  /* IMAGES */
+  .cs-img { background:var(--bg2); overflow:hidden; border:1px solid var(--border); }
+  .cs-img img { width:100%; display:block; object-fit:cover; object-position:top; }
+  .cs-img-caption { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:var(--cream3); padding:10px 16px; border-top:1px solid var(--border); }
+  .cs-img-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; }
+  .cs-img-single { margin-top:4px; }
+
+  /* ROLES LIST */
+  .cs-scope { display:flex; flex-wrap:wrap; gap:8px; margin-top:4px; }
+  .cs-scope-tag { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:var(--cream3); border:1px solid var(--border2); padding:5px 12px; border-radius:100px; }
+
+  /* NEXT */
+  .cs-next { display:flex; align-items:center; justify-content:space-between; padding:56px max(48px,calc((100vw - var(--max-w)) / 2)); border-top:1px solid var(--border); text-decoration:none; transition:background 0.2s; cursor:none; }
+  .cs-next:hover { background:var(--bg2); }
+  .cs-next-label { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--cream3); margin-bottom:8px; display:block; }
+  .cs-next-title { font-family:"Barlow Condensed",sans-serif; font-size:clamp(28px,3.5vw,48px); font-weight:700; letter-spacing:0.02em; text-transform:uppercase; color:var(--cream); }
+  .cs-next-arrow { font-size:28px; color:var(--cream3); transition:color 0.2s,transform 0.2s; }
+  .cs-next:hover .cs-next-arrow { color:var(--accent); transform:translateX(8px); }
+
+  /* FOOTER */
+  footer { border-top:1px solid var(--border); padding:48px max(48px,calc((100vw - var(--max-w)) / 2)); display:flex; justify-content:space-between; align-items:center; }
+  .footer-left { font-family:"Barlow Condensed",sans-serif; font-size:18px; font-weight:600; letter-spacing:0.04em; color:var(--cream2); }
+  .footer-links { display:flex; gap:32px; }
+  .footer-links a { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:var(--cream3); text-decoration:none; transition:color 0.2s; }
+  .footer-links a:hover { color:var(--accent); }
+  .footer-copy { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.1em; color:var(--cream3); }
+
+  .reveal { opacity:0; transform:translateY(24px); transition:opacity 0.7s cubic-bezier(0.23,1,0.32,1),transform 0.7s cubic-bezier(0.23,1,0.32,1); }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  /* Skip link */
+  .skip-link { position:fixed; top:-100px; left:24px; z-index:9999; background:var(--accent); color:var(--bg); font-family:"DM Mono",monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; padding:10px 20px; border-radius:100px; text-decoration:none; transition:top 0.2s; }
+  .skip-link:focus { top:24px; }
+  :focus-visible { outline:2px solid var(--accent); outline-offset:4px; border-radius:2px; }
+  .nav-cta:focus-visible { border-radius:100px; }
+  @media (prefers-reduced-motion: reduce) {
+    .cursor { display:none; }
+    body { cursor:auto; }
+    .reveal { opacity:1 !important; transform:none !important; transition:none !important; }
+  }
+
+  /* Tablet */
+  @media (max-width: 900px) {
+    .cs-section-grid { grid-template-columns: 140px 1fr; gap:40px; }
+    .cs-two-col { grid-template-columns: 1fr; gap:32px; }
+    .cs-img-grid { grid-template-columns: 1fr; }
+    nav { padding:18px 32px; }
+  }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    nav { padding:16px 20px; }
+    nav.scrolled .nav-pill { max-width:calc(100vw - 40px); padding:0 12px 0 16px; height:44px; }
+    .nav-links { display:none; }
+
+    .cs-hero { padding:100px 24px 48px; }
+    .cs-title { font-size:clamp(40px,10vw,60px); }
+    .cs-intro { font-size:14px; }
+    .cs-meta { grid-template-columns:1fr 1fr; }
+    .cs-meta-cell { padding:14px 16px; }
+
+    .cs-body { padding:0 24px; }
+    .cs-section { padding:48px 0; }
+    .cs-section-grid { grid-template-columns:1fr; gap:2px; }
+    .cs-section-left { display:flex; align-items:center; gap:12px; padding-top:0; border-bottom:1px solid var(--border); padding-bottom:12px; }
+    .cs-section-title { font-size:clamp(22px,5vw,32px); }
+    .cs-text { font-size:14px; }
+    .cs-pullquote { padding-left:18px; }
+    .cs-pullquote p { font-size:18px; }
+    .cs-img-grid { grid-template-columns:1fr; gap:2px; }
+
+    .cs-next { padding:40px 24px; flex-direction:column; align-items:flex-start; gap:20px; }
+    .cs-next-title { font-size:28px; }
+
+    footer { flex-direction:column; gap:20px; text-align:center; padding:36px 24px; }
+    .footer-links { flex-wrap:wrap; justify-content:center; gap:14px; }
+  }
+
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div class="cursor" id="cursor"></div>
+<nav id="nav" aria-label="Main navigation">
+  <div class="nav-pill">
+    <a href="index.html" class="nav-logo" aria-label="Trillion Nguyen — home">
+      <img src="images/logo.webp" alt="" role="presentation">
+    </a>
+    <div class="nav-right">
+      <ul class="nav-links" role="list">
+        <li><a href="index.html#work">Work</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="other-work.html">Other Work</a></li>
+      </ul>
+      <a href="mailto:trillionnguyen@gmail.com" class="nav-cta">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main-content">
+<section class="cs-hero">
+  <a href="index.html" class="cs-back">← All Work</a>
+  <span class="cs-eyebrow">UI/UX · Content Strategy · Teamworks · 2022–2023</span>
+  <h1 class="cs-title">Content Hub</h1>
+  <p class="cs-intro">Redesigned an outdated gallery module to drive user engagement — larger imagery, cleaner upload flows, and a design-system-aligned experience.</p>
+  <div class="cs-meta">
+    <div class="cs-meta-cell"><span class="cs-meta-label">Role</span><span class="cs-meta-value">Lead Product Designer</span></div>
+    <div class="cs-meta-cell"><span class="cs-meta-label">Company</span><span class="cs-meta-value">Teamworks</span></div>
+    <div class="cs-meta-cell"><span class="cs-meta-label">Year</span><span class="cs-meta-value">2022–2023</span></div>
+    <div class="cs-meta-cell"><span class="cs-meta-label">Scope of Work</span><span class="cs-meta-value">User Research · User Interviews · Competitive Analysis · Journey Map · Wireframing · Prototyping · IA · UI Design</span></div>
+  </div>
+</section>
+<div class="cs-cover"><img src="images/hub-cover.webp" alt="Cover"></div>
+<div class="cs-body">
+<div class="cs-section reveal">
+  <div class="cs-section-grid">
+    <div class="cs-section-left">
+      <span class="cs-section-label">Problem</span>
+      <span class="cs-section-num">01</span>
+    </div>
+    <div class="cs-section-right">
+      <h2 class="cs-section-title">The Challenge</h2>
+      <p class="cs-text">The current gallery module was outdated and did not effectively engage users. Images were displayed at small sizes with incorrect aspect ratios and poor quality. The process to upload images was cumbersome, leading to <strong>low user engagement</strong> across the platform.</p><p class="cs-text">My goal was to redesign the gallery module so that it would enhance the user experience and engagement, while ensuring consistency through the use of the new design system.</p><div class="cs-pullquote"><p>Users didn't engage because the product didn't respect their content. Fixing that meant fixing the fundamentals first.</p></div>
+    </div>
+  </div>
+</div>
+<div class="cs-section reveal">
+  <div class="cs-section-grid">
+    <div class="cs-section-left">
+      <span class="cs-section-label">Discovery</span>
+      <span class="cs-section-num">02</span>
+    </div>
+    <div class="cs-section-right">
+      <h2 class="cs-section-title">Understanding the Problem</h2>
+      <p class="cs-text">We began with a discovery phase gathering insights on user behavior and pain points through <strong>user feedback forums and interviews</strong>. A clear pattern emerged — users often did not engage with the current content hub due to the small image sizes, incorrect aspect ratios, and poor image quality.</p><p class="cs-text">Additionally, users found the upload image flow confusing and difficult to navigate. These weren't edge cases — they were the primary reasons engagement had stalled.</p><div class="cs-img cs-img-single reveal">
+  <img src="images/hub-old.webp" alt="Previous content hub — small images, incorrect aspect ratios">
+  <p class="cs-img-caption">Previous content hub — small images, incorrect aspect ratios</p>
+</div>
+    </div>
+  </div>
+</div>
+<div class="cs-section reveal">
+  <div class="cs-section-grid">
+    <div class="cs-section-left">
+      <span class="cs-section-label">Design</span>
+      <span class="cs-section-num">03</span>
+    </div>
+    <div class="cs-section-right">
+      <h2 class="cs-section-title">The Solution</h2>
+      <p class="cs-text">I crafted a new content hub designed to engage users with <strong>stunning, high-quality imagery</strong>. I enlarged the images for better visibility while maintaining original aspect ratios. A hover interaction reveals helpful details on demand — giving users the information they need without cluttering the interface or compromising image quality.</p><p class="cs-text">I restructured the <strong>image upload process</strong> for improved UX. The new flow guides users through gallery creation and enables bulk uploads from multiple platforms, resulting in significant time savings. The gallery now supports video, audio files, and documents — extending beyond static visuals to reach a wider audience.</p><div class="cs-img-grid reveal"><div class="cs-img"><img src="images/hub-gallery.webp" alt="Redesigned gallery view"><p class="cs-img-caption">Redesigned gallery view</p></div><div class="cs-img"><img src="images/hub-upload.webp" alt="Streamlined upload flow"><p class="cs-img-caption">Streamlined upload flow</p></div></div>
+    </div>
+  </div>
+</div>
+<div class="cs-section reveal">
+  <div class="cs-section-grid">
+    <div class="cs-section-left">
+      <span class="cs-section-label">Prototyping</span>
+      <span class="cs-section-num">04</span>
+    </div>
+    <div class="cs-section-right">
+      <h2 class="cs-section-title">Testing & Validation</h2>
+      <p class="cs-text">The design journey began with translating research into a <strong>clickable prototype</strong>, bringing the envisioned content hub to life. Early interaction revealed its potential and enabled internal testing to identify and iron out technical issues.</p><p class="cs-text">A panel of users then tested the prototype, providing invaluable real-world feedback. Their insights pinpointed areas for improvement, allowing us to iteratively refine the design for an enhanced user experience.</p><div class="cs-img-grid reveal"><div class="cs-img"><img src="images/hub-drawer.webp" alt="Image details drawer"><p class="cs-img-caption">Image details drawer</p></div><div class="cs-img"><img src="images/hub-list.webp" alt="Secondary list view"><p class="cs-img-caption">Secondary list view</p></div></div>
+    </div>
+  </div>
+</div>
+<div class="cs-section reveal">
+  <div class="cs-section-grid">
+    <div class="cs-section-left">
+      <span class="cs-section-label">Refinement</span>
+      <span class="cs-section-num">05</span>
+    </div>
+    <div class="cs-section-right">
+      <h2 class="cs-section-title">Iteration & Polish</h2>
+      <p class="cs-text">I tackled issues including slow loading times, image upload errors, and missing features uncovered in testing. After each fix, rigorous testing ensured changes genuinely improved the experience. This <strong>iterative cycle</strong> continued until the design met every user need and delivered an optimal experience.</p>
+    </div>
+  </div>
+</div>
+<div class="cs-section reveal">
+  <div class="cs-section-grid">
+    <div class="cs-section-left">
+      <span class="cs-section-label">Impact</span>
+      <span class="cs-section-num">06</span>
+    </div>
+    <div class="cs-section-right">
+      <h2 class="cs-section-title">The Outcome</h2>
+      <p class="cs-text">The revamped content hub wasn't just a facelift — it was a <strong>user engagement revolution</strong>. Stunning, high-quality images grabbed attention, while the intuitive upload flow made adding visuals effortless. Users noted significant improvements, and the numbers agreed — engagement and satisfaction soared.</p><p class="cs-text">The design system ensured a seamless, consistent experience across the website, further boosting user engagement and retention. Our clients witnessed firsthand the power of user-centric design.</p>
+    </div>
+  </div>
+</div>
+</div>
+<a href="design-system.html" class="cs-next">
+  <div><span class="cs-next-label">Next Project</span><h3 class="cs-next-title">Design System</h3></div>
+  <span class="cs-next-arrow">→</span>
+</a>
+</main>
+<footer>
+  <span class="footer-left">Trillion Nguyen</span>
+  <div class="footer-links">
+    <a href="index.html">Work</a><a href="about.html">About</a>
+    <a href="other-work.html">Other Work</a>
+    <a href="https://www.linkedin.com/in/trillionnguyen/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    <a href="mailto:trillionnguyen@gmail.com">Contact</a>
+  </div>
+  <span class="footer-copy">© 2026</span>
+</footer><script>
+  // Cursor
+  const cursor = document.getElementById("cursor");
+  document.addEventListener("mousemove", e => {
+    cursor.style.transform = `translate(${e.clientX}px,${e.clientY}px)`;
+  });
+  document.addEventListener("mouseleave", () => cursor.style.opacity = "0");
+  document.addEventListener("mouseenter", () => cursor.style.opacity = "1");
+
+  // Nav pill
+  const nav = document.getElementById("nav");
+  window.addEventListener("scroll", () => {
+    nav.classList.toggle("scrolled", window.scrollY > 80);
+  });
+
+  // Reveal on scroll — with immediate trigger for in-viewport elements
+  const reveals = document.querySelectorAll(".reveal");
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add("visible"), i * 60);
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05, rootMargin: "0px 0px -20px 0px" });
+
+  reveals.forEach(el => obs.observe(el));
+
+  // Fallback — ensure all reveals fire after 800ms in case observer misses
+  setTimeout(() => {
+    document.querySelectorAll(".reveal:not(.visible)").forEach(el => {
+      el.classList.add("visible");
+    });
+  }, 800);
+</script></body></html>
