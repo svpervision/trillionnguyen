@@ -15,13 +15,15 @@
   body { background:var(--bg); color:var(--cream); font-family:"Barlow",sans-serif; font-weight:300; overflow-x:hidden; cursor:none; }
   .cursor { width:24px; height:24px; border:1.5px solid var(--accent); border-radius:50%; position:fixed; top:-12px; left:-12px; pointer-events:none; z-index:9999; will-change:transform; background:transparent; }
   body::before { content:""; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E"); opacity:0.032; pointer-events:none; z-index:100; }
+  .nav-mobile-menu { display: none; }
+
   nav { position:fixed; top:0; left:0; right:0; z-index:50; display:flex; justify-content:center; align-items:center; padding:20px max(48px,calc((100vw - var(--max-w)) / 2)); pointer-events:none; }
   .nav-pill { display:flex; align-items:center; justify-content:space-between; width:100%; max-width:100%; padding:8px 0; border-radius:100px; border:1px solid transparent; background:transparent; pointer-events:all; transition:max-width 0.6s cubic-bezier(0.4,0,0.2,1),padding 0.6s cubic-bezier(0.4,0,0.2,1),background 0.5s ease,border-color 0.5s ease; }
-  nav.scrolled .nav-pill { max-width:580px; justify-content:space-between; align-items:center; padding:0 16px 0 20px; height:48px; background:rgba(15,14,12,0.92); border-color:var(--border2); backdrop-filter:blur(20px); }
+  nav.scrolled .nav-pill { max-width:580px; justify-content:space-between; align-items:center; padding:0 16px 0 20px; height:48px; background:rgba(245,242,235,0.95); border-color:var(--border2); backdrop-filter:blur(20px); }
   .nav-right { display:flex; align-items:center; gap:20px; height:100%; }
   .nav-logo { display:flex; align-items:center; height:26px; text-decoration:none; opacity:0.85; transition:opacity 0.2s; flex-shrink:0; }
   .nav-logo:hover { opacity:1; }
-  .nav-logo img { height:22px; width:auto; filter:invert(1) brightness(0.85); }
+  .nav-logo img { height:22px; width:auto; filter:none; }
   .nav-links { display:flex; gap:24px; list-style:none; align-items:center; height:100%; }
   .nav-links li { display:flex; align-items:center; height:100%; }
   .nav-links a { font-family:"DM Mono",monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--cream3); text-decoration:none; transition:color 0.2s; white-space:nowrap; }
@@ -126,6 +128,11 @@
         <li><a href="other-work.html">Other Work</a></li>
       </ul>
       <a href="mailto:trillionnguyen@gmail.com" class="nav-cta" aria-label="Send email">Contact</a>
+    </div>
+    <div class="nav-mobile-menu">
+      <a href="index.html" class="nav-mobile-link">Work</a>
+      <a href="about.html" class="nav-mobile-link">About</a>
+      <a href="mailto:trillionnguyen@gmail.com" class="nav-mobile-link accent">Contact</a>
     </div>
   </div>
 </nav>
