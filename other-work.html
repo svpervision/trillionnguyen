@@ -2,310 +2,257 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="description" content="Trillion Nguyen — Product Designer specializing in design systems, mobile, and interaction design. Based in Ontario, CA.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Trillion Nguyen — Graphic design work, side projects and creative explorations.">
 <title>Other Work — Trillion Nguyen</title>
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Barlow:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#f5f2eb; --max-w:1140px; --bg2:#edeae0; --bg3:#e4e0d4; --cream:#1a1814; --cream2:#3d3a32; --cream3:#585450; --accent:#a84d1a; --accent2:#c4622d; --border:rgba(26,24,20,0.09); --border2:rgba(26,24,20,0.16); }
-  *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
-  body { background:var(--bg); color:var(--cream); font-family:"Barlow",sans-serif; font-weight:300; overflow-x:hidden; cursor:none; }
-  .cursor { width:24px; height:24px; border:1.5px solid var(--accent); border-radius:50%; position:fixed; top:-12px; left:-12px; pointer-events:none; z-index:9999; will-change:transform; background:transparent; }
-  body::before { content:""; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E"); opacity:0.032; pointer-events:none; z-index:100; }
+  :root {
+    --bg: #f5f2eb; --max-w: 1140px;
+    --bg2: #edeae0; --bg3: #e4e0d4;
+    --cream: #1a1814; --cream2: #3d3a32; --cream3: #585450;
+    --accent: #a84d1a; --accent2: #c4622d;
+    --border: rgba(26,24,20,0.09); --border2: rgba(26,24,20,0.16);
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--cream); font-family: "Barlow", sans-serif; font-weight: 300; overflow-x: hidden; cursor: none; }
+  .cursor { width: 24px; height: 24px; border: 1.5px solid var(--accent); border-radius: 50%; background: transparent; position: fixed; top: -12px; left: -12px; pointer-events: none; z-index: 9999; will-change: transform; }
+  body::before { content: ""; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E"); opacity: 0.015; pointer-events: none; z-index: 100; }
+
+  /* NAV */
   .nav-mobile-menu { display: none; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: flex; justify-content: center; align-items: center; padding: 20px max(48px, calc((100vw - var(--max-w)) / 2)); pointer-events: none; }
+  .nav-pill { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 100%; padding: 8px 0; border-radius: 100px; border: 1px solid transparent; background: transparent; pointer-events: all; transition: max-width 0.6s cubic-bezier(0.4,0,0.2,1), padding 0.6s cubic-bezier(0.4,0,0.2,1), background 0.5s ease, border-color 0.5s ease; }
+  nav.scrolled .nav-pill { max-width: 580px; justify-content: space-between; align-items: center; padding: 0 16px 0 20px; height: 48px; background: rgba(245,242,235,0.95); border-color: var(--border2); backdrop-filter: blur(20px); }
+  .nav-right { display: flex; align-items: center; gap: 20px; height: 100%; }
+  .nav-logo { display: flex; align-items: center; height: 26px; text-decoration: none; opacity: 0.85; transition: opacity 0.2s; flex-shrink: 0; }
+  .nav-logo:hover { opacity: 1; }
+  .nav-logo img { height: 22px; width: auto; filter: none; }
+  .nav-links { display: flex; gap: 24px; list-style: none; align-items: center; height: 100%; }
+  .nav-links li { display: flex; align-items: center; height: 100%; }
+  .nav-links a { font-family: "DM Mono", monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream3); text-decoration: none; transition: color 0.2s; white-space: nowrap; }
+  .nav-links a:hover { color: var(--cream); }
+  .nav-cta { font-family: "DM Mono", monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); border: 1px solid rgba(168,77,26,0.4); padding: 7px 16px; border-radius: 100px; transition: background 0.2s, color 0.2s; text-decoration: none; flex-shrink: 0; }
+  .nav-cta:hover { background: var(--accent); color: var(--bg); }
 
-  nav { position:fixed; top:0; left:0; right:0; z-index:50; display:flex; justify-content:center; align-items:center; padding:20px max(48px,calc((100vw - var(--max-w)) / 2)); pointer-events:none; }
-  .nav-pill { display:flex; align-items:center; justify-content:space-between; width:100%; max-width:100%; padding:8px 0; border-radius:100px; border:1px solid transparent; background:transparent; pointer-events:all; transition:max-width 0.6s cubic-bezier(0.4,0,0.2,1),padding 0.6s cubic-bezier(0.4,0,0.2,1),background 0.5s ease,border-color 0.5s ease; }
-  nav.scrolled .nav-pill { max-width:580px; justify-content:space-between; align-items:center; padding:0 16px 0 20px; height:48px; background:rgba(245,242,235,0.95); border-color:var(--border2); backdrop-filter:blur(20px); }
-  .nav-right { display:flex; align-items:center; gap:20px; height:100%; }
-  .nav-logo { display:flex; align-items:center; height:26px; text-decoration:none; opacity:0.85; transition:opacity 0.2s; flex-shrink:0; }
-  .nav-logo:hover { opacity:1; }
-  .nav-logo img { height:22px; width:auto; filter:none; }
-  .nav-links { display:flex; gap:24px; list-style:none; align-items:center; height:100%; }
-  .nav-links li { display:flex; align-items:center; height:100%; }
-  .nav-links a { font-family:"DM Mono",monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--cream3); text-decoration:none; transition:color 0.2s; white-space:nowrap; }
-  .nav-links a:hover { color:var(--cream); }
-  .nav-cta { font-family:"DM Mono",monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); border:1px solid rgba(196,98,45,0.4); padding:7px 16px; border-radius:100px; transition:background 0.2s,color 0.2s; text-decoration:none; flex-shrink:0; }
-  .nav-cta:hover { background:var(--accent); color:var(--bg); }
-  footer { border-top:1px solid var(--border); padding:48px max(48px,calc((100vw - var(--max-w)) / 2)); display:flex; justify-content:space-between; align-items:center; }
-  .footer-left { font-family:"Barlow Condensed",sans-serif; font-size:18px; font-weight:600; letter-spacing:0.04em; color:var(--cream2); }
-  .footer-links { display:flex; gap:32px; }
-  .footer-links a { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:var(--cream3); text-decoration:none; transition:color 0.2s; }
-  .footer-links a:hover { color:var(--accent); }
-  .footer-copy { font-family:"DM Mono",monospace; font-size:9px; color:var(--cream3); }
-  .skip-link { position:fixed; top:-100px; left:24px; z-index:9999; background:var(--accent); color:var(--bg); font-family:"DM Mono",monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; padding:10px 20px; border-radius:100px; text-decoration:none; transition:top 0.2s; }
-  .skip-link:focus { top:24px; }
-  :focus-visible { outline:2px solid var(--accent); outline-offset:4px; border-radius:2px; }
-  .reveal { opacity:0; transform:translateY(24px); transition:opacity 0.7s cubic-bezier(0.23,1,0.32,1),transform 0.7s cubic-bezier(0.23,1,0.32,1); }
-  .reveal.visible { opacity:1; transform:translateY(0); }
-  @media (prefers-reduced-motion:reduce) { .cursor { display:none; } body { cursor:auto; } .reveal { opacity:1 !important; transform:none !important; transition:none !important; } }
-  @media (max-width:640px) {
-    nav { padding:16px 20px; }
-    nav.scrolled .nav-pill { max-width:calc(100vw - 40px); padding:0 12px 0 16px; height:44px; }
-    .nav-links { gap: 12px; }
-    .nav-links a { font-size: 9px; letter-spacing: 0.1em; }
-    .nav-cta { padding: 5px 10px; font-size: 9px; }
-    footer { flex-direction:column; gap:20px; text-align:center; padding:36px 24px; }
-    .footer-links { flex-wrap:wrap; justify-content:center; gap:14px; }
+  /* PAGE HEADER */
+  .page-header {
+    padding: 130px max(48px, calc((100vw - var(--max-w)) / 2)) 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  .page-eyebrow { font-family: "DM Mono", monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; display: block; }
+  .page-title { font-family: "Barlow Condensed", sans-serif; font-size: clamp(48px, 6vw, 80px); font-weight: 700; line-height: 0.9; letter-spacing: 0.02em; text-transform: uppercase; color: var(--cream); }
+
+  /* MASONRY GRID */
+  .masonry-wrap {
+    padding: 48px max(48px, calc((100vw - var(--max-w)) / 2));
   }
 
-  .page-header { padding:140px max(48px,calc((100vw - var(--max-w)) / 2)) 80px; border-bottom:1px solid var(--border); }
-  .page-eyebrow { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:16px; display:block; }
-  .page-title { font-family:"Barlow Condensed",sans-serif; font-size:clamp(52px,7vw,88px); font-weight:700; line-height:0.9; letter-spacing:0.02em; text-transform:uppercase; color:var(--cream); }
-  .page-intro { font-size:15px; font-weight:300; color:var(--cream3); line-height:1.7; max-width:540px; margin-top:20px; }
-
-  .ow-body { padding:80px max(48px,calc((100vw - var(--max-w)) / 2)); }
-
-  .ow-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
+  .masonry {
+    columns: 3;
+    column-gap: 12px;
   }
 
-  .ow-item {
-    display: block;
-    position: relative;
+  .masonry-item {
+    break-inside: avoid;
+    margin-bottom: 12px;
     overflow: hidden;
-    background: var(--bg2);
-    aspect-ratio: 4/3;
-    text-decoration: none;
     cursor: none;
   }
 
-  .ow-item div.ow-img-wrap { position:relative; width:100%; height:100%; }
-
-  .ow-img-wrap img {
+  .masonry-item img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
-    filter: brightness(0.7) saturate(0.85);
-    transition: filter 0.4s ease;
+    height: auto;
+    display: block;
+    transition: opacity 0.3s ease;
+  }
+
+  .masonry-item:hover img { opacity: 0.85; }
+
+  /* LIGHTBOX */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(245,242,235,0.95);
+    backdrop-filter: blur(12px);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    cursor: none;
+  }
+
+  .lightbox.open { display: flex; }
+
+  .lightbox img {
+    max-width: 100%;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
     display: block;
   }
 
-  .ow-item:hover .ow-img-wrap img { filter:brightness(0.4) saturate(0.6); }
-
-  .ow-overlay {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    padding: 24px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    transform: translateY(6px);
-    transition: transform 0.3s ease;
+  .lightbox-close {
+    position: fixed;
+    top: 28px; right: 28px;
+    font-family: "DM Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cream3);
+    background: none;
+    border: 1px solid var(--border2);
+    padding: 7px 16px;
+    border-radius: 100px;
+    cursor: none;
+    transition: color 0.2s, border-color 0.2s;
   }
 
-  .ow-item:hover .ow-overlay { transform: translateY(0); }
+  .lightbox-close:hover { color: var(--accent); border-color: var(--accent); }
 
-  .ow-name { font-family:"Barlow Condensed",sans-serif; font-size:18px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--cream); }
-  .ow-cat { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:var(--cream3); }
-  .ow-link { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); margin-top:4px; }
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); padding: 48px max(48px, calc((100vw - var(--max-w)) / 2)); display: flex; justify-content: space-between; align-items: center; }
+  .footer-left { font-family: "Barlow Condensed", sans-serif; font-size: 18px; font-weight: 600; letter-spacing: 0.04em; color: var(--cream2); }
+  .footer-links { display: flex; gap: 32px; }
+  .footer-links a { font-family: "DM Mono", monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream3); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-copy { font-family: "DM Mono", monospace; font-size: 9px; color: var(--cream3); }
 
-  @media (max-width:900px) { .ow-grid { grid-template-columns:repeat(2,1fr); } }
-  @media (max-width:640px) {
-    .page-header { padding:110px 24px 56px; }
-    .ow-body { padding:48px 24px; }
-    .ow-grid { grid-template-columns:repeat(2,1fr); }
-    .ow-item { aspect-ratio:1/1; }
+  /* SKIP LINK */
+  .skip-link { position: fixed; top: -100px; left: 24px; z-index: 9999; background: var(--accent); color: var(--bg); font-family: "DM Mono", monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; padding: 10px 20px; border-radius: 100px; text-decoration: none; transition: top 0.2s; }
+  .skip-link:focus { top: 24px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cursor { display: none; }
+    body { cursor: auto; }
+  }
+
+  @media (max-width: 900px) {
+    .masonry { columns: 2; }
+  }
+
+  @media (max-width: 640px) {
+    nav { padding: 16px 20px; }
+    nav.scrolled .nav-pill { max-width: calc(100vw - 40px); padding: 0 12px 0 16px; height: 44px; }
+    .nav-links { gap: 12px; }
+    .nav-links a { font-size: 9px; letter-spacing: 0.1em; }
+    .nav-cta { padding: 5px 10px; font-size: 9px; }
+    .masonry { columns: 2; column-gap: 6px; }
+    .masonry-item { margin-bottom: 6px; }
+    .masonry-wrap { padding: 32px 16px; }
+    .page-header { padding: 110px 24px 40px; }
+    footer { flex-direction: column; gap: 20px; text-align: center; padding: 36px 24px; }
+    .footer-links { flex-wrap: wrap; justify-content: center; gap: 14px; }
+    .lightbox { padding: 20px; }
   }
 </style>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Skip to content</a>
 <div class="cursor" id="cursor"></div>
+
 <nav id="nav" aria-label="Main navigation">
   <div class="nav-pill">
     <a href="index.html" class="nav-logo" aria-label="Trillion Nguyen — home">
-      <img loading="lazy" decoding="async" src="images/logo.webp" alt="" role="presentation">
+      <img src="images/logo.webp" alt="" role="presentation">
     </a>
     <div class="nav-right">
       <ul class="nav-links" role="list">
         <li><a href="index.html#work">Work</a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="other-work.html">Other Work</a></li>
+        <li><a href="other-work.html" aria-current="page">Other Work</a></li>
       </ul>
       <a href="mailto:trillionnguyen@gmail.com" class="nav-cta" aria-label="Send email">Contact</a>
     </div>
-    <div class="nav-mobile-menu">
-      <a href="index.html" class="nav-mobile-link">Work</a>
-      <a href="about.html" class="nav-mobile-link">About</a>
-      <a href="mailto:trillionnguyen@gmail.com" class="nav-mobile-link accent">Contact</a>
-    </div>
   </div>
 </nav>
+
 <main id="main-content">
 
 <header class="page-header">
-  <span class="page-eyebrow">Graphic Design · Side Projects · Explorations</span>
+  <span class="page-eyebrow">Graphic Design · Explorations · Side Projects</span>
   <h1 class="page-title">Other<br>Work.</h1>
-  <p class="page-intro">A collection of graphic design work, side projects, and creative explorations outside of product design — posters, brand work, UI experiments, and more.</p>
 </header>
 
-<div class="ow-body">
-  <div class="ow-grid reveal">
-<a href="https://designspec.lovable.app" target="_blank" rel="noopener" class="ow-item">
-  <div class="ow-img-wrap">
-    <img src="images/logo.webp" alt="Design Spec Website" loading="lazy" decoding="async">
-    <div class="ow-overlay">
-      <span class="ow-name">Design Spec Website</span>
-      <span class="ow-cat">Product Design · Web App</span>
-      <span class='ow-link'>View →</span>
-    </div>
-  </div>
-</a>
-<div class="ow-item">
-  <div class="ow-img-wrap">
-    <img src="images/ow-kendrick.webp" alt="Kendrick" loading="lazy" decoding="async">
-    <div class="ow-overlay">
-      <span class="ow-name">Kendrick</span>
-      <span class="ow-cat">Graphic Design · Poster</span>
-      
-    </div>
-  </div>
-</div>
-<div class="ow-item">
-  <div class="ow-img-wrap">
-    <img src="images/ow-login.webp" alt="Login UI" loading="lazy" decoding="async">
-    <div class="ow-overlay">
-      <span class="ow-name">Login UI</span>
-      <span class="ow-cat">UI Design · Authentication</span>
-      
-    </div>
-  </div>
-</div>
-<div class="ow-item">
-  <div class="ow-img-wrap">
-    <img src="images/ow-dashboard.webp" alt="Dashboard" loading="lazy" decoding="async">
-    <div class="ow-overlay">
-      <span class="ow-name">Dashboard</span>
-      <span class="ow-cat">Data Dashboard · UI</span>
-      
-    </div>
-  </div>
-</div>
-<div class="ow-item">
-  <div class="ow-img-wrap">
-    <img src="images/ow-conversations.webp" alt="Conversations" loading="lazy" decoding="async">
-    <div class="ow-overlay">
-      <span class="ow-name">Conversations</span>
-      <span class="ow-cat">UI Design · Messaging</span>
-      
-    </div>
-  </div>
-</div>
-<div class="ow-item">
-  <div class="ow-img-wrap">
-    <img src="images/ow-amnotify.webp" alt="AMNOTIFY" loading="lazy" decoding="async">
-    <div class="ow-overlay">
-      <span class="ow-name">AMNOTIFY</span>
-      <span class="ow-cat">Brand · Graphic Design</span>
-      
-    </div>
-  </div>
-</div>
-<div class="ow-item">
-  <div class="ow-img-wrap">
-    <img src="images/ow-untitled.webp" alt="Untitled" loading="lazy" decoding="async">
-    <div class="ow-overlay">
-      <span class="ow-name">Untitled</span>
-      <span class="ow-cat">Graphic Design</span>
-      
-    </div>
-  </div>
-</div>
-<div class="ow-item">
-  <div class="ow-img-wrap">
-    <img src="images/ow-dashdash.webp" alt="Dashboard Design" loading="lazy" decoding="async">
-    <div class="ow-overlay">
-      <span class="ow-name">Dashboard Design</span>
-      <span class="ow-cat">Data Visualization</span>
-      
-    </div>
-  </div>
-</div>
-<div class="ow-item">
-  <div class="ow-img-wrap">
-    <img src="images/ow-tupac.webp" alt="Tupac" loading="lazy" decoding="async">
-    <div class="ow-overlay">
-      <span class="ow-name">Tupac</span>
-      <span class="ow-cat">Graphic Design · Poster</span>
-      
-    </div>
-  </div>
-</div>
-<div class="ow-item">
-  <div class="ow-img-wrap">
-    <img src="images/ow-analytics.webp" alt="UC Analytics" loading="lazy" decoding="async">
-    <div class="ow-overlay">
-      <span class="ow-name">UC Analytics</span>
-      <span class="ow-cat">Dashboard · UI Design</span>
-      
-    </div>
-  </div>
-</div>
-<div class="ow-item">
-  <div class="ow-img-wrap">
-    <img src="images/ow-offwhite.webp" alt="Off White 270" loading="lazy" decoding="async">
-    <div class="ow-overlay">
-      <span class="ow-name">Off White 270</span>
-      <span class="ow-cat">Sneaker · Graphic Design</span>
-      
-    </div>
-  </div>
-</div>
-<div class="ow-item">
-  <div class="ow-img-wrap">
-    <img src="images/ow-cancer.webp" alt="Cancer Awareness" loading="lazy" decoding="async">
-    <div class="ow-overlay">
-      <span class="ow-name">Cancer Awareness</span>
-      <span class="ow-cat">Graphic Design · Poster</span>
-      
-    </div>
-  </div>
-</div>
-
+<div class="masonry-wrap">
+  <div class="masonry">
+      <div class="masonry-item"><img src="images/ow-kendrick.webp" alt="Kendrick" loading="lazy" decoding="async" onclick="openLightbox(this.src)"></div>
+      <div class="masonry-item"><img src="images/ow-login.webp" alt="Login UI" loading="lazy" decoding="async" onclick="openLightbox(this.src)"></div>
+      <div class="masonry-item"><img src="images/ow-dashboard.webp" alt="Dashboard" loading="lazy" decoding="async" onclick="openLightbox(this.src)"></div>
+      <div class="masonry-item"><img src="images/ow-conversations.webp" alt="Conversations" loading="lazy" decoding="async" onclick="openLightbox(this.src)"></div>
+      <div class="masonry-item"><img src="images/ow-amnotify.webp" alt="AMNOTIFY" loading="lazy" decoding="async" onclick="openLightbox(this.src)"></div>
+      <div class="masonry-item"><img src="images/ow-untitled.webp" alt="Untitled" loading="lazy" decoding="async" onclick="openLightbox(this.src)"></div>
+      <div class="masonry-item"><img src="images/ow-dashdash.webp" alt="Dashboard Design" loading="lazy" decoding="async" onclick="openLightbox(this.src)"></div>
+      <div class="masonry-item"><img src="images/ow-tupac.webp" alt="Tupac" loading="lazy" decoding="async" onclick="openLightbox(this.src)"></div>
+      <div class="masonry-item"><img src="images/ow-analytics.webp" alt="UC Analytics" loading="lazy" decoding="async" onclick="openLightbox(this.src)"></div>
+      <div class="masonry-item"><img src="images/ow-offwhite.webp" alt="Off White 270" loading="lazy" decoding="async" onclick="openLightbox(this.src)"></div>
+      <div class="masonry-item"><img src="images/ow-cancer.webp" alt="Cancer Awareness" loading="lazy" decoding="async" onclick="openLightbox(this.src)"></div>
   </div>
 </div>
 
 </main>
+
 <footer role="contentinfo">
   <span class="footer-left">Trillion Nguyen</span>
   <div class="footer-links">
     <a href="index.html">Work</a>
     <a href="about.html">About</a>
     <a href="other-work.html">Other Work</a>
-    <a href="https://www.linkedin.com/in/trillionnguyen/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://www.linkedin.com/in/trillionnguyen/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
     <a href="mailto:trillionnguyen@gmail.com">Contact</a>
   </div>
   <span class="footer-copy">© 2026</span>
-</footer><script>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">Close ✕</button>
+  <img id="lightbox-img" src="" alt="Enlarged view">
+</div>
+
+<script>
+  // Cursor
   const cursor = document.getElementById("cursor");
   document.addEventListener("mousemove", e => {
     cursor.style.transform = `translate(${e.clientX}px,${e.clientY}px)`;
   });
   document.addEventListener("mouseleave", () => cursor.style.opacity = "0");
   document.addEventListener("mouseenter", () => cursor.style.opacity = "1");
+
+  // Nav pill
   const nav = document.getElementById("nav");
   window.addEventListener("scroll", () => {
     nav.classList.toggle("scrolled", window.scrollY > 80);
   });
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add("visible"), i * 60);
-        obs.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.05 });
-  document.querySelectorAll(".reveal").forEach(el => obs.observe(el));
-  setTimeout(() => {
-    document.querySelectorAll(".reveal:not(.visible)").forEach(el => el.classList.add("visible"));
-  }, 800);
+
+  // Lightbox
+  function openLightbox(src) {
+    document.getElementById("lightbox-img").src = src;
+    document.getElementById("lightbox").classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeLightbox() {
+    document.getElementById("lightbox").classList.remove("open");
+    document.body.style.overflow = "";
+    document.getElementById("lightbox-img").src = "";
+  }
+
+  // Close on backdrop click
+  document.getElementById("lightbox").addEventListener("click", e => {
+    if (e.target === e.currentTarget) closeLightbox();
+  });
+
+  // Close on Escape
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") closeLightbox();
+  });
 </script>
 </body>
 </html>
