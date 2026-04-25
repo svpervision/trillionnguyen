@@ -66,7 +66,7 @@
   .cs-section + .cs-section { margin-top:2px; }
   .cs-section:last-child { border-bottom:none; }
   .cs-section-grid { display:grid; grid-template-columns:200px 1fr; gap:64px; }
-  .cs-section-left { padding-top:4px; display:flex; flex-direction:column; gap:6px; }
+  .cs-section-left { padding-top:0; display:flex; flex-direction:column; gap:4px; justify-content:flex-start; }
   .cs-section-label { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:8px; }
   .cs-section-num { font-family:"Barlow Condensed",sans-serif; font-size:13px; font-weight:400; letter-spacing:0.06em; color:var(--cream3); line-height:1; }
   .cs-section-right { display:flex; flex-direction:column; gap:20px; }
@@ -132,6 +132,8 @@
     nav { padding:16px 20px; }
     nav.scrolled .nav-pill { max-width:calc(100vw - 40px); padding:0 12px 0 16px; height:44px; }
     .nav-links { display:none; }
+    .nav-cta { display:none; }
+    .nav-mobile-menu { display:flex !important; align-items:center; gap:16px; }
 
     .cs-hero { padding:100px 24px 48px; }
     .cs-title { font-size:clamp(40px,10vw,60px); }
