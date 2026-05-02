@@ -8,7 +8,7 @@
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Barlow:wght@300;400;500&family=DM+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Barlow:wght@300;400;500&family=DM+Mono:wght@300;400;500&family=IBM+Plex+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #f5f2eb;
@@ -550,7 +550,7 @@
     transition: border-color 0.3s;
   }
 
-  .ds-feature:hover { border-color: rgba(196,98,45,0.4); }
+  .ds-feature { }
 
   .ds-feature::before {
     content: '';
@@ -716,10 +716,7 @@
     flex-shrink: 0;
   }
 
-  .ds-feature:hover .ds-cta {
-    background: var(--accent);
-    color: var(--bg);
-  }
+
 
   /* Right — screenshot */
   .ds-right {
@@ -742,7 +739,7 @@
     padding: 12px;
   }
 
-  .ds-feature:hover .ds-screenshot { filter: brightness(1); }
+
 
   /* Responsive */
   @media (max-width: 900px) {
@@ -1072,6 +1069,157 @@
   /* Load font for stickers */
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&display=swap');
 
+
+  /* WALLPAPER CARD */
+  .focal-card-wrap {
+    padding: 16px max(48px, calc((100vw - var(--max-w)) / 2)) 0;
+  }
+
+  .focal-card-feature {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    min-height: 200px;
+    overflow: hidden;
+    text-decoration: none;
+    position: relative;
+    cursor: none;
+    border: 1px solid var(--border2);
+    background: var(--bg2);
+    transition: border-color 0.3s;
+  }
+
+
+
+  .focal-card-left {
+    padding: 32px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .focal-card-top { display: flex; flex-direction: column; gap: 10px; }
+
+  .focal-card-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .focal-badge-live {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(129,140,248,0.08);
+    border: 1px solid rgba(129,140,248,0.2);
+    padding: 4px 12px; border-radius: 100px;
+  }
+  .focal-badge-live-dot { width:5px; height:5px; border-radius:50%; background:#818cf8; animation:pulse 2s infinite; }
+  .focal-badge-live span { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:#818cf8; }
+
+  .focal-badge-ai {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(26,24,20,0.04);
+    border: 1px solid var(--border2);
+    padding: 4px 12px; border-radius: 100px;
+  }
+  .focal-badge-ai-dot { width:5px; height:5px; border-radius:50%; background:var(--cream3); }
+  .focal-badge-ai span { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:var(--cream3); }
+
+  .focal-card-title {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: clamp(36px,4vw,52px);
+    font-weight: 700; line-height: 0.92;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--cream);
+  }
+
+  .focal-card-desc {
+    font-size: 13px; font-weight: 300;
+    color: var(--cream3); line-height: 1.65;
+    max-width: 420px;
+  }
+
+  .focal-card-cta {
+    font-family: "DM Mono", monospace; font-size: 10px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: #818cf8; border: 1px solid rgba(129,140,248,0.3);
+    padding: 7px 16px; border-radius: 100px;
+    display: inline-flex; align-items: center; gap: 8px;
+    align-self: flex-start; margin-top: 8px;
+    transition: background 0.2s, color 0.2s;
+  }
+
+
+  .focal-card-right {
+    background: #0a0a0a;
+    border-left: 1px solid rgba(129,140,248,0.1);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 8px;
+  }
+
+  .focal-wordmark {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 22px; font-weight: 500;
+    color: #fff; letter-spacing: 0.08em;
+  }
+
+  .focal-wordmark-sub {
+    font-family: "DM Mono", monospace;
+    font-size: 9px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: #818cf8;
+  }
+
+  .focal-pills {
+    display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; justify-content: center;
+  }
+
+  .focal-pill {
+    font-family: "DM Mono", monospace; font-size: 8px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: #333; border: 1px solid #1a1a1a;
+    padding: 3px 10px; border-radius: 100px;
+  }
+
+  @media (max-width: 900px) {
+    .focal-card-feature { grid-template-columns: 1fr; }
+    .focal-card-right { height: 140px; border-left: none; border-top: 1px solid rgba(129,140,248,0.1); }
+    .focal-card-wrap { padding: 12px max(48px,calc((100vw - var(--max-w)) / 2)) 0; }
+  }
+
+  @media (max-width: 640px) {
+    .focal-card-wrap { padding: 12px 24px 0; }
+    .focal-card-left { padding: 24px; }
+  }
+
+
+  /* DS button variants */
+  .ds-cta { text-decoration: none; }
+  .ds-cta-primary {
+    background: transparent;
+    color: var(--accent) !important;
+    border: 1px solid rgba(168,77,26,0.45) !important;
+  }
+  .ds-cta-primary:hover { background: var(--accent); color: var(--bg) !important; }
+  .ds-cta-secondary {
+    color: var(--cream3) !important;
+    border: none !important;
+    background: transparent !important;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .ds-cta-secondary:hover { color: var(--cream) !important; background: transparent !important; }
+
+  /* Wallpaper button variants */
+  .focal-card-cta { text-decoration: none; }
+  .focal-cta-primary {
+    background: transparent;
+    color: #818cf8 !important;
+    border: 1px solid rgba(129,140,248,0.4) !important;
+  }
+  .focal-cta-primary:hover { background: #818cf8; color: #fff !important; }
+  .focal-cta-secondary {
+    color: var(--cream3) !important;
+    border: none !important;
+    background: transparent !important;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .focal-cta-secondary:hover { color: var(--cream) !important; background: transparent !important; }
+
   /* ANIMATIONS */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(24px); }
@@ -1337,55 +1485,68 @@
 <section class="section" id="work" style="padding-bottom: 24px;">
   <div class="section-header reveal" style="margin-bottom: 32px;">
     <div>
-      <p class="section-label">Side Project</p>
+      <p class="section-label">Side Projects</p>
       <h2 class="section-title">Building in <em>Public</em></h2>
     </div>
   </div>
 </section>
 
 <div class="ds-wrap reveal">
-<a href="designspec.html" class="ds-feature">
-  <div class="ds-left">
-    <div class="ds-left-main">
-      <div class="ds-badges">
-        <div class="ds-badge">
-          <div class="ds-badge-dot"></div>
-          <span>Live · designspec.lovable.app</span>
+  <div class="ds-feature">
+    <div class="ds-left">
+      <div class="ds-left-main">
+        <div class="ds-badges">
+          <div class="ds-badge"><div class="ds-badge-dot"></div><span>Live</span></div>
+          <div class="ds-badge-ai"><div class="ds-badge-ai-dot"></div><span>Built with AI</span></div>
         </div>
-        <div class="ds-badge-ai">
-          <div class="ds-badge-ai-dot"></div>
-          <span>Built with AI</span>
+        <h2 class="ds-title">Design<em>Spec</em></h2>
+        <p class="ds-desc">A searchable encyclopedia of UX principles for UI components — built because designers deserve to understand what they build, not just copy it.</p>
+      </div>
+      <div class="ds-bottom">
+        <div class="ds-stats">
+          <div><span class="ds-stat-num">43</span><span class="ds-stat-label">Components</span></div>
+          <div><span class="ds-stat-num">8.7k</span><span class="ds-stat-label">Impressions</span></div>
+          <div><span class="ds-stat-num">258+</span><span class="ds-stat-label">Sections</span></div>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <a href="designspec.html" class="ds-cta ds-cta-primary">View case study ↗</a>
+          <a href="https://designspec.lovable.app" target="_blank" rel="noopener noreferrer" class="ds-cta ds-cta-secondary">Visit live site ↗</a>
         </div>
       </div>
-      <h2 class="ds-title">Design<em>Spec</em></h2>
-      <p class="ds-desc">A searchable encyclopedia of UX principles for UI components — built because designers deserve to understand what they build, not just copy it.</p>
     </div>
-    <div class="ds-bottom">
-      <div class="ds-stats">
-        <div>
-          <span class="ds-stat-num">43</span>
-          <span class="ds-stat-label">Components</span>
+    <div class="ds-right">
+      <img src="images/designspec-screenshot.webp" alt="DesignSpec — Design patterns, documented." class="ds-screenshot">
+    </div>
+  </div>
+</div>
+
+<div class="focal-card-wrap reveal">
+  <div class="focal-card-feature">
+    <div class="focal-card-left">
+      <div class="focal-card-top">
+        <div class="focal-card-badges">
+          <div class="focal-badge-live"><div class="focal-badge-live-dot"></div><span>Live</span></div>
+          <div class="focal-badge-ai"><div class="focal-badge-ai-dot"></div><span>Built with Claude Code</span></div>
         </div>
-        <div>
-          <span class="ds-stat-num">8.7k</span>
-          <span class="ds-stat-label">Impressions</span>
-        </div>
-        <div>
-          <span class="ds-stat-num">258+</span>
-          <span class="ds-stat-label">Sections</span>
-        </div>
+        <h3 class="focal-card-title">Wallpaper</h3>
+        <p class="focal-card-desc">An AI meeting intelligence tool built for myself — live transcription, Kanban task management, and one-click note enhancement via Claude API. Used every day.</p>
       </div>
-      <span class="ds-cta">View case study ↗</span>
+      <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:24px;">
+        <a href="wallpaper.html" class="focal-card-cta focal-cta-primary">View case study →</a>
+        <a href="https://wallpaper-gilt-one.vercel.app" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="focal-card-cta focal-cta-secondary">Visit live site ↗</a>
+      </div>
+    </div>
+    <div class="focal-card-right">
+      <span class="focal-wordmark">[ WALLPAPER ]</span>
+      <span class="focal-wordmark-sub">AI Meeting Intelligence</span>
+      <div class="focal-pills">
+        <span class="focal-pill">Claude API</span>
+        <span class="focal-pill">Web Speech API</span>
+        <span class="focal-pill">React</span>
+        <span class="focal-pill">Vercel</span>
+      </div>
     </div>
   </div>
-  <div class="ds-right">
-    <img
-      src="images/designspec-screenshot.webp"
-      alt="DesignSpec"
-      class="ds-screenshot"
-    >
-  </div>
-</a>
 </div>
 
 <!-- CASE STUDIES -->

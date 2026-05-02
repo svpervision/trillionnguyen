@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Wallpaper — AI meeting intelligence tool. A case study by Trillion Nguyen.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wallpaper — Case Study — Trillion Nguyen</title>
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Barlow:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#f5f2eb; --max-w:1140px; --bg2:#edeae0; --bg3:#e4e0d4; --cream:#1a1814; --cream2:#3d3a32; --cream3:#585450; --accent:#a84d1a; --accent2:#c4622d; --border:rgba(26,24,20,0.09); --border2:rgba(26,24,20,0.16); }
+  *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--cream); font-family:"Barlow",sans-serif; font-weight:300; overflow-x:hidden; cursor:none; }
+  .cursor { width:24px; height:24px; border:1.5px solid var(--accent); border-radius:50%; position:fixed; top:-12px; left:-12px; pointer-events:none; z-index:9999; will-change:transform; background:transparent; }
+  body::before { content:""; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E"); opacity:0.032; pointer-events:none; z-index:100; }
+
+  nav { position:fixed; top:0; left:0; right:0; z-index:50; display:flex; justify-content:center; align-items:center; padding:20px max(48px,calc((100vw - var(--max-w)) / 2)); pointer-events:none; }
+  .nav-pill { display:flex; align-items:center; justify-content:space-between; width:100%; max-width:100%; padding:8px 0; border-radius:100px; border:1px solid transparent; background:transparent; pointer-events:all; transition:max-width 0.6s cubic-bezier(0.4,0,0.2,1),padding 0.6s cubic-bezier(0.4,0,0.2,1),background 0.5s ease,border-color 0.5s ease; }
+  nav.scrolled .nav-pill { max-width:580px; justify-content:space-between; align-items:center; padding:0 16px 0 20px; height:48px; background:rgba(245,242,235,0.95); border-color:var(--border2); backdrop-filter:blur(20px); }
+  .nav-right { display:flex; align-items:center; gap:20px; height:100%; }
+  .nav-logo { display:flex; align-items:center; height:26px; text-decoration:none; opacity:0.85; transition:opacity 0.2s; flex-shrink:0; }
+  .nav-logo:hover { opacity:1; }
+  .nav-logo img { height:22px; width:auto; }
+  .nav-links { display:flex; gap:24px; list-style:none; align-items:center; height:100%; }
+  .nav-links li { display:flex; align-items:center; height:100%; }
+  .nav-links a { font-family:"DM Mono",monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--cream3); text-decoration:none; transition:color 0.2s; white-space:nowrap; }
+  .nav-links a:hover { color:var(--cream); }
+  .nav-cta { font-family:"DM Mono",monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); border:1px solid rgba(196,98,45,0.4); padding:7px 16px; border-radius:100px; transition:background 0.2s,color 0.2s; text-decoration:none; flex-shrink:0; }
+  .nav-cta:hover { background:var(--accent); color:var(--bg); }
+
+  footer { border-top:1px solid var(--border); padding:48px max(48px,calc((100vw - var(--max-w)) / 2)); display:flex; justify-content:space-between; align-items:center; }
+  .footer-left { font-family:"Barlow Condensed",sans-serif; font-size:18px; font-weight:600; letter-spacing:0.04em; color:var(--cream2); }
+  .footer-links { display:flex; gap:32px; }
+  .footer-links a { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:var(--cream3); text-decoration:none; transition:color 0.2s; }
+  .footer-links a:hover { color:var(--accent); }
+  .footer-copy { font-family:"DM Mono",monospace; font-size:9px; color:var(--cream3); }
+
+  .skip-link { position:fixed; top:-100px; left:24px; z-index:9999; background:var(--accent); color:var(--bg); font-family:"DM Mono",monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; padding:10px 20px; border-radius:100px; text-decoration:none; transition:top 0.2s; }
+  .skip-link:focus { top:24px; }
+  :focus-visible { outline:2px solid var(--accent); outline-offset:4px; border-radius:2px; }
+  .reveal { opacity:0; transform:translateY(24px); transition:opacity 0.7s cubic-bezier(0.23,1,0.32,1),transform 0.7s cubic-bezier(0.23,1,0.32,1); }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  @media (prefers-reduced-motion:reduce) { .cursor { display:none; } body { cursor:auto; } .reveal { opacity:1 !important; transform:none !important; transition:none !important; } }
+  @media (max-width:640px) {
+    nav { padding:16px 20px; }
+    nav.scrolled .nav-pill { max-width:calc(100vw - 40px); padding:0 12px 0 16px; height:44px; }
+    .nav-links { gap:12px; }
+    .nav-links a { font-size:9px; }
+    .nav-cta { padding:5px 10px; font-size:9px; }
+    footer { flex-direction:column; gap:20px; text-align:center; padding:36px 24px; }
+    .footer-links { flex-wrap:wrap; justify-content:center; gap:14px; }
+  }
+
+  .cs-hero { padding:130px max(48px,calc((100vw - var(--max-w)) / 2)) 72px; }
+  .cs-back { font-family:"DM Mono",monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--cream3); text-decoration:none; display:inline-flex; align-items:center; gap:8px; margin-bottom:52px; transition:color 0.2s; }
+  .cs-back:hover { color:var(--accent); }
+  .cs-eyebrow { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; display:block; }
+  .cs-title { font-family:"Barlow Condensed",sans-serif; font-size:clamp(52px,7vw,88px); font-weight:700; line-height:0.9; letter-spacing:0.02em; text-transform:uppercase; color:var(--cream); margin-bottom:24px; }
+  .cs-intro { font-size:16px; font-weight:300; color:var(--cream3); line-height:1.7; max-width:640px; margin-bottom:56px; }
+  .cs-meta { display:grid; grid-template-columns:repeat(4,auto); gap:0; border-top:1px solid var(--border); border-left:1px solid var(--border); }
+  .cs-meta-cell { padding:20px 28px; border-right:1px solid var(--border); border-bottom:1px solid var(--border); }
+  .cs-meta-label { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.16em; text-transform:uppercase; color:var(--cream3); margin-bottom:6px; display:block; }
+  .cs-meta-value { font-size:13px; font-weight:400; color:var(--cream2); line-height:1.5; }
+
+  .cs-cover { width:100%; padding:0 max(48px,calc((100vw - var(--max-w)) / 2)); background:var(--bg); margin-bottom:0; }
+  .cs-cover img { width:100%; max-height:600px; object-fit:cover; object-position:top; display:block; border:1px solid var(--border); }
+
+  .cs-body { padding:0 max(48px,calc((100vw - var(--max-w)) / 2)); }
+  .cs-section { padding:72px 0; border-bottom:1px solid var(--border); }
+  .cs-section:last-child { border-bottom:none; }
+  .cs-section-grid { display:grid; grid-template-columns:200px 1fr; gap:64px; }
+  .cs-section-left { padding-top:4px; }
+  .cs-section-label { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:8px; }
+  .cs-section-num { font-family:"Barlow Condensed",sans-serif; font-size:13px; font-weight:400; letter-spacing:0.06em; color:var(--cream3); line-height:1; }
+  .cs-section-right { display:flex; flex-direction:column; gap:20px; }
+  .cs-section-title { font-family:"Barlow Condensed",sans-serif; font-size:clamp(26px,3vw,38px); font-weight:600; letter-spacing:0.03em; text-transform:uppercase; color:var(--cream); line-height:1.0; margin-bottom:4px; }
+  .cs-text { font-size:15px; font-weight:300; color:var(--cream3); line-height:1.8; max-width:680px; }
+  .cs-text strong { color:var(--cream2); font-weight:400; }
+
+  .cs-pullquote { border-left:2px solid var(--accent); padding:8px 0 8px 28px; margin:4px 0; }
+  .cs-pullquote p { font-family:"Barlow Condensed",sans-serif; font-size:clamp(20px,2.2vw,28px); font-weight:500; letter-spacing:0.03em; text-transform:uppercase; color:var(--cream); line-height:1.2; }
+
+  .cs-img { background:var(--bg2); overflow:hidden; border:1px solid var(--border); margin-top:4px; }
+  .cs-img img { width:100%; display:block; object-fit:cover; object-position:top; }
+  .cs-img-caption { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:var(--cream3); padding:10px 16px; border-top:1px solid var(--border); }
+  .cs-img-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-top:4px; }
+  .cs-img-grid .cs-img { margin-top:0; }
+  .cs-caption-bare { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:var(--cream3); padding:10px 0 0; }
+
+  .cs-stats-row { display:flex; gap:0; border:1px solid var(--border); margin-top:8px; }
+  .cs-stat { flex:1; padding:28px 24px; border-right:1px solid var(--border); }
+  .cs-stat:last-child { border-right:none; }
+  .cs-stat-num { font-family:"Barlow Condensed",sans-serif; font-size:44px; font-weight:600; letter-spacing:0.02em; color:var(--cream); line-height:1; display:block; margin-bottom:6px; }
+  .cs-stat-label { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:var(--cream3); }
+
+  .ai-panel { background:var(--bg2); border:1px solid var(--border2); padding:36px 40px; margin-top:8px; }
+  .ai-panel-title { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:24px; display:block; }
+  .ai-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:2px; }
+  .ai-col { padding:20px 24px; background:var(--bg3); }
+  .ai-col-label { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:var(--cream3); margin-bottom:12px; display:block; }
+  .ai-col-text { font-size:13px; font-weight:300; color:var(--cream3); line-height:1.65; }
+
+  .cs-next { display:flex; align-items:center; justify-content:space-between; padding:56px max(48px,calc((100vw - var(--max-w)) / 2)); border-top:1px solid var(--border); text-decoration:none; transition:background 0.2s; cursor:none; }
+  .cs-next:hover { background:var(--bg2); }
+  .cs-next-label { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--cream3); margin-bottom:8px; display:block; }
+  .cs-next-title { font-family:"Barlow Condensed",sans-serif; font-size:clamp(28px,3.5vw,48px); font-weight:700; letter-spacing:0.02em; text-transform:uppercase; color:var(--cream); }
+  .cs-next-arrow { font-size:28px; color:var(--cream3); transition:color 0.2s,transform 0.2s; }
+  .cs-next:hover .cs-next-arrow { color:var(--accent); transform:translateX(8px); }
+
+  @media (max-width:900px) {
+    .cs-section-grid { grid-template-columns:140px 1fr; gap:40px; }
+    .cs-img-grid { grid-template-columns:1fr; gap:2px; }
+    .ai-row { grid-template-columns:1fr; gap:2px; }
+    .cs-stats-row { flex-wrap:wrap; }
+    .cs-stat { min-width:50%; }
+  }
+  @media (max-width:640px) {
+    .cs-hero { padding:100px 24px 48px; }
+    .cs-meta { grid-template-columns:1fr 1fr; }
+    .cs-meta-cell { padding:14px 16px; }
+    .cs-body { padding:0 24px; }
+    .cs-section { padding:48px 0; }
+    .cs-section-grid { grid-template-columns:1fr; gap:12px; }
+    .cs-section-left { display:flex; flex-direction:row; align-items:baseline; gap:8px; border-bottom:1px solid var(--border); padding-bottom:12px; }
+    .cs-section-title { font-size:clamp(22px,5vw,32px); }
+    .cs-text { font-size:14px; }
+    .ai-panel { padding:24px; }
+    .cs-next { padding:40px 24px; flex-direction:column; align-items:flex-start; gap:20px; }
+  }
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div class="cursor" id="cursor"></div>
+
+<nav id="nav" aria-label="Main navigation">
+  <div class="nav-pill">
+    <a href="index.html" class="nav-logo" aria-label="Trillion Nguyen — home">
+      <img loading="lazy" decoding="async" src="images/logo.webp" alt="" role="presentation">
+    </a>
+    <div class="nav-right">
+      <ul class="nav-links" role="list">
+        <li><a href="index.html#work">Work</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="other-work.html">Other Work</a></li>
+      </ul>
+      <a href="mailto:trillionnguyen@gmail.com" class="nav-cta" aria-label="Send email">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main-content">
+
+<section class="cs-hero reveal">
+  <a href="index.html" class="cs-back">← All Work</a>
+  <span class="cs-eyebrow">Side Project · Product Design · AI-Assisted Development · 2024</span>
+  <h1 class="cs-title">Wallpaper</h1>
+  <p class="cs-intro">An AI meeting intelligence tool I built for myself — because I kept missing tasks and context in every meeting I joined.</p>
+  <div class="cs-meta">
+    <div class="cs-meta-cell"><span class="cs-meta-label">Role</span><span class="cs-meta-value">Solo — Product Design & Development</span></div>
+    <div class="cs-meta-cell"><span class="cs-meta-label">Platform</span><span class="cs-meta-value">Web App</span></div>
+    <div class="cs-meta-cell"><span class="cs-meta-label">Stack</span><span class="cs-meta-value">Claude API · Web Speech API</span></div>
+    <div class="cs-meta-cell"><span class="cs-meta-label">Status</span><span class="cs-meta-value">Live · Daily use</span></div>
+  </div>
+</section>
+
+<div class="cs-cover reveal">
+  <img loading="eager" decoding="async" src="images/wallpaper-cover.webp" alt="Wallpaper app — full view with Kanban board and AI panel">
+</div>
+
+<div class="cs-body">
+
+  <div class="cs-section reveal">
+    <div class="cs-section-grid">
+      <div class="cs-section-left">
+        <span class="cs-section-label">Overview</span>
+        <span class="cs-section-num">01</span>
+      </div>
+      <div class="cs-section-right">
+        <h2 class="cs-section-title">I Built This Because Meetings Move Fast</h2>
+        <p class="cs-text">The problem isn't attention — it's that being present in a meeting and capturing it accurately at the same time are genuinely competing tasks. The moment you shift focus to write something down, you've already missed the next thing said.</p>
+        <p class="cs-text">I noticed this in myself: the meetings where I was most engaged were often the ones where my notes were the worst. Not because I wasn't paying attention — because I was paying <strong>too much</strong> attention to split it toward a notepad.</p>
+        <div class="cs-pullquote">
+          <p>I didn't want another note-taking app. I wanted something that let me stay fully in the room.</p>
+        </div>
+        <p class="cs-text">Wallpaper runs in the background during meetings. It transcribes in real time, then uses the Claude API to surface enhanced notes, action items, and decisions. A Kanban board sits alongside the AI panel so tasks captured in the moment can move immediately into a workflow — without me ever having to look away from the conversation.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cs-section reveal">
+    <div class="cs-section-grid">
+      <div class="cs-section-left">
+        <span class="cs-section-label">Problem</span>
+        <span class="cs-section-num">02</span>
+      </div>
+      <div class="cs-section-right">
+        <h2 class="cs-section-title">Most People in Meetings Are Doing Three Things at Once</h2>
+        <p class="cs-text">Listening, thinking, and trying to write. That split attention means something always slips. You either lose the context because you were writing, or you lose the note because you were listening.</p>
+        <p class="cs-text">Existing tools either required too much setup, captured too much without helping you make sense of it, or produced summaries so generic they weren't actionable. What I needed was something lightweight that ran in the background, stayed out of the way, and only stepped in after the meeting to help me organize what I'd heard.</p>
+        <div class="cs-img-grid">
+          <div class="cs-img">
+            <img loading="lazy" decoding="async" src="images/wallpaper-empty.webp" alt="Wallpaper — empty start state before a meeting begins">
+          </div>
+          <div class="cs-img">
+            <img loading="lazy" decoding="async" src="images/wallpaper-login.webp" alt="Wallpaper — login screen">
+          </div>
+        </div>
+        <p class="cs-caption-bare">Empty state and login — the tool should feel calm before a meeting starts.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cs-section reveal">
+    <div class="cs-section-grid">
+      <div class="cs-section-left">
+        <span class="cs-section-label">Design</span>
+        <span class="cs-section-num">03</span>
+      </div>
+      <div class="cs-section-right">
+        <h2 class="cs-section-title">75/25 — Work First, AI Second</h2>
+        <p class="cs-text">The layout is a deliberate split: 75% Kanban board, 25% AI panel. The Kanban is the primary surface — it's where work lives and moves. The AI panel is a tool you pull from, not something that dominates the experience.</p>
+        <p class="cs-text">During a meeting, the transcript tab runs silently. You can glance at it to verify it's capturing, but you don't need to manage it. After — or at any point mid-meeting — you can trigger note enhancement. Claude takes the raw transcript and returns structured notes: key points, decisions made, action items with owners where it can infer them.</p>
+        <div class="cs-img">
+          <img loading="lazy" decoding="async" src="images/wallpaper-transcript.webp" alt="Wallpaper — live transcript tab active during a meeting">
+          <p class="cs-img-caption">Live transcript — captures in real time without requiring any interaction.</p>
+        </div>
+        <p class="cs-text">The Kanban board sits in the same view so tasks can move the moment they're identified. No context switching, no copying between apps — the capture and the workflow are in the same place.</p>
+        <div class="cs-img">
+          <img loading="lazy" decoding="async" src="images/wallpaper-kanban.webp" alt="Wallpaper — Kanban board with cards in multiple columns">
+          <p class="cs-img-caption">Kanban view — tasks captured during the meeting slot directly into a workflow.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cs-section reveal">
+    <div class="cs-section-grid">
+      <div class="cs-section-left">
+        <span class="cs-section-label">AI Output</span>
+        <span class="cs-section-num">04</span>
+      </div>
+      <div class="cs-section-right">
+        <h2 class="cs-section-title">Three Tabs. One Source of Truth.</h2>
+        <p class="cs-text">The AI panel has three tabs: Transcript, Notes, and Actions. The transcript is the raw feed. Notes is where Claude's enhancement lands — structured, readable, and specific to what was actually discussed. Actions isolates task-specific output so you don't have to hunt through notes to find what you need to do.</p>
+        <div class="cs-pullquote">
+          <p>The goal was output that respects your time — specific enough to be useful, structured enough to scan quickly.</p>
+        </div>
+        <div class="cs-img-grid">
+          <div class="cs-img">
+            <img loading="lazy" decoding="async" src="images/wallpaper-notes.webp" alt="Wallpaper — AI panel showing enhanced notes after processing">
+          </div>
+          <div class="cs-img">
+            <img loading="lazy" decoding="async" src="images/wallpaper-actions.webp" alt="Wallpaper — AI panel showing extracted action items">
+          </div>
+        </div>
+        <p class="cs-caption-bare">Enhanced notes and extracted actions — two views from the same source.</p>
+        <div class="cs-stats-row">
+          <div class="cs-stat">
+            <span class="cs-stat-num">3</span>
+            <span class="cs-stat-label">AI output tabs</span>
+          </div>
+          <div class="cs-stat">
+            <span class="cs-stat-num">0</span>
+            <span class="cs-stat-label">Meeting bots required</span>
+          </div>
+          <div class="cs-stat">
+            <span class="cs-stat-num">Daily</span>
+            <span class="cs-stat-label">Personal usage frequency</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cs-section reveal">
+    <div class="cs-section-grid">
+      <div class="cs-section-left">
+        <span class="cs-section-label">How AI Was Used</span>
+        <span class="cs-section-num">05</span>
+      </div>
+      <div class="cs-section-right">
+        <h2 class="cs-section-title">I Designed It. Claude Powers It.</h2>
+        <p class="cs-text">This project uses the Claude API as its core intelligence layer. Transparency matters here — especially for a tool built around trust and accuracy.</p>
+        <div class="ai-panel">
+          <span class="ai-panel-title">Layer → What Claude Does → My Design Choices</span>
+          <div class="ai-row">
+            <div class="ai-col">
+              <span class="ai-col-label">Transcription</span>
+              <p class="ai-col-text">Web Speech API handles real-time capture. Claude receives the cleaned transcript for processing, not raw audio — keeping latency low and accuracy high.</p>
+            </div>
+            <div class="ai-col">
+              <span class="ai-col-label">Enhancement</span>
+              <p class="ai-col-text">Claude structures notes, surfaces decisions, and extracts actions. I wrote and iterated on the prompts until the output was actually useful, not just plausible.</p>
+            </div>
+            <div class="ai-col">
+              <span class="ai-col-label">Separation</span>
+              <p class="ai-col-text">Raw transcript is always preserved and visible. AI output is clearly labeled as enhanced — users can compare and decide how much to trust it.</p>
+            </div>
+          </div>
+        </div>
+        <p class="cs-text">Building this deepened how I think about AI in product design. The most useful AI isn't the most visible — it's the kind that fits into an existing behavior so naturally that you stop noticing it's there.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cs-section reveal">
+    <div class="cs-section-grid">
+      <div class="cs-section-left">
+        <span class="cs-section-label">Outcome</span>
+        <span class="cs-section-num">06</span>
+      </div>
+      <div class="cs-section-right">
+        <h2 class="cs-section-title">I Use It Every Day. That's the Metric.</h2>
+        <p class="cs-text">Wallpaper is something I use every day. Not that it's impressive to show, but that it's actually useful to have. It's made my meetings less stressful and my follow-through more consistent.</p>
+        <p class="cs-text">Post-meeting recaps dropped from 20+ minutes to under 5. Tasks no longer slip between the meeting and the to-do list. The tool runs without interrupting the meeting — no setup, no bots, no friction. And using it daily taught me more about designing for ambient, background AI than any brief could have.</p>
+        <div class="cs-pullquote">
+          <p>Solving a real problem for yourself, the same way you'd solve it for users — that's the best kind of design practice.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</main>
+
+<a href="designspec.html" class="cs-next" aria-label="Next case study: DesignSpec">
+  <div>
+    <span class="cs-next-label">Next Project</span>
+    <span class="cs-next-title">DesignSpec</span>
+  </div>
+  <span class="cs-next-arrow" aria-hidden="true">→</span>
+</a>
+
+<footer>
+  <span class="footer-left">Trillion Nguyen</span>
+  <div class="footer-links">
+    <a href="index.html#work">Work</a>
+    <a href="about.html">About</a>
+    <a href="https://www.linkedin.com/in/trillionnguyen/" target="_blank" rel="noopener">LinkedIn</a>
+  </div>
+  <span class="footer-copy">© 2025</span>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  if (cursor) {
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = (e.clientX - 12) + 'px';
+      cursor.style.top = (e.clientY - 12) + 'px';
+    });
+  }
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
