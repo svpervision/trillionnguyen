@@ -56,7 +56,9 @@
   .cs-hero { padding:130px max(48px,calc((100vw - var(--max-w)) / 2)) 72px; }
   .cs-back { font-family:"DM Mono",monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--cream3); text-decoration:none; display:inline-flex; align-items:center; gap:8px; margin-bottom:52px; transition:color 0.2s; }
   .cs-back:hover { color:var(--accent); }
-  .cs-live-btn { display:inline-flex; align-items:center; gap:8px; margin-top:32px; font-family:"DM Mono",monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); border:1px solid rgba(196,98,45,0.5); padding:10px 22px; border-radius:100px; text-decoration:none; transition:background 0.2s,color 0.2s; }
+  .cs-intro-row { display:flex; align-items:center; justify-content:space-between; gap:32px; margin-bottom:56px; }
+  .cs-intro-row .cs-intro { margin-bottom:0; }
+  .cs-live-btn { display:inline-flex; align-items:center; gap:8px; white-space:nowrap; flex-shrink:0; font-family:"DM Mono",monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); border:1px solid rgba(196,98,45,0.5); padding:10px 22px; border-radius:100px; text-decoration:none; transition:background 0.2s,color 0.2s; }
   .cs-live-btn:hover { background:var(--accent); color:var(--bg); }
   .cs-eyebrow { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; display:block; }
   .cs-title { font-family:"Barlow Condensed",sans-serif; font-size:clamp(52px,7vw,88px); font-weight:700; line-height:0.9; letter-spacing:0.02em; text-transform:uppercase; color:var(--cream); margin-bottom:24px; }
@@ -159,14 +161,16 @@
   <a href="index.html" class="cs-back">← All Work</a>
   <span class="cs-eyebrow">Side Project · Product Design · AI-Assisted Development · 2024</span>
   <h1 class="cs-title">Wallpaper</h1>
-  <p class="cs-intro">An AI meeting intelligence tool I built for myself — because I kept missing tasks and context in every meeting I joined.</p>
+  <div class="cs-intro-row">
+    <p class="cs-intro">An AI meeting intelligence tool I built for myself — because I kept missing tasks and context in every meeting I joined.</p>
+    <a href="https://www.usewallpaper.app/" target="_blank" rel="noopener noreferrer" class="cs-live-btn">Visit Live Site ↗</a>
+  </div>
   <div class="cs-meta">
     <div class="cs-meta-cell"><span class="cs-meta-label">Role</span><span class="cs-meta-value">Solo — Product Design & Development</span></div>
     <div class="cs-meta-cell"><span class="cs-meta-label">Platform</span><span class="cs-meta-value">Web App</span></div>
     <div class="cs-meta-cell"><span class="cs-meta-label">Stack</span><span class="cs-meta-value">Claude API · Web Speech API</span></div>
     <div class="cs-meta-cell"><span class="cs-meta-label">Status</span><span class="cs-meta-value">Live · Daily use</span></div>
   </div>
-  <a href="https://www.usewallpaper.app/" target="_blank" rel="noopener noreferrer" class="cs-live-btn">Visit Live Site ↗</a>
 </section>
 
 <div class="cs-cover reveal">
