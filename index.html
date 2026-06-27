@@ -34,20 +34,6 @@
     font-family: 'Barlow', sans-serif;
     font-weight: 300;
     overflow-x: hidden;
-    cursor: none;
-  }
-
-  /* Custom cursor — dot only, no lag */
-  .cursor {
-    width: 24px; height: 24px;
-    border: 1.5px solid var(--accent);
-    border-radius: 50%;
-    background: transparent;
-    position: fixed;
-    top: -12px; left: -12px;
-    pointer-events: none;
-    z-index: 9999;
-    will-change: transform;
   }
 
   /* Grain overlay */
@@ -417,7 +403,6 @@
     grid-template-columns: 320px 1fr;
     min-height: 240px;
     text-decoration: none;
-    cursor: none;
     overflow: hidden;
     background: var(--bg2);
     transition: background 0.3s;
@@ -544,7 +529,6 @@
     overflow: hidden;
     text-decoration: none;
     position: relative;
-    cursor: none;
     border: 1px solid rgba(168,77,26,0.2);
     background: linear-gradient(135deg, #ede8dc 0%, #e8e3d6 100%);
     transition: border-color 0.3s;
@@ -1082,7 +1066,6 @@
     overflow: hidden;
     text-decoration: none;
     position: relative;
-    cursor: none;
     border: 1px solid var(--border2);
     background: var(--bg2);
     transition: border-color 0.3s;
@@ -1264,11 +1247,7 @@
     outline-offset: 3px;
     border-radius: 100px;
   }
-
-  /* Restore cursor for keyboard/accessibility users */
   @media (prefers-reduced-motion: reduce) {
-    .cursor { display: none; }
-    body { cursor: auto; }
     .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
   }
 
@@ -1359,8 +1338,6 @@
 </style>
 </head>
 <body>
-
-<div class="cursor" id="cursor"></div>
 
 <!-- NAV -->
 <nav id="nav" aria-label="Main navigation">
@@ -1725,15 +1702,6 @@
 </footer>
 
 <script>
-  // Custom cursor — zero lag, direct positioning
-  const cursor = document.getElementById('cursor');
-
-  document.addEventListener('mousemove', e => {
-    cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-  });
-
-  document.addEventListener('mouseleave', () => cursor.style.opacity = '0');
-  document.addEventListener('mouseenter', () => cursor.style.opacity = '1');
 
   // Nav — pill centers on scroll
   const nav = document.getElementById('nav');
