@@ -9,293 +9,112 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Barlow:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f5f2eb; --bg2: #edeae0; --bg3: #e4e0d4;
-    --cream: #1a1814; --cream2: #3d3a32; --cream3: #585450;
-    --accent: #a84d1a; --accent2: #c4622d;
-    --border: rgba(26,24,20,0.09); --border2: rgba(26,24,20,0.16);
+    --bg:#f5f2eb; --bg2:#edeae0; --bg3:#e4e0d4;
+    --cream:#1a1814; --cream2:#3d3a32; --cream3:#585450;
+    --accent:#a84d1a; --accent2:#c4622d;
+    --border:rgba(26,24,20,0.09); --border2:rgba(26,24,20,0.16);
   }
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body { height: 100%; overflow: hidden; }
-  body { background: var(--bg); color: var(--cream); font-family: "Barlow", sans-serif; font-weight: 300; }
-  body::before {
-    content: ""; position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E");
-    opacity: 0.032; pointer-events: none; z-index: 200;
-  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  html,body{height:100%;overflow:hidden;}
+  body{background:var(--bg);color:var(--cream);font-family:"Barlow",sans-serif;font-weight:300;}
+  body::before{content:"";position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E");opacity:0.032;pointer-events:none;z-index:200;}
 
-  /* PROGRESS */
-  .progress-bar {
-    position: fixed; top: 0; left: 0; height: 2px;
-    background: var(--accent); z-index: 300;
-    transition: width 0.5s cubic-bezier(0.23,1,0.32,1);
-  }
+  .progress-bar{position:fixed;top:0;left:0;height:2px;background:var(--accent);z-index:300;transition:width 0.5s cubic-bezier(0.23,1,0.32,1);}
 
-  /* HEADER */
-  .deck-header {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 24px 48px; pointer-events: none;
-  }
-  .deck-logo {
-    font-family: "Barlow Condensed", sans-serif;
-    font-size: 13px; font-weight: 600; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--cream2);
-    text-decoration: none; pointer-events: all;
-  }
-  .deck-back {
-    font-family: "DM Mono", monospace; font-size: 9px;
-    letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--cream3); text-decoration: none;
-    pointer-events: all; transition: color 0.2s;
-  }
-  .deck-back:hover { color: var(--accent); }
+  .deck-header{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:24px 48px;pointer-events:none;}
+  .deck-logo{font-family:"Barlow Condensed",sans-serif;font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--cream2);text-decoration:none;pointer-events:all;}
+  .deck-back{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--cream3);text-decoration:none;pointer-events:all;transition:color 0.2s;}
+  .deck-back:hover{color:var(--accent);}
 
-  /* SLIDES */
-  .slideshow { position: fixed; inset: 0; }
-  .slide {
-    position: absolute; inset: 0;
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.5s cubic-bezier(0.23,1,0.32,1),
-                transform 0.5s cubic-bezier(0.23,1,0.32,1);
-    transform: translateY(10px);
-  }
-  .slide.active { opacity: 1; pointer-events: all; transform: translateY(0); }
-  .slide.exit   { opacity: 0; transform: translateY(-10px); }
+  .slideshow{position:fixed;inset:0;}
+  .slide{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity 0.5s cubic-bezier(0.23,1,0.32,1),transform 0.5s cubic-bezier(0.23,1,0.32,1);transform:translateY(10px);}
+  .slide.active{opacity:1;pointer-events:all;transform:translateY(0);}
+  .slide.exit{opacity:0;transform:translateY(-10px);}
 
-  /* ── LAYOUT: COVER ─────────────────────────────── */
-  .slide--cover {
-    display: flex; flex-direction: column;
-    align-items: flex-start; justify-content: flex-end;
-    padding: 0 80px 120px; background: var(--bg);
-  }
-  .cover-line { position: absolute; top: 0; width: 1px; height: 100%; background: var(--border); pointer-events: none; }
-  .cover-eyebrow {
-    font-family: "DM Mono", monospace; font-size: 9px;
-    letter-spacing: 0.22em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 24px;
-  }
-  .cover-name {
-    font-family: "Barlow Condensed", sans-serif;
-    font-size: clamp(80px, 10vw, 140px);
-    font-weight: 700; line-height: 0.87; letter-spacing: 0.01em;
-    text-transform: uppercase; color: var(--cream); margin-bottom: 40px;
-  }
-  .cover-name em { font-style: normal; color: var(--cream3); font-weight: 300; }
-  .cover-meta {
-    display: flex; align-items: center; gap: 40px;
-    border-top: 1px solid var(--border2); padding-top: 32px; width: 100%;
-  }
-  .cover-role { font-size: 15px; font-weight: 300; color: var(--cream3); line-height: 1.6; max-width: 480px; }
-  .cover-btn {
-    margin-left: auto; flex-shrink: 0;
-    font-family: "DM Mono", monospace; font-size: 10px;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--accent); border: 1px solid rgba(196,98,45,0.4);
-    padding: 10px 22px; border-radius: 100px;
-    background: transparent; cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-  }
-  .cover-btn:hover { background: var(--accent); color: var(--bg); }
+  /* COVER */
+  .slide--cover{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:0 80px 120px;background:var(--bg);}
+  .cover-line{position:absolute;top:0;width:1px;height:100%;background:var(--border);pointer-events:none;}
+  .cover-eyebrow{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);margin-bottom:24px;}
+  .cover-name{font-family:"Barlow Condensed",sans-serif;font-size:clamp(80px,10vw,140px);font-weight:700;line-height:0.87;letter-spacing:0.01em;text-transform:uppercase;color:var(--cream);margin-bottom:40px;}
+  .cover-name em{font-style:normal;color:var(--cream3);font-weight:300;}
+  .cover-meta{display:flex;align-items:center;gap:40px;border-top:1px solid var(--border2);padding-top:32px;width:100%;}
+  .cover-role{font-size:15px;font-weight:300;color:var(--cream3);line-height:1.6;max-width:480px;}
+  .cover-btn{margin-left:auto;flex-shrink:0;font-family:"DM Mono",monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(196,98,45,0.4);padding:10px 22px;border-radius:100px;background:transparent;cursor:pointer;transition:background 0.2s,color 0.2s;}
+  .cover-btn:hover{background:var(--accent);color:var(--bg);}
 
-  /* ── LAYOUT: TEXT EDITORIAL ────────────────────── */
-  .slide--text {
-    display: grid; grid-template-columns: 280px 1fr; background: var(--bg);
-  }
-  .te-left {
-    display: flex; flex-direction: column; justify-content: flex-end;
-    padding: 80px 40px; border-right: 1px solid var(--border2);
-    background: var(--bg2); position: relative; overflow: hidden;
-  }
-  .te-ghost {
-    position: absolute; bottom: -32px; left: -12px;
-    font-family: "Barlow Condensed", sans-serif;
-    font-size: 200px; font-weight: 700; line-height: 1;
-    color: rgba(26,24,20,0.055); pointer-events: none; user-select: none;
-  }
-  .te-chapter {
-    font-family: "DM Mono", monospace; font-size: 8px;
-    letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 8px; display: block;
-  }
-  .te-label {
-    font-family: "DM Mono", monospace; font-size: 9px;
-    letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--cream3); line-height: 1.6;
-  }
-  .te-right {
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 100px 64px 80px; overflow-y: auto;
-  }
-  .te-title {
-    font-family: "Barlow Condensed", sans-serif;
-    font-size: clamp(34px, 3.8vw, 52px);
-    font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase;
-    color: var(--cream); line-height: 1.0; margin-bottom: 28px;
-  }
-  .te-body {
-    font-size: 15px; font-weight: 300; color: var(--cream3);
-    line-height: 1.85; max-width: 640px; margin-bottom: 20px;
-  }
-  .te-body strong { color: var(--cream2); font-weight: 400; }
-  .te-quote {
-    border-left: 2px solid var(--accent);
-    padding: 6px 0 6px 24px; margin: 24px 0;
-  }
-  .te-quote p {
-    font-family: "Barlow Condensed", sans-serif;
-    font-size: clamp(18px, 2vw, 26px); font-weight: 500;
-    letter-spacing: 0.02em; text-transform: uppercase;
-    color: var(--cream); line-height: 1.3;
-  }
-  .te-list { list-style: none; margin: 8px 0 24px; max-width: 640px; }
-  .te-list li {
-    display: flex; align-items: baseline; gap: 16px;
-    padding: 14px 0; border-bottom: 1px solid var(--border);
-    font-size: 14px; color: var(--cream3); line-height: 1.6;
-  }
-  .te-list li:first-child { border-top: 1px solid var(--border); }
-  .te-list .li-n {
-    font-family: "DM Mono", monospace; font-size: 8px;
-    letter-spacing: 0.12em; color: var(--accent);
-    white-space: nowrap; flex-shrink: 0;
-  }
-  .te-list strong { color: var(--cream2); font-weight: 400; }
-  .te-principles { display: flex; flex-direction: column; gap: 32px; margin-top: 8px; max-width: 640px; }
-  .te-principle-num {
-    font-family: "DM Mono", monospace; font-size: 8px;
-    letter-spacing: 0.16em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 6px; display: block;
-  }
-  .te-principle-title {
-    font-family: "Barlow Condensed", sans-serif;
-    font-size: 20px; font-weight: 600; letter-spacing: 0.04em;
-    text-transform: uppercase; color: var(--cream); margin-bottom: 6px;
-  }
-  .te-principle-body {
-    font-size: 14px; color: var(--cream3); line-height: 1.7;
-  }
+  /* TEXT EDITORIAL */
+  .slide--text{display:grid;grid-template-columns:280px 1fr;background:var(--bg);}
+  .te-left{display:flex;flex-direction:column;justify-content:flex-end;padding:80px 40px;border-right:1px solid var(--border2);background:var(--bg2);position:relative;overflow:hidden;}
+  .te-ghost{position:absolute;bottom:-32px;left:-12px;font-family:"Barlow Condensed",sans-serif;font-size:200px;font-weight:700;line-height:1;color:rgba(26,24,20,0.055);pointer-events:none;user-select:none;}
+  .te-chapter{font-family:"DM Mono",monospace;font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;display:block;}
+  .te-label{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--cream3);line-height:1.6;}
+  .te-right{display:flex;flex-direction:column;justify-content:center;padding:100px 64px 80px;overflow-y:auto;}
+  .te-title{font-family:"Barlow Condensed",sans-serif;font-size:clamp(34px,3.8vw,52px);font-weight:600;letter-spacing:0.03em;text-transform:uppercase;color:var(--cream);line-height:1.0;margin-bottom:28px;}
+  .te-body{font-size:15px;font-weight:300;color:var(--cream3);line-height:1.85;max-width:640px;margin-bottom:20px;}
+  .te-body strong{color:var(--cream2);font-weight:400;}
+  .te-quote{border-left:2px solid var(--accent);padding:6px 0 6px 24px;margin:24px 0;}
+  .te-quote p{font-family:"Barlow Condensed",sans-serif;font-size:clamp(18px,2vw,26px);font-weight:500;letter-spacing:0.02em;text-transform:uppercase;color:var(--cream);line-height:1.3;}
+  .te-list{list-style:none;margin:8px 0 24px;max-width:640px;}
+  .te-list li{display:flex;align-items:baseline;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);font-size:14px;color:var(--cream3);line-height:1.6;}
+  .te-list li:first-child{border-top:1px solid var(--border);}
+  .te-list .li-n{font-family:"DM Mono",monospace;font-size:8px;letter-spacing:0.12em;color:var(--accent);white-space:nowrap;flex-shrink:0;}
+  .te-list strong{color:var(--cream2);font-weight:400;}
+  .te-principles{display:flex;flex-direction:column;gap:32px;margin-top:8px;max-width:640px;}
+  .te-p-num{font-family:"DM Mono",monospace;font-size:8px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;display:block;}
+  .te-p-title{font-family:"Barlow Condensed",sans-serif;font-size:20px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:var(--cream);margin-bottom:6px;}
+  .te-p-body{font-size:14px;color:var(--cream3);line-height:1.7;}
 
-  /* ── LAYOUT: SPLIT (image + content) ───────────── */
-  .slide--split {
-    display: grid; grid-template-columns: 45fr 55fr; background: var(--bg);
-  }
-  .slide--split.flip { grid-template-columns: 55fr 45fr; }
-  .slide--split.flip .sp-content { order: 2; }
-  .slide--split.flip .sp-image   { order: 1; }
-  .sp-content {
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 100px 56px 80px; position: relative; overflow: hidden;
-  }
-  .sp-ghost {
-    position: absolute; bottom: -32px; right: -16px;
-    font-family: "Barlow Condensed", sans-serif;
-    font-size: 200px; font-weight: 700; line-height: 1;
-    color: rgba(26,24,20,0.04); pointer-events: none; user-select: none;
-  }
-  .sp-chapter {
-    font-family: "DM Mono", monospace; font-size: 8px;
-    letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 12px; display: block;
-  }
-  .sp-eyebrow {
-    font-family: "DM Mono", monospace; font-size: 9px;
-    letter-spacing: 0.16em; text-transform: uppercase;
-    color: var(--cream3); margin-bottom: 16px; display: block;
-  }
-  .sp-title {
-    font-family: "Barlow Condensed", sans-serif;
-    font-size: clamp(44px, 5vw, 72px);
-    font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase;
-    color: var(--cream); line-height: 0.92; margin-bottom: 24px;
-  }
-  .sp-body {
-    font-size: 14px; font-weight: 300; color: var(--cream3);
-    line-height: 1.8; max-width: 400px; margin-bottom: 28px;
-  }
-  .sp-body strong { color: var(--cream2); font-weight: 400; }
-  .sp-meta { display: flex; gap: 0; border-top: 1px solid var(--border); margin-bottom: 32px; }
-  .sp-meta-cell { padding: 14px 20px 0 0; margin-right: 20px; border-right: 1px solid var(--border); }
-  .sp-meta-cell:last-child { border-right: none; }
-  .sp-meta-label {
-    font-family: "DM Mono", monospace; font-size: 8px;
-    letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--cream3); display: block; margin-bottom: 4px;
-  }
-  .sp-meta-value { font-size: 13px; font-weight: 400; color: var(--cream2); }
-  .sp-cta {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-family: "DM Mono", monospace; font-size: 9px;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--accent); border: 1px solid rgba(196,98,45,0.4);
-    padding: 9px 18px; border-radius: 100px; text-decoration: none;
-    width: fit-content; transition: background 0.2s, color 0.2s;
-  }
-  .sp-cta:hover { background: var(--accent); color: var(--bg); }
-  .sp-image { position: relative; overflow: hidden; background: var(--bg3); }
-  .sp-image img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
-  .slide--split:not(.flip) .sp-image::after {
-    content: ""; position: absolute; inset: 0;
-    background: linear-gradient(to left, transparent 70%, var(--bg) 100%);
-    opacity: 0.3; pointer-events: none;
-  }
-  .slide--split.flip .sp-image::after {
-    content: ""; position: absolute; inset: 0;
-    background: linear-gradient(to right, transparent 70%, var(--bg) 100%);
-    opacity: 0.3; pointer-events: none;
-  }
+  /* SPLIT */
+  .slide--split{display:grid;grid-template-columns:45fr 55fr;background:var(--bg);}
+  .slide--split.flip{grid-template-columns:55fr 45fr;}
+  .slide--split.flip .sp-content{order:2;}
+  .slide--split.flip .sp-image{order:1;}
+  .sp-content{display:flex;flex-direction:column;justify-content:center;padding:100px 56px 80px;position:relative;overflow:hidden;}
+  .sp-ghost{position:absolute;bottom:-32px;right:-16px;font-family:"Barlow Condensed",sans-serif;font-size:200px;font-weight:700;line-height:1;color:rgba(26,24,20,0.04);pointer-events:none;user-select:none;}
+  .sp-chapter{font-family:"DM Mono",monospace;font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;display:block;}
+  .sp-eyebrow{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--cream3);margin-bottom:16px;display:block;}
+  .sp-title{font-family:"Barlow Condensed",sans-serif;font-size:clamp(44px,5vw,72px);font-weight:700;letter-spacing:0.02em;text-transform:uppercase;color:var(--cream);line-height:0.92;margin-bottom:24px;}
+  .sp-body{font-size:14px;font-weight:300;color:var(--cream3);line-height:1.8;max-width:400px;margin-bottom:20px;}
+  .sp-body strong{color:var(--cream2);font-weight:400;}
+  .sp-meta{display:flex;gap:0;border-top:1px solid var(--border);margin-bottom:28px;}
+  .sp-meta-cell{padding:14px 20px 0 0;margin-right:20px;border-right:1px solid var(--border);}
+  .sp-meta-cell:last-child{border-right:none;}
+  .sp-meta-label{font-family:"DM Mono",monospace;font-size:8px;letter-spacing:0.14em;text-transform:uppercase;color:var(--cream3);display:block;margin-bottom:4px;}
+  .sp-meta-value{font-size:13px;font-weight:400;color:var(--cream2);}
+  .sp-cta{display:inline-flex;align-items:center;gap:8px;font-family:"DM Mono",monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(196,98,45,0.4);padding:9px 18px;border-radius:100px;text-decoration:none;width:fit-content;transition:background 0.2s,color 0.2s;}
+  .sp-cta:hover{background:var(--accent);color:var(--bg);}
+  .sp-image{position:relative;overflow:hidden;background:var(--bg3);}
+  .sp-image img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
+  .slide--split:not(.flip) .sp-image::after{content:"";position:absolute;inset:0;background:linear-gradient(to left,transparent 70%,var(--bg) 100%);opacity:0.3;pointer-events:none;}
+  .slide--split.flip .sp-image::after{content:"";position:absolute;inset:0;background:linear-gradient(to right,transparent 70%,var(--bg) 100%);opacity:0.3;pointer-events:none;}
 
   /* NAV */
-  .deck-nav {
-    position: fixed; bottom: 36px; left: 0; right: 0;
-    display: flex; align-items: center; justify-content: center;
-    gap: 20px; z-index: 100;
-  }
-  .nav-btn {
-    font-family: "DM Mono", monospace; font-size: 9px;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--cream3); background: transparent;
-    border: 1px solid var(--border2); padding: 8px 16px;
-    border-radius: 100px; cursor: pointer;
-    transition: color 0.2s, border-color 0.2s, background 0.2s;
-  }
-  .nav-btn:hover { color: var(--cream); border-color: var(--cream3); }
-  .nav-btn:disabled { opacity: 0.25; pointer-events: none; }
-  .nav-counter {
-    font-family: "DM Mono", monospace; font-size: 9px;
-    letter-spacing: 0.14em; color: var(--cream3);
-    text-align: center; min-width: 200px;
-  }
-  .nav-counter span { color: var(--accent); }
+  .deck-nav{position:fixed;bottom:36px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:20px;z-index:100;}
+  .nav-btn{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--cream3);background:transparent;border:1px solid var(--border2);padding:8px 16px;border-radius:100px;cursor:pointer;transition:color 0.2s,border-color 0.2s;}
+  .nav-btn:hover{color:var(--cream);border-color:var(--cream3);}
+  .nav-btn:disabled{opacity:0.25;pointer-events:none;}
+  .nav-counter{font-family:"DM Mono",monospace;font-size:9px;letter-spacing:0.14em;color:var(--cream3);text-align:center;min-width:220px;}
+  .nav-counter span{color:var(--accent);}
+  .chapter-segments{position:fixed;bottom:68px;left:50%;transform:translateX(-50%);display:flex;gap:4px;z-index:100;}
+  .ch-seg{height:2px;background:var(--border2);border-radius:1px;transition:background 0.3s;cursor:pointer;}
+  .ch-seg.active{background:var(--accent);}
+  .mono{font-family:"DM Mono",monospace;font-size:11px;color:var(--accent);}
 
-  /* CHAPTER SEGMENTS */
-  .chapter-segments {
-    position: fixed; bottom: 68px; left: 50%;
-    transform: translateX(-50%);
-    display: flex; gap: 4px; z-index: 100;
-  }
-  .ch-seg {
-    height: 2px; background: var(--border2); border-radius: 1px;
-    transition: background 0.3s, width 0.3s;
-    cursor: pointer;
-  }
-  .ch-seg.active { background: var(--accent); }
-
-  @media (max-width: 900px) {
-    .slide--text { grid-template-columns: 1fr; }
-    .te-left { display: none; }
-    .te-right { padding: 90px 32px 80px; }
-    .slide--split, .slide--split.flip { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
-    .slide--split.flip .sp-content, .slide--split.flip .sp-image { order: unset; }
-    .sp-content { padding: 60px 32px 40px; }
-    .slide--cover { padding: 0 32px 100px; }
-    .deck-header { padding: 20px 24px; }
+  @media(max-width:900px){
+    .slide--text{grid-template-columns:1fr;}
+    .te-left{display:none;}
+    .te-right{padding:90px 32px 80px;}
+    .slide--split,.slide--split.flip{grid-template-columns:1fr;grid-template-rows:1fr 1fr;}
+    .slide--split.flip .sp-content,.slide--split.flip .sp-image{order:unset;}
+    .sp-content{padding:60px 32px 40px;}
+    .slide--cover{padding:0 32px 100px;}
+    .deck-header{padding:20px 24px;}
   }
 </style>
 </head>
 <body>
 
 <div class="progress-bar" id="progress"></div>
-
 <header class="deck-header">
   <a href="index.html" class="deck-logo">Trillion Nguyen</a>
   <a href="index.html" class="deck-back">← Portfolio</a>
@@ -303,14 +122,14 @@
 
 <div class="slideshow" id="slideshow">
 
-  <!-- ═══════════════════════════════════════════════
-       OPENING
-  ═══════════════════════════════════════════════ -->
+  <!-- ══════════════════════════════════════
+       OPENING  ·  0–2
+  ══════════════════════════════════════ -->
 
   <!-- 0: Cover -->
   <div class="slide slide--cover active" data-index="0">
     <div class="cover-line" style="right:260px;"></div>
-    <div class="cover-line" style="right:520px; opacity:0.5;"></div>
+    <div class="cover-line" style="right:520px;opacity:0.5;"></div>
     <span class="cover-eyebrow">Product Designer · Ontario, CA</span>
     <h1 class="cover-name">Trillion<br><em>Nguyen.</em></h1>
     <div class="cover-meta">
@@ -346,27 +165,27 @@
       <h2 class="te-title">How I Think<br>About Design.</h2>
       <div class="te-principles">
         <div>
-          <span class="te-principle-num">01 — Principle</span>
-          <div class="te-principle-title">Design is communication.</div>
-          <div class="te-principle-body">Not decoration. Not problem-solving alone. It's the clearest way to say what needs to be said — across cultures, contexts, and constraints.</div>
+          <span class="te-p-num">01 — Principle</span>
+          <div class="te-p-title">Design is communication.</div>
+          <div class="te-p-body">Not decoration. Not problem-solving alone. It's the clearest way to say what needs to be said — across cultures, contexts, and constraints.</div>
         </div>
         <div>
-          <span class="te-principle-num">02 — Principle</span>
-          <div class="te-principle-title">Empathy before assumptions.</div>
-          <div class="te-principle-body">The best brief isn't the stakeholder's brief. It's the user's unspoken frustration — found only by getting close enough to observe it directly.</div>
+          <span class="te-p-num">02 — Principle</span>
+          <div class="te-p-title">Empathy before assumptions.</div>
+          <div class="te-p-body">The best brief isn't the stakeholder's brief. It's the user's unspoken frustration — found only by getting close enough to observe it directly.</div>
         </div>
         <div>
-          <span class="te-principle-num">03 — Principle</span>
-          <div class="te-principle-title">Systems, not solutions.</div>
-          <div class="te-principle-body">A good solution solves today's problem. A good system prevents tomorrow's ten. I design for scale from the first decision.</div>
+          <span class="te-p-num">03 — Principle</span>
+          <div class="te-p-title">Systems, not solutions.</div>
+          <div class="te-p-body">A good solution solves today's problem. A good system prevents tomorrow's ten. I design for scale from the first decision.</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════════════
-       SIDEBAR REDESIGN  ·  Slides 3–12
-  ═══════════════════════════════════════════════ -->
+  <!-- ══════════════════════════════════════
+       SIDEBAR REDESIGN  ·  3–16
+  ══════════════════════════════════════ -->
 
   <!-- 3: Product Overview -->
   <div class="slide slide--split" data-index="3">
@@ -384,527 +203,513 @@
       <a href="sidebar-redesign.html" class="sp-cta" target="_blank">Full Case Study →</a>
     </div>
     <div class="sp-image">
-      <img loading="lazy" src="images/sidebar-cover.webp" alt="Sidebar Redesign — Aspect">
+      <img loading="lazy" src="images/sidebar-cover.webp" alt="Sidebar Redesign">
     </div>
   </div>
 
-  <!-- 4: The Challenge -->
+  <!-- 4: Business Problem -->
   <div class="slide slide--text" data-index="4">
     <div class="te-left">
       <div class="te-ghost">05</div>
       <span class="te-chapter">Sidebar Redesign</span>
-      <span class="te-label">The Challenge</span>
+      <span class="te-label">Business Problem</span>
     </div>
     <div class="te-right">
-      <h2 class="te-title">The Challenge.</h2>
-      <p class="te-body">The app's original navigation lived in a floating action bar fixed to the top of the screen. While it kept navigation accessible, it created persistent tension with the content below — overlapping key UI elements, interrupting scroll behavior, and making the layout feel cluttered as the product matured.</p>
-      <p class="te-body">The floating pattern that once felt lightweight had become a liability. The goal was to rethink navigation from the ground up — moving away from the floating bar and toward a collapsible sidebar that integrates cleanly into the layout and gives users control over how much space navigation takes up at any moment.</p>
-      <div class="te-quote"><p>"The shift from a floating bar to a sidebar wasn't just a layout change — it was a fundamental rethink of how navigation should coexist with content."</p></div>
+      <h2 class="te-title">Business Problem.</h2>
+      <p class="te-body">As Aspect's product matured, the floating action bar designed for an MVP-era product — minimal pages, simple flows — became a structural liability. New features meant more nav items, and the floating approach couldn't scale without cluttering the content layer it was meant to coexist with.</p>
+      <p class="te-body">Every team adding a feature was competing for real estate in a fixed floating element. The product was growing. The navigation paradigm wasn't. <strong>This wasn't a polish problem — it was a ceiling</strong>, and the business needed a navigation architecture that could grow with the product rather than fight it.</p>
+      <div class="te-quote"><p>"The floating bar that once felt lightweight had become the product's biggest structural liability."</p></div>
     </div>
   </div>
 
-  <!-- 5: Research -->
-  <div class="slide slide--split flip" data-index="5">
+  <!-- 5: Understanding Users -->
+  <div class="slide slide--text" data-index="5">
+    <div class="te-left">
+      <div class="te-ghost">06</div>
+      <span class="te-chapter">Sidebar Redesign</span>
+      <span class="te-label">Understanding Users</span>
+    </div>
+    <div class="te-right">
+      <h2 class="te-title">Understanding Users.</h2>
+      <p class="te-body">Aspect's primary users were operations and scheduling teams at contact center companies. Their workflow was data-dense and daily — managing shift schedules, agent performance, and trade requests. The nav wasn't something they visited occasionally; it was the scaffolding for their entire workday.</p>
+      <p class="te-body"><strong>Power users had built workarounds:</strong> multiple tabs open in parallel, keyboard shortcuts memorized, browser bookmarks bypassing the main nav entirely. Workarounds are always the signal. Users had adapted to a system that wasn't working, because they didn't believe a better option existed.</p>
+      <div class="te-quote"><p>"Users tolerate things that frustrate them when they don't believe a better option is possible."</p></div>
+    </div>
+  </div>
+
+  <!-- 6: Existing Navigation -->
+  <div class="slide slide--split" data-index="6">
     <div class="sp-content">
-      <span class="sp-ghost">06</span>
+      <span class="sp-ghost">07</span>
       <span class="sp-chapter">Sidebar Redesign</span>
-      <span class="sp-eyebrow">Discovery</span>
-      <h2 class="sp-title">Research.</h2>
-      <p class="sp-body">Discovery started with <strong>session recordings and user interviews</strong> to understand why the floating bar had stopped working. A clear pattern emerged — users were frequently scrolling past it, accidentally triggering it, or losing track of it in content-heavy views.</p>
-      <p class="sp-body">We conducted a <strong>competitive analysis</strong> across Notion, Linear, and Figma — studying how leading products handle persistent navigation, how collapse behavior is communicated, and how state is preserved across sessions.</p>
+      <span class="sp-eyebrow">Before State</span>
+      <h2 class="sp-title">Existing<br>Navigation.</h2>
+      <p class="sp-body">The original nav lived in a floating action bar fixed to the top of the viewport. On a sparse product it had worked. As the product matured, it began overlapping critical UI, obscuring content during scroll, and creating persistent visual tension between navigation and the work users were trying to do.</p>
+      <p class="sp-body">It was also context-blind — identical across a complex data table and a simple settings page. Navigation without awareness of where it was living.</p>
     </div>
     <div class="sp-image">
-      <img loading="lazy" src="images/sidebar-before.webp" alt="Before — floating top navigation">
+      <img loading="lazy" src="images/sidebar-before.webp" alt="Before — floating navigation bar">
     </div>
   </div>
 
-  <!-- 6: User Pain Points -->
-  <div class="slide slide--text" data-index="6">
-    <div class="te-left">
-      <div class="te-ghost">07</div>
-      <span class="te-chapter">Sidebar Redesign</span>
-      <span class="te-label">User Pain Points</span>
-    </div>
-    <div class="te-right">
-      <h2 class="te-title">User Pain Points.</h2>
-      <ul class="te-list">
-        <li><span class="li-n">01</span><span><strong>Scrolling past the bar</strong> — users frequently lost the nav when moving through content-dense views</span></li>
-        <li><span class="li-n">02</span><span><strong>Accidental triggers</strong> — reaching for content beneath the nav bar caused unintended interactions</span></li>
-        <li><span class="li-n">03</span><span><strong>Content overlap</strong> — the floating bar obscured key UI elements, creating visual and functional clutter</span></li>
-        <li><span class="li-n">04</span><span><strong>No layout memory</strong> — users had to re-configure their workspace preference every session</span></li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- 7: Information Architecture -->
+  <!-- 7: Research -->
   <div class="slide slide--text" data-index="7">
     <div class="te-left">
       <div class="te-ghost">08</div>
       <span class="te-chapter">Sidebar Redesign</span>
-      <span class="te-label">Information Architecture</span>
+      <span class="te-label">Research</span>
     </div>
     <div class="te-right">
-      <h2 class="te-title">Information<br>Architecture.</h2>
-      <p class="te-body">The sidebar needed to support three distinct states, each serving a different user intent without breaking the mental model between them.</p>
+      <h2 class="te-title">Research.</h2>
+      <p class="te-body">Session recordings surfaced an unexpected pattern: users were moving the cursor toward the nav bar and then <strong>hesitating</strong> — hovering but not clicking. The floating element had become a source of anxiety. Users weren't sure if interacting with it would disrupt what they were currently doing.</p>
+      <p class="te-body">Competitive benchmarking against Notion, Linear, and Figma showed a clear industry shift toward anchored, collapsible sidebars for data-dense applications. These products had learned that navigation consistency reduces decision fatigue. You always know where to look. The floating bar was breaking that contract every time a user changed context.</p>
+    </div>
+  </div>
+
+  <!-- 8: Journey Mapping -->
+  <div class="slide slide--text" data-index="8">
+    <div class="te-left">
+      <div class="te-ghost">09</div>
+      <span class="te-chapter">Sidebar Redesign</span>
+      <span class="te-label">Journey Mapping</span>
+    </div>
+    <div class="te-right">
+      <h2 class="te-title">Journey Mapping.</h2>
+      <p class="te-body">Mapping the daily workflow of a scheduling manager surfaced four distinct navigation moments — and clarified which one was failing:</p>
       <ul class="te-list">
-        <li><span class="li-n">Expanded</span><span><strong>Full sidebar with labels</strong> — icons and text visible, all nav items accessible at a glance</span></li>
-        <li><span class="li-n">Collapsed</span><span><strong>Icon rail only</strong> — minimal footprint, navigation awareness preserved through iconography and tooltips</span></li>
-        <li><span class="li-n">Hover</span><span><strong>Flyout label overlay</strong> — collapsed icon rail triggers a contextual flyout, no layout shift required</span></li>
+        <li><span class="li-n">Arrive</span><span><strong>Orientation</strong> — landing in the app and getting bearings for the session. Nav bar worked here.</span></li>
+        <li><span class="li-n">Move</span><span><strong>Navigation</strong> — switching between modules. Nav bar worked here too.</span></li>
+        <li><span class="li-n">Reference</span><span><strong>Quick-glance</strong> — checking where they are while staying deep in content. <strong>This is where it failed.</strong></span></li>
+        <li><span class="li-n">Leave</span><span><strong>Context reset</strong> — understanding where to return next session. Nav bar worked passively.</span></li>
       </ul>
-      <p class="te-body" style="margin-top:16px;">State transitions needed to feel instant and controlled — never jarring. Persistence across sessions meant the sidebar "learned" the user's preference from the first interaction.</p>
+      <p class="te-body" style="margin-top:4px;">The sidebar solves the quick-glance moment: always visible, always telling you where you are, without competing for attention.</p>
     </div>
   </div>
 
-  <!-- 8: Explorations -->
-  <div class="slide slide--split" data-index="8">
-    <div class="sp-content">
-      <span class="sp-ghost">09</span>
-      <span class="sp-chapter">Sidebar Redesign</span>
-      <span class="sp-eyebrow">Prototyping</span>
-      <h2 class="sp-title">Explorations.</h2>
-      <p class="sp-body">A clickable prototype was built early to validate the collapse interaction before investing in high-fidelity design. The prototype focused on trigger mechanics — where users expected to click, how the transition felt, and whether the icon rail was sufficient for navigation in the collapsed state.</p>
-      <p class="sp-body">Stakeholder walkthroughs with PMs and engineering surfaced early feasibility questions around animation performance and state management. These shaped the handoff spec before a single line of production code was written.</p>
-    </div>
-    <div class="sp-image">
-      <img loading="lazy" src="images/sidebar-spec.webp" alt="Anatomy and documentation of the sidebar">
-    </div>
-  </div>
-
-  <!-- 9: Design Decisions -->
+  <!-- 9: Information Architecture -->
   <div class="slide slide--text" data-index="9">
     <div class="te-left">
       <div class="te-ghost">10</div>
       <span class="te-chapter">Sidebar Redesign</span>
-      <span class="te-label">Design Decisions</span>
-    </div>
-    <div class="te-right">
-      <h2 class="te-title">Design Decisions.</h2>
-      <ul class="te-list">
-        <li><span class="li-n">01</span><span><strong>Fixed sidebar anchored left</strong> — removes float/content tension permanently, integrates into layout</span></li>
-        <li><span class="li-n">02</span><span><strong>Collapse toggle at the top</strong> — clear, discoverable affordance that gives users explicit layout control</span></li>
-        <li><span class="li-n">03</span><span><strong>Icon rail in collapsed state</strong> — preserves navigational awareness without visual noise of the original bar</span></li>
-        <li><span class="li-n">04</span><span><strong>Tooltips on icon hover</strong> — resolved confusion in collapsed state without breaking the minimal aesthetic</span></li>
-        <li><span class="li-n">05</span><span><strong>Session-persisted collapse state</strong> — the app remembers the layout each user prefers, eliminating repetitive setup</span></li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- 10: Final Solution -->
-  <div class="slide slide--split flip" data-index="10">
-    <div class="sp-content">
-      <span class="sp-ghost">11</span>
-      <span class="sp-chapter">Sidebar Redesign</span>
-      <span class="sp-eyebrow">Design</span>
-      <h2 class="sp-title">Final Solution.</h2>
-      <p class="sp-body">The redesign moved navigation off the floating layer and into a <strong>fixed sidebar anchored to the left</strong>. A persistent collapse toggle at the top gives users direct control over their layout — reducing to an icon-only rail when space is needed, expanding fully when context matters.</p>
-      <p class="sp-body">An edge handle in the collapsed state offers a low-friction re-entry point. Flyout labels on hover preserve clarity without requiring the sidebar to open fully.</p>
-    </div>
-    <div class="sp-image">
-      <img loading="lazy" src="images/sidebar-flyout.webp" alt="Flyout menu in collapsed sidebar state">
-    </div>
-  </div>
-
-  <!-- 11: Impact -->
-  <div class="slide slide--text" data-index="11">
-    <div class="te-left">
-      <div class="te-ghost">12</div>
-      <span class="te-chapter">Sidebar Redesign</span>
-      <span class="te-label">Impact</span>
-    </div>
-    <div class="te-right">
-      <h2 class="te-title">Impact.</h2>
-      <p class="te-body">Moving from a floating action bar to a collapsible sidebar resolved the core tension users had been experiencing — navigation no longer competed with content for space. The collapse feature saw <strong>strong adoption post-launch</strong>, and users consistently noted feeling more in control of their workspace layout.</p>
-      <p class="te-body">The icon rail approach proved effective in the collapsed state, preserving navigational awareness without the visual noise of the original floating bar. The design also leaned heavily on the existing design system — reusing tokens, motion values, and component patterns — keeping the build lightweight and the experience consistent with the broader product.</p>
-      <div class="te-quote"><p>"Navigation no longer competes with content. Users feel in control of their workspace for the first time."</p></div>
-    </div>
-  </div>
-
-  <!-- 12: Reflection -->
-  <div class="slide slide--text" data-index="12">
-    <div class="te-left">
-      <div class="te-ghost">13</div>
-      <span class="te-chapter">Sidebar Redesign</span>
-      <span class="te-label">Reflection</span>
-    </div>
-    <div class="te-right">
-      <h2 class="te-title">Reflection.</h2>
-      <p class="te-body">The most impactful change turned out to be the smallest one: persisting collapse state per session. Users don't want to re-configure their workspace every time they open a product. <strong>State persistence is a form of respect.</strong></p>
-      <p class="te-body">The most technically complex part — replacing the entire nav paradigm — was also the most straightforward in terms of user reception. The users who had struggled with the floating bar immediately understood the sidebar. Good architecture makes good UX easier.</p>
-      <div class="te-quote"><p>"The difference between a good tool and a great one is often memory. Does it remember who you are?"</p></div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════════════
-       NOTEWORTH  ·  Slides 13–22
-  ═══════════════════════════════════════════════ -->
-
-  <!-- 13: Product Overview -->
-  <div class="slide slide--split" data-index="13">
-    <div class="sp-content">
-      <span class="sp-ghost">14</span>
-      <span class="sp-chapter">Noteworth</span>
-      <span class="sp-eyebrow">Product Design · Mobile · Healthcare · 2019–2020</span>
-      <h2 class="sp-title">Goals &<br>Action Plan</h2>
-      <div class="sp-meta">
-        <div class="sp-meta-cell"><span class="sp-meta-label">Role</span><span class="sp-meta-value">Product Designer</span></div>
-        <div class="sp-meta-cell"><span class="sp-meta-label">Company</span><span class="sp-meta-value">Noteworth</span></div>
-        <div class="sp-meta-cell"><span class="sp-meta-label">Year</span><span class="sp-meta-value">2019–2020</span></div>
-      </div>
-      <p class="sp-body">An accordion-based goal-setting system letting clinicians define patient goals and actionable steps — built for mobile-first workflows in a healthcare context where clarity isn't optional.</p>
-      <a href="goals.html" class="sp-cta" target="_blank">Full Case Study →</a>
-    </div>
-    <div class="sp-image">
-      <img loading="lazy" src="images/goals-cover.webp" alt="Goals & Action Plan — Noteworth">
-    </div>
-  </div>
-
-  <!-- 14: The Challenge -->
-  <div class="slide slide--text" data-index="14">
-    <div class="te-left">
-      <div class="te-ghost">15</div>
-      <span class="te-chapter">Noteworth</span>
-      <span class="te-label">The Challenge</span>
-    </div>
-    <div class="te-right">
-      <h2 class="te-title">The Challenge.</h2>
-      <p class="te-body">Clinicians faced a tedious, <strong>error-prone process</strong> of manually setting patient goals. This resulted in unreliable data, incomplete information, and lengthy processing times — all of which had direct consequences for patient care quality.</p>
-      <p class="te-body">There was no structured way for clinicians to define goals with actionable steps, or for patients to suggest goals and report challenges back to their care team. The system needed to work seamlessly across both web and mobile with the same underlying data model.</p>
-      <div class="te-quote"><p>"The key challenge was prioritizing information in a limited viewing window without sacrificing the depth clinicians needed to do their jobs."</p></div>
-    </div>
-  </div>
-
-  <!-- 15: Research -->
-  <div class="slide slide--split flip" data-index="15">
-    <div class="sp-content">
-      <span class="sp-ghost">16</span>
-      <span class="sp-chapter">Noteworth</span>
-      <span class="sp-eyebrow">Discovery</span>
-      <h2 class="sp-title">Research.</h2>
-      <p class="sp-body">Competitor analysis revealed that <strong>form builders and accordion patterns</strong> offered real potential for streamlining complex, nested data entry without overwhelming users with all fields at once.</p>
-      <p class="sp-body">Clinician workflows were mapped end-to-end — from goal creation to patient follow-up — to identify where the existing process broke down and what a digital system needed to handle that paper-based workflows had absorbed informally.</p>
-    </div>
-    <div class="sp-image">
-      <img loading="lazy" src="images/goals-wires.webp" alt="Discovery wireframes — accordion and form builder patterns">
-    </div>
-  </div>
-
-  <!-- 16: User Pain Points -->
-  <div class="slide slide--text" data-index="16">
-    <div class="te-left">
-      <div class="te-ghost">17</div>
-      <span class="te-chapter">Noteworth</span>
-      <span class="te-label">User Pain Points</span>
-    </div>
-    <div class="te-right">
-      <h2 class="te-title">User Pain Points.</h2>
-      <ul class="te-list">
-        <li><span class="li-n">01</span><span><strong>Clinicians:</strong> manual, freeform goal entry with no structure — data was incomplete and inconsistent across patients</span></li>
-        <li><span class="li-n">02</span><span><strong>Clinicians:</strong> no way to attach actionable steps to a goal — the "what next" was left to memory and paper</span></li>
-        <li><span class="li-n">03</span><span><strong>Patients:</strong> no mechanism to suggest goals or flag challenges back to their care team within the app</span></li>
-        <li><span class="li-n">04</span><span><strong>Both:</strong> the mobile experience was an afterthought — desktop-first design created friction for patients on the go</span></li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- 17: Information Architecture -->
-  <div class="slide slide--text" data-index="17">
-    <div class="te-left">
-      <div class="te-ghost">18</div>
-      <span class="te-chapter">Noteworth</span>
       <span class="te-label">Information Architecture</span>
     </div>
     <div class="te-right">
       <h2 class="te-title">Information<br>Architecture.</h2>
-      <p class="te-body">Goals needed a clear hierarchy that could scale to unlimited entries without overwhelming the interface. The accordion model made that possible — collapsing inactive goals to expose only what matters in the moment.</p>
+      <p class="te-body">Moving from floating to fixed required rethinking navigation as a <strong>persistent layer</strong> — always present, never intrusive. Three states emerged, each serving a different user intent without breaking the mental model between them:</p>
       <ul class="te-list">
-        <li><span class="li-n">Level 1</span><span><strong>Goal</strong> — top-level item with title, status flag, and expand/collapse control</span></li>
-        <li><span class="li-n">Level 2</span><span><strong>Action Steps</strong> — nested tasks beneath each goal, each with its own completion state</span></li>
-        <li><span class="li-n">Level 3</span><span><strong>Notes / Feedback</strong> — patient-reported updates and clinician annotations attached to each step</span></li>
+        <li><span class="li-n">Expanded</span><span><strong>Icons + labels</strong> — full context for new users and exploratory sessions</span></li>
+        <li><span class="li-n">Collapsed</span><span><strong>Icon rail only</strong> — compact footprint for power users who know the product</span></li>
+        <li><span class="li-n">Hover</span><span><strong>Flyout panel</strong> — contextual labels in collapsed state, no layout shift required</span></li>
       </ul>
-      <p class="te-body" style="margin-top:12px;">The same data model had to render correctly across web (clinician) and native mobile (patient) — different surface areas, same information hierarchy.</p>
+      <p class="te-body" style="margin-top:12px;">Each state needed to communicate <strong>orientation</strong> (where you are) not just destination (where you can go). Active state legibility was non-negotiable across all three collapse levels.</p>
     </div>
   </div>
 
-  <!-- 18: Explorations -->
-  <div class="slide slide--split" data-index="18">
+  <!-- 10: Early Concepts -->
+  <div class="slide slide--split" data-index="10">
     <div class="sp-content">
-      <span class="sp-ghost">19</span>
-      <span class="sp-chapter">Noteworth</span>
-      <span class="sp-eyebrow">Explorations</span>
-      <h2 class="sp-title">Explorations.</h2>
-      <p class="sp-body">Early explorations tested a flat-list approach before moving to the accordion. The flat list made it easy to see all goals at once but created serious scroll depth problems at scale — clinicians managing patients with 8–12 active goals couldn't work efficiently.</p>
-      <p class="sp-body">The accordion immediately reduced cognitive load by surfacing only the active goal while keeping others within reach. It also mirrored how clinicians already thought about patient progress — one goal at a time, with supporting context available on demand.</p>
+      <span class="sp-ghost">11</span>
+      <span class="sp-chapter">Sidebar Redesign</span>
+      <span class="sp-eyebrow">Early Concepts</span>
+      <h2 class="sp-title">Early Concepts.</h2>
+      <p class="sp-body">Early concepts explored three anchor points — left, top, and bottom — before committing to the sidebar. Bottom nav was ruled out quickly (desktop context, not mobile). A top-fixed approach replicated the original problem with different packaging.</p>
+      <p class="sp-body">The left sidebar was clear, but the collapse behavior needed to be prototyped before the concept could advance. A mid-fidelity clickable prototype was built to test trigger location, transition feel, and whether the icon rail alone was enough to navigate in the collapsed state.</p>
     </div>
     <div class="sp-image">
-      <img loading="lazy" src="images/goals-clinician.webp" alt="Clinician goal-setting interface">
+      <img loading="lazy" src="images/sidebar-spec.webp" alt="Early sidebar anatomy and concept spec">
     </div>
   </div>
 
-  <!-- 19: Design Decisions -->
-  <div class="slide slide--text" data-index="19">
+  <!-- 11: Wireframes -->
+  <div class="slide slide--split flip" data-index="11">
+    <div class="sp-content">
+      <span class="sp-ghost">12</span>
+      <span class="sp-chapter">Sidebar Redesign</span>
+      <span class="sp-eyebrow">Wireframes</span>
+      <h2 class="sp-title">Wireframes.</h2>
+      <p class="sp-body">Wireframes focused on the collapsed state — the riskier of the two to get wrong. Three label approaches were tested at low fidelity: persistent mini-labels below icons, tooltips on hover, and a full flyout panel on hover.</p>
+      <p class="sp-body">Persistent labels cluttered the rail and defeated the purpose of collapsing. Tooltips felt slow — they required deliberate intent to reveal. The <strong>flyout panel</strong> won: full label context on hover, no layout shift, no loss of the compact footprint users had chosen.</p>
+    </div>
+    <div class="sp-image">
+      <img loading="lazy" src="images/sidebar-collapsed.webp" alt="Collapsed sidebar — icon rail wireframe">
+    </div>
+  </div>
+
+  <!-- 12: Design Exploration -->
+  <div class="slide slide--text" data-index="12">
     <div class="te-left">
-      <div class="te-ghost">20</div>
-      <span class="te-chapter">Noteworth</span>
-      <span class="te-label">Design Decisions</span>
+      <div class="te-ghost">13</div>
+      <span class="te-chapter">Sidebar Redesign</span>
+      <span class="te-label">Design Exploration</span>
     </div>
     <div class="te-right">
-      <h2 class="te-title">Design Decisions.</h2>
-      <ul class="te-list">
-        <li><span class="li-n">01</span><span><strong>Accordion over flat list</strong> — collapsible goals reduce visual overload while keeping all entries accessible</span></li>
-        <li><span class="li-n">02</span><span><strong>Unlimited goals + nested steps</strong> — mirrors real clinical workflow without artificial constraints</span></li>
-        <li><span class="li-n">03</span><span><strong>Mobile-first for patient-facing views</strong> — patients interact on native mobile, clinicians on web; same data, different surface</span></li>
-        <li><span class="li-n">04</span><span><strong>Above-fold prioritization</strong> — most critical actions visible without scroll — respects the small mobile viewport</span></li>
-        <li><span class="li-n">05</span><span><strong>Flag system for urgency</strong> — priority and status visible at a glance without opening the goal details</span></li>
-      </ul>
+      <h2 class="te-title">Design Exploration.</h2>
+      <p class="te-body">The core design challenge in the collapsed state was preventing disorientation. When only icons are visible, users need enough context to stay oriented — without adding visual noise to a state chosen specifically for its compactness.</p>
+      <p class="te-body">The <strong>edge handle</strong> was discovered through prototype testing, not intentional design. Users in the collapsed state were hunting for a way to re-expand without moving all the way to the top collapse toggle. A narrow draggable handle at the panel edge surfaced naturally as a solution — instinctive to grab, invisible until needed. It came from watching behavior, not inventing it.</p>
+      <div class="te-quote"><p>"The best features in this project weren't designed — they were discovered by watching people use the prototype."</p></div>
     </div>
   </div>
 
-  <!-- 20: Final Solution -->
-  <div class="slide slide--split flip" data-index="20">
+  <!-- 13: Final Design -->
+  <div class="slide slide--split" data-index="13">
     <div class="sp-content">
-      <span class="sp-ghost">21</span>
-      <span class="sp-chapter">Noteworth</span>
-      <span class="sp-eyebrow">Design</span>
-      <h2 class="sp-title">Final Solution.</h2>
-      <p class="sp-body">An intuitive <strong>accordion-style form</strong> empowers clinicians to create unlimited goals and nest actionable steps — breaking down goals into manageable steps that foster patient engagement and clear follow-through.</p>
-      <p class="sp-body">The space-saving solution translates seamlessly to the mobile app, ensuring a smooth experience for patients on the go. Comprehensive documentation was produced to ensure consistent implementation across engineering, mobile, and web.</p>
+      <span class="sp-ghost">14</span>
+      <span class="sp-chapter">Sidebar Redesign</span>
+      <span class="sp-eyebrow">Final Design</span>
+      <h2 class="sp-title">Final Design.</h2>
+      <p class="sp-body">Navigation moved off the floating layer and into a <strong>fixed sidebar anchored left</strong>. A persistent collapse toggle at the top gives users direct control over their layout. The sidebar "remembers" who you are — state persists across sessions, so your preference is set once and respected every login after that.</p>
+      <p class="sp-body">Active states are deliberate: the current section stays highlighted regardless of collapse level, giving users constant passive orientation without requiring any action to access it.</p>
     </div>
     <div class="sp-image">
-      <img loading="lazy" src="images/goals-input.webp" alt="Goal input — accordion form">
+      <img loading="lazy" src="images/sidebar-expanded.webp" alt="Final design — expanded sidebar">
     </div>
   </div>
 
-  <!-- 21: Impact -->
-  <div class="slide slide--text" data-index="21">
+  <!-- 14: Interaction Details -->
+  <div class="slide slide--split flip" data-index="14">
+    <div class="sp-content">
+      <span class="sp-ghost">15</span>
+      <span class="sp-chapter">Sidebar Redesign</span>
+      <span class="sp-eyebrow">Interaction Details</span>
+      <h2 class="sp-title">Interaction<br>Details.</h2>
+      <p class="sp-body">The flyout in the collapsed state uses a deliberate hover delay — fast enough to feel responsive, slow enough to avoid accidental triggers when the cursor passes through. Labels appear with a subtle fade, not a pop, so the reveal feels like information surfacing rather than a UI interruption.</p>
+      <p class="sp-body">The collapse transition uses a custom easing curve: decelerating into the collapsed state so the panel feels like it's <strong>settling, not snapping</strong>. Motion values were pulled directly from the token system, keeping animation consistent with the broader product.</p>
+    </div>
+    <div class="sp-image">
+      <img loading="lazy" src="images/sidebar-flyout.webp" alt="Flyout interaction — collapsed state hover">
+    </div>
+  </div>
+
+  <!-- 15: Impact -->
+  <div class="slide slide--text" data-index="15">
     <div class="te-left">
-      <div class="te-ghost">22</div>
-      <span class="te-chapter">Noteworth</span>
+      <div class="te-ghost">16</div>
+      <span class="te-chapter">Sidebar Redesign</span>
       <span class="te-label">Impact</span>
     </div>
     <div class="te-right">
       <h2 class="te-title">Impact.</h2>
-      <p class="te-body">The Goals & Action Plan feature enabled <strong>personalized healthcare at scale</strong> — clinicians could create tailored programs specific to each patient's needs, and patients could conveniently record and report their progress directly through the app.</p>
-      <p class="te-body">Enhanced collaboration between patients and clinicians fostered by this feature led to better treatment adherence and outcomes. The structured data model also made patient progress trackable over time, giving clinicians the longitudinal view they previously had no way to access digitally.</p>
-      <div class="te-quote"><p>"The right interface can meaningfully improve the quality of care. That's not an abstraction — it's the job."</p></div>
+      <p class="te-body">Post-launch analytics surfaced two results the team hadn't predicted. First: the collapse feature was adopted immediately and heavily — <strong>more than half of active users spent the majority of their sessions in the collapsed state</strong>. Second: the expanded state saw stronger engagement than the old floating bar had ever produced among new users.</p>
+      <p class="te-body">Both groups found exactly what they needed. Power users got a compact, efficient workspace. New users got a clear, labeled orientation layer. The sidebar served two distinct mental models simultaneously — which is the definition of navigation that works at scale.</p>
+      <div class="te-quote"><p>"Navigation no longer competes with content. Both can exist without compromise."</p></div>
     </div>
   </div>
 
-  <!-- 22: Reflection -->
+  <!-- 16: Reflection -->
+  <div class="slide slide--text" data-index="16">
+    <div class="te-left">
+      <div class="te-ghost">17</div>
+      <span class="te-chapter">Sidebar Redesign</span>
+      <span class="te-label">Reflection</span>
+    </div>
+    <div class="te-right">
+      <h2 class="te-title">Reflection.</h2>
+      <p class="te-body">The hardest part of this project wasn't the design. It was the conversation. The original nav bar had been in the product for two years, had internal champions, and users had adapted to it. The argument required making a clear distinction: <strong>familiarity is not the same as preference</strong>.</p>
+      <p class="te-body">The prototype made that argument better than any document could. Watching people try the collapse interaction — the exact moment their body language shifted from skeptical to comfortable — that was the real deliverable. The Figma file was documentation of something stakeholders had already decided they wanted. The prototype was the decision.</p>
+      <div class="te-quote"><p>"The most important design tool in this project wasn't Figma. It was a clickable prototype in a stakeholder walkthrough."</p></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       NOTEWORTH  ·  17–23
+  ══════════════════════════════════════ -->
+
+  <!-- 17: Patient Motivation -->
+  <div class="slide slide--split" data-index="17">
+    <div class="sp-content">
+      <span class="sp-ghost">18</span>
+      <span class="sp-chapter">Noteworth</span>
+      <span class="sp-eyebrow">Activity Tracker · Mobile · Healthcare · 2019–2020</span>
+      <h2 class="sp-title">Patient<br>Motivation.</h2>
+      <p class="sp-body">Patients interacting with a healthcare app aren't primarily motivated by features — they're motivated by outcomes. They want to feel like their effort is being <strong>seen, tracked, and connected</strong> to their health goals.</p>
+      <p class="sp-body">Existing apps captured data without creating meaning. A patient could see their step count but not understand what it meant for their care plan — or whether their clinician had even seen it. Designing for motivation meant designing for closure: the sense that an action taken had been received and mattered.</p>
+      <a href="activity-tracker.html" class="sp-cta" target="_blank">Full Case Study →</a>
+    </div>
+    <div class="sp-image">
+      <img loading="lazy" src="images/activity-cover.webp" alt="Activity Tracker — Noteworth">
+    </div>
+  </div>
+
+  <!-- 18: Healthcare Workflows -->
+  <div class="slide slide--split flip" data-index="18">
+    <div class="sp-content">
+      <span class="sp-ghost">19</span>
+      <span class="sp-chapter">Noteworth</span>
+      <span class="sp-eyebrow">Discovery</span>
+      <h2 class="sp-title">Healthcare<br>Workflows.</h2>
+      <p class="sp-body">Clinicians worked across two surfaces: a desktop web dashboard for reviewing patient data and managing care plans, and a mobile app for on-the-go check-ins. Patient activity data fed into their dashboard as part of the <strong>longitudinal health record</strong> — but only if that data was structured and consistent.</p>
+      <p class="sp-body">A competitive analysis of existing tracking tools — fitness trackers, wearables, clinical dashboards — confirmed the gap: none produced data in a format clinicians could meaningfully act on. Freeform logging created noise, not signal.</p>
+    </div>
+    <div class="sp-image">
+      <img loading="lazy" src="images/activity-research.webp" alt="Competitive analysis — existing tracking apps">
+    </div>
+  </div>
+
+  <!-- 19: Mobile Design -->
+  <div class="slide slide--split" data-index="19">
+    <div class="sp-content">
+      <span class="sp-ghost">20</span>
+      <span class="sp-chapter">Noteworth</span>
+      <span class="sp-eyebrow">Mobile Design</span>
+      <h2 class="sp-title">Mobile Design.</h2>
+      <p class="sp-body">The patient-facing surface was almost exclusively mobile. That constraint made every decision ruthless. The activity view had to answer three questions at a glance: <strong>Did I log today? How am I trending? What's my goal?</strong></p>
+      <p class="sp-body">Anything beyond that belonged in a secondary view. The small screen wasn't a limitation — it was a forcing function that kept the design focused on what patients actually needed, not what was technically possible to display. In healthcare, simplicity is a clinical responsibility, not a design preference.</p>
+    </div>
+    <div class="sp-image">
+      <img loading="lazy" src="images/activity-design.webp" alt="Activity tracking — mobile dashboard">
+    </div>
+  </div>
+
+  <!-- 20: Accessibility -->
+  <div class="slide slide--text" data-index="20">
+    <div class="te-left">
+      <div class="te-ghost">21</div>
+      <span class="te-chapter">Noteworth</span>
+      <span class="te-label">Accessibility</span>
+    </div>
+    <div class="te-right">
+      <h2 class="te-title">Accessibility.</h2>
+      <p class="te-body">Healthcare is one of the highest-stakes accessibility contexts: a confused user isn't just frustrated — they might miss a health marker or fail to report something that matters to their care. <strong>Cognitive load was treated as an accessibility concern</strong>, not a UX nicety.</p>
+      <p class="te-body">Every interaction needed to be completable by a patient who might be fatigued, anxious, or managing a condition that affected focus. That meant: single-action screens where possible, progress feedback at every step, and language that confirmed what happened — not just what to do next.</p>
+      <p class="te-body">We designed for the hardest version of the user. When the experience works for them, it works for everyone.</p>
+      <div class="te-quote"><p>"Simplicity is not just trendy — it's vital for user success in contexts where cognitive load is already high."</p></div>
+    </div>
+  </div>
+
+  <!-- 21: Clinician Collaboration -->
+  <div class="slide slide--split flip" data-index="21">
+    <div class="sp-content">
+      <span class="sp-ghost">22</span>
+      <span class="sp-chapter">Noteworth</span>
+      <span class="sp-eyebrow">Clinician Collaboration</span>
+      <h2 class="sp-title">Clinician<br>Collaboration.</h2>
+      <p class="sp-body">The product's core value was collaboration — the shared record between clinician and patient. Tracking only mattered if clinicians could act on the data. The design created two views of the same underlying information: a <strong>patient view optimized for logging and motivation</strong>, and a clinician view optimized for trend analysis.</p>
+      <p class="sp-body">A detailed flow diagram mapped every micro-interaction and data handoff point across both surfaces — becoming the primary engineering artifact and ensuring both views stayed in sync from one shared data model.</p>
+    </div>
+    <div class="sp-image">
+      <img loading="lazy" src="images/activity-flow.webp" alt="Flow diagram — patient to clinician data path">
+    </div>
+  </div>
+
+  <!-- 22: Habit Formation -->
   <div class="slide slide--text" data-index="22">
     <div class="te-left">
       <div class="te-ghost">23</div>
       <span class="te-chapter">Noteworth</span>
-      <span class="te-label">Reflection</span>
+      <span class="te-label">Habit Formation</span>
     </div>
     <div class="te-right">
-      <h2 class="te-title">Reflection.</h2>
-      <p class="te-body">Healthcare is a context where clarity isn't optional — a confused clinician means a worse outcome for a patient. The constraint of a small mobile screen forced every decision to be ruthless. <strong>If it didn't need to be there, it wasn't.</strong></p>
-      <p class="te-body">That discipline made the final design better than any desktop-first approach would have. Starting from the most constrained surface — the patient's phone — and expanding upward to web produced a system that was clear everywhere, rather than one that was spacious on desktop and cramped on mobile.</p>
-      <div class="te-quote"><p>"The best constraints produce the clearest design. The mobile screen forced every decision."</p></div>
+      <h2 class="te-title">Habit Formation.</h2>
+      <p class="te-body">Activity tracking only creates value if patients do it consistently. Most tracking apps nail the routine (submit data) but miss the trigger (why now?) and the reward (what changed?). The trigger and reward are what determine whether an action becomes a habit.</p>
+      <p class="te-body">The solution was <strong>contextual nudges tied to the patient's goal schedule</strong> — not generic daily reminders — and completion states that felt genuinely satisfying. An animated checkmark. A progress ring that filled. A confirmation that used the patient's first name. Small moments of acknowledgment that turned a clinical data entry task into something that felt personal and worth returning to.</p>
+      <div class="te-quote"><p>"A patient who feels acknowledged after logging is more likely to log again than one who gets a silent confirmation."</p></div>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════════════
-       DESIGN SYSTEM  ·  Slides 23–32
-  ═══════════════════════════════════════════════ -->
-
-  <!-- 23: Product Overview -->
-  <div class="slide slide--split" data-index="23">
-    <div class="sp-content">
-      <span class="sp-ghost">24</span>
-      <span class="sp-chapter">Design System</span>
-      <span class="sp-eyebrow">Design Systems · Tokens · Components · 2021–2022</span>
-      <h2 class="sp-title">Design<br>System</h2>
-      <div class="sp-meta">
-        <div class="sp-meta-cell"><span class="sp-meta-label">Role</span><span class="sp-meta-value">Lead Product Designer</span></div>
-        <div class="sp-meta-cell"><span class="sp-meta-label">Scope</span><span class="sp-meta-value">Tokens · Components · Documentation</span></div>
-      </div>
-      <p class="sp-body">Built and led adoption of a scalable design system from the ground up — from token architecture to cross-team implementation across multiple products.</p>
+  <!-- 23: Measuring Progress -->
+  <div class="slide slide--text" data-index="23">
+    <div class="te-left">
+      <div class="te-ghost">24</div>
+      <span class="te-chapter">Noteworth</span>
+      <span class="te-label">Measuring Progress</span>
     </div>
-    <div class="sp-image">
-      <img loading="lazy" src="images/ds-cover.webp" alt="Design System">
+    <div class="te-right">
+      <h2 class="te-title">Measuring Progress.</h2>
+      <p class="te-body">The progress view was the most technically constrained but emotionally important screen in the tracker. It needed to show trend data in a way that felt <strong>encouraging rather than clinical</strong> — a patient with inconsistent logging shouldn't feel like they failed when they opened it.</p>
+      <p class="te-body">The design used rolling averages rather than daily totals, and anchored progress to the goal rather than to a perfect record. "Here's where you are relative to your goal" rather than "here's every day you missed." That reframe — a data decision, not a visual one — had a measurable impact on patient return rate and engagement.</p>
+      <div class="te-quote"><p>"The most impactful design decision in this project was a framing choice, not a visual one."</p></div>
     </div>
   </div>
 
-  <!-- 24: The Challenge -->
+  <!-- ══════════════════════════════════════
+       DESIGN SYSTEM  ·  24–33
+  ══════════════════════════════════════ -->
+
+  <!-- 24: Why a Design System -->
   <div class="slide slide--text" data-index="24">
     <div class="te-left">
       <div class="te-ghost">25</div>
       <span class="te-chapter">Design System</span>
-      <span class="te-label">The Challenge</span>
+      <span class="te-label">Why a Design System</span>
     </div>
     <div class="te-right">
-      <h2 class="te-title">The Challenge.</h2>
-      <p class="te-body">There was <strong>no design system in place</strong> — leading to fragmented design patterns, lack of consistency, low brand recognition, and time-consuming design and development processes.</p>
-      <p class="te-body">Every team was making independent decisions. The product had grown in multiple directions without a shared foundation. The main challenge was creating a system usable across multiple products while maintaining consistency and significantly speeding up design and development.</p>
+      <h2 class="te-title">Why a Design<br>System.</h2>
+      <p class="te-body">The decision to build a design system wasn't made in a planning meeting — it was forced by reality. Teams were building the same components independently and making different decisions about spacing, color, and interaction patterns. The product felt subtly inconsistent in ways users couldn't articulate but viscerally experienced.</p>
+      <p class="te-body">The primary business case wasn't efficiency — though that came. It was <strong>quality</strong>: a shared foundation that made consistency the default. When every team has to decide what "danger red" looks like, someone will decide differently. The system removes that choice. In doing so, it removes that inconsistency.</p>
       <div class="te-quote"><p>"A design system isn't a Figma library. It's a shared language — and building one means getting everyone to speak it."</p></div>
     </div>
   </div>
 
-  <!-- 25: Research -->
-  <div class="slide slide--split flip" data-index="25">
+  <!-- 25: Auditing Inconsistencies -->
+  <div class="slide slide--split" data-index="25">
     <div class="sp-content">
       <span class="sp-ghost">26</span>
       <span class="sp-chapter">Design System</span>
-      <span class="sp-eyebrow">Discovery</span>
-      <h2 class="sp-title">Research.</h2>
-      <p class="sp-body">An <strong>audit of existing designs</strong> uncovered the extent of the inconsistency — multiple versions of the same component across different products, no shared color system, and typography applied differently by every team.</p>
-      <p class="sp-body">User journey mapping across all products highlighted where inconsistency created real friction for end users — not just designers. The research made the case internally that this wasn't a design preference problem; it was a product quality problem.</p>
+      <span class="sp-eyebrow">Auditing Inconsistencies</span>
+      <h2 class="sp-title">Auditing<br>Inconsistencies.</h2>
+      <p class="sp-body">The audit was humbling. Across the product ecosystem: eleven distinct button styles, four dropdown interaction patterns, no single agreed-upon color for "danger." Teams had made reasonable local decisions that created unreasonable global fragmentation.</p>
+      <p class="sp-body">The audit served two purposes: documenting what existed (to understand scope) and surfacing the worst offenders (to build the case for change). It became the first artifact of the system — a reference that showed teams, all at once, <strong>what inconsistency looked like laid flat</strong>. Seeing it was often enough to create alignment.</p>
     </div>
     <div class="sp-image">
-      <img loading="lazy" src="images/ds-dropdown.webp" alt="Existing dropdown patterns — inconsistent across products">
+      <img loading="lazy" src="images/ds-dropdown.webp" alt="Audit — inconsistent dropdown patterns across products">
     </div>
   </div>
 
-  <!-- 26: User Pain Points -->
+  <!-- 26: Component Strategy -->
   <div class="slide slide--text" data-index="26">
     <div class="te-left">
       <div class="te-ghost">27</div>
       <span class="te-chapter">Design System</span>
-      <span class="te-label">User Pain Points</span>
+      <span class="te-label">Component Strategy</span>
     </div>
     <div class="te-right">
-      <h2 class="te-title">User Pain Points.</h2>
+      <h2 class="te-title">Component Strategy.</h2>
+      <p class="te-body">The wrong approach would have been to build the system in isolation and announce it to teams. The right approach was to <strong>build it in public</strong> — starting with the components teams were actively asking for, shipping them with documentation, and iterating on real usage.</p>
+      <p class="te-body">Components were released in priority order by frequency of use, not design elegance. The most-used components shipped first, even when they were the least interesting to design. A button system is unglamorous. It's also the thing every team touches every day. That's where the leverage lives.</p>
       <ul class="te-list">
-        <li><span class="li-n">01</span><span><strong>Design teams</strong> were rebuilding the same components from scratch for each new feature — no reuse, no shared starting point</span></li>
-        <li><span class="li-n">02</span><span><strong>Engineering handoffs</strong> were inconsistent — specs didn't agree on spacing, color values, or interaction behavior across products</span></li>
-        <li><span class="li-n">03</span><span><strong>End users</strong> experienced a fragmented product — the same action felt different depending on which part of the app they were in</span></li>
-        <li><span class="li-n">04</span><span><strong>New designers</strong> had no reference for how the product should look and behave — every decision started from zero</span></li>
+        <li><span class="li-n">Layer 1</span><span><strong>Atoms</strong> — buttons, inputs, icons, badges, tags. The foundation everything else composes from.</span></li>
+        <li><span class="li-n">Layer 2</span><span><strong>Molecules</strong> — form fields, dropdowns, modals, cards. Atoms in combination.</span></li>
+        <li><span class="li-n">Layer 3</span><span><strong>Organisms</strong> — nav, data tables, dashboards, page templates. Full product patterns.</span></li>
       </ul>
     </div>
   </div>
 
-  <!-- 27: Information Architecture -->
-  <div class="slide slide--text" data-index="27">
-    <div class="te-left">
-      <div class="te-ghost">28</div>
-      <span class="te-chapter">Design System</span>
-      <span class="te-label">Information Architecture</span>
-    </div>
-    <div class="te-right">
-      <h2 class="te-title">System<br>Architecture.</h2>
-      <p class="te-body">The system was structured in composable layers — each built on the one below, making it extensible without breaking what already existed.</p>
-      <ul class="te-list">
-        <li><span class="li-n">Layer 01</span><span><strong>Foundations / Tokens</strong> — color, typography, spacing, motion, elevation defined as named variables</span></li>
-        <li><span class="li-n">Layer 02</span><span><strong>Components</strong> — atoms (button, input) → molecules (form field) → organisms (modal, nav) built from tokens</span></li>
-        <li><span class="li-n">Layer 03</span><span><strong>Patterns</strong> — page-level templates and interaction patterns composed from components</span></li>
-        <li><span class="li-n">Layer 04</span><span><strong>Documentation</strong> — usage guidelines, do/don't examples, and accessibility notes living alongside every component</span></li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- 28: Explorations -->
-  <div class="slide slide--split" data-index="28">
+  <!-- 27: Tokens -->
+  <div class="slide slide--split flip" data-index="27">
     <div class="sp-content">
-      <span class="sp-ghost">29</span>
+      <span class="sp-ghost">28</span>
       <span class="sp-chapter">Design System</span>
-      <span class="sp-eyebrow">Explorations</span>
-      <h2 class="sp-title">Explorations.</h2>
-      <p class="sp-body">Before designing a single component, I established overarching design principles and a <strong>unified token system</strong> for color, type, and spacing. This gave every subsequent component decision a clear reference point and prevented the same divergence from re-emerging.</p>
-      <p class="sp-body">The modular approach was tested by applying early components to real product screens — surfacing edge cases and usage patterns that refined the system before any team-wide adoption began.</p>
+      <span class="sp-eyebrow">Tokens</span>
+      <h2 class="sp-title">Tokens.</h2>
+      <p class="sp-body">Design tokens were the foundation that made everything composable. Color wasn't stored as hex values — it was stored as semantic names: <span class="mono">color.feedback.error</span>, <span class="mono">color.interactive.primary</span>.</p>
+      <p class="sp-body">A single change to the token layer propagated through every component simultaneously. Tokens were also tool-agnostic — the same values were consumed by Figma, iOS, Android, and web, giving every team a <strong>shared source of truth that required no translation</strong>. The token layer made the system cross-platform from day one, not as a retrofit.</p>
     </div>
     <div class="sp-image">
-      <img loading="lazy" src="images/ds-components.webp" alt="Component library overview">
+      <img loading="lazy" src="images/ds-colors.webp" alt="Design tokens — unified color system">
     </div>
   </div>
 
-  <!-- 29: Design Decisions -->
+  <!-- 28: Accessibility -->
+  <div class="slide slide--text" data-index="28">
+    <div class="te-left">
+      <div class="te-ghost">29</div>
+      <span class="te-chapter">Design System</span>
+      <span class="te-label">Accessibility</span>
+    </div>
+    <div class="te-right">
+      <h2 class="te-title">Accessibility.</h2>
+      <p class="te-body">Accessibility wasn't a checklist applied at the end — it was baked into the token system at the foundation. Every color pairing was checked for <strong>WCAG AA contrast compliance</strong> before it was published to the library. Pairings that failed didn't ship.</p>
+      <p class="te-body">Interactive states — focus, hover, active, disabled — were treated as first-class design decisions. Every component shipped with accessibility annotations: screen reader behavior, keyboard navigation patterns, ARIA roles, and focus order specified alongside the visual spec.</p>
+      <p class="te-body">Accessibility at the system level meant <strong>designers didn't have to rediscover the right behavior every time</strong>. The correct default was the path of least resistance. Making the wrong choice required deliberate extra effort.</p>
+    </div>
+  </div>
+
+  <!-- 29: Documentation -->
   <div class="slide slide--text" data-index="29">
     <div class="te-left">
       <div class="te-ghost">30</div>
       <span class="te-chapter">Design System</span>
-      <span class="te-label">Design Decisions</span>
+      <span class="te-label">Documentation</span>
     </div>
     <div class="te-right">
-      <h2 class="te-title">Design Decisions.</h2>
-      <ul class="te-list">
-        <li><span class="li-n">01</span><span><strong>Token-first architecture</strong> — visual decisions as named variables, not hardcoded values — changes cascade automatically</span></li>
-        <li><span class="li-n">02</span><span><strong>Modular components</strong> — customizable within bounds, not rigid templates — teams retain flexibility without breaking consistency</span></li>
-        <li><span class="li-n">03</span><span><strong>Documentation alongside assets</strong> — usage guidelines built into the component library, not separate; adoption requires education</span></li>
-        <li><span class="li-n">04</span><span><strong>Workshops over announcements</strong> — teams needed to learn by doing, not by reading a PDF</span></li>
-        <li><span class="li-n">05</span><span><strong>Multi-product testing before v1</strong> — edge cases surfaced early, before any team was committed to a broken pattern</span></li>
-      </ul>
+      <h2 class="te-title">Documentation.</h2>
+      <p class="te-body">Documentation was the part of the design system that teams actually used. A component without documentation isn't adoptable — it requires the original designer to explain it every time someone encounters it. That's not a system. That's a bottleneck.</p>
+      <p class="te-body">Every component shipped with: a usage example, do/don't patterns, prop specifications, accessibility notes, and a changelog. Documentation was written for <strong>the person who found it without context</strong> — a developer starting a new feature, a designer joining the team, a PM estimating scope. Self-service or failure.</p>
+      <div class="te-quote"><p>"A design system without documentation is a gift no one can open."</p></div>
     </div>
   </div>
 
-  <!-- 30: Final Solution -->
-  <div class="slide slide--split flip" data-index="30">
+  <!-- 30: Governance -->
+  <div class="slide slide--text" data-index="30">
+    <div class="te-left">
+      <div class="te-ghost">31</div>
+      <span class="te-chapter">Design System</span>
+      <span class="te-label">Governance</span>
+    </div>
+    <div class="te-right">
+      <h2 class="te-title">Governance.</h2>
+      <p class="te-body">A design system without governance is a design system with an expiration date. Governance defined who could change the system, how changes were proposed, and how breaking changes were communicated to teams who depended on them.</p>
+      <p class="te-body">A lightweight <strong>RFC (request for comment) process</strong> was introduced for significant changes. Modifications to shared components were reviewed by the teams that used them before shipping. This prevented the same fragmentation the system was built to solve from creeping back in through uncoordinated updates. The RFC process also became a mechanism for teams to contribute — turning the design system from something owned by one designer into something owned by the whole organization.</p>
+    </div>
+  </div>
+
+  <!-- 31: Developer Collaboration -->
+  <div class="slide slide--split" data-index="31">
     <div class="sp-content">
-      <span class="sp-ghost">31</span>
+      <span class="sp-ghost">32</span>
       <span class="sp-chapter">Design System</span>
-      <span class="sp-eyebrow">Design</span>
-      <h2 class="sp-title">Final Solution.</h2>
-      <p class="sp-body">A complete library of reusable components built on a unified token foundation — with comprehensive documentation explaining each component, its usage guidelines, and real product examples.</p>
-      <p class="sp-body">The system was <strong>implemented across multiple products simultaneously</strong>, with feedback loops built into each stage. Quality improved while design and development time decreased significantly — freed from repetitive component work, the team could focus on higher-level product thinking.</p>
+      <span class="sp-eyebrow">Developer Collaboration</span>
+      <h2 class="sp-title">Developer<br>Collaboration.</h2>
+      <p class="sp-body">Engineers were stakeholders from the first sprint. Component specs weren't static Figma files — they were interactive prototypes with explicit state documentation, token references, and edge case examples included as standard.</p>
+      <p class="sp-body">Engineers mapped every token reference in the spec directly to a code variable in the component library. <strong>When spec and code use the same vocabulary, translation errors disappear</strong> — and so do the "what did you mean by this?" conversations that had previously consumed most of the handoff cycle.</p>
     </div>
     <div class="sp-image">
-      <img loading="lazy" src="images/ds-dashboard.webp" alt="Dashboard — design system in production">
+      <img loading="lazy" src="images/ds-components.webp" alt="Component library — developer handoff view">
     </div>
   </div>
 
-  <!-- 31: Impact -->
-  <div class="slide slide--text" data-index="31">
-    <div class="te-left">
-      <div class="te-ghost">32</div>
-      <span class="te-chapter">Design System</span>
-      <span class="te-label">Impact</span>
-    </div>
-    <div class="te-right">
-      <h2 class="te-title">Impact.</h2>
-      <p class="te-body">Quality improved across all products while <strong>design and development time decreased significantly</strong>. Reusable components and a streamlined process led to major efficiency gains — new features that previously required days of design work could be assembled in hours.</p>
-      <p class="te-body">Users experienced a seamless and familiar journey across all products, enhancing brand perception and reducing support friction. The design system became the cornerstone of the design process — transforming fragmented experiences into a cohesive, efficient ecosystem.</p>
-      <div class="te-quote"><p>"Freed from repetitive component work, the design team could focus on what design is actually for — solving the right problems."</p></div>
-    </div>
-  </div>
-
-  <!-- 32: Reflection -->
+  <!-- 32: Adoption -->
   <div class="slide slide--text" data-index="32">
     <div class="te-left">
       <div class="te-ghost">33</div>
       <span class="te-chapter">Design System</span>
-      <span class="te-label">Reflection</span>
+      <span class="te-label">Adoption</span>
     </div>
     <div class="te-right">
-      <h2 class="te-title">Reflection.</h2>
-      <p class="te-body">A design system is a product for designers and engineers. It has users, requires maintenance, and needs an adoption strategy as much as it needs good design. <strong>The hardest problem wasn't building the components</strong> — it was convincing teams to stop making exceptions.</p>
-      <p class="te-body">Consistency is a discipline. Design systems are the infrastructure that makes it achievable. But infrastructure only works when people trust it — and trust is built through workshops, documentation, and being willing to update the system when the system is wrong.</p>
-      <div class="te-quote"><p>"You don't ship a design system. You grow one. It only works when teams believe in it more than their own workarounds."</p></div>
+      <h2 class="te-title">Adoption.</h2>
+      <p class="te-body">Adoption was harder than building. A system teams don't use is documentation debt. Three things drove it:</p>
+      <ul class="te-list">
+        <li><span class="li-n">01</span><span><strong>Make the default the right thing</strong> — if using the system was easier than rebuilding, teams would use it. Friction was designed out of adoption, not just out of the components.</span></li>
+        <li><span class="li-n">02</span><span><strong>Workshops over announcements</strong> — teams who built with the system in a guided session became its advocates. Understanding creates ownership in a way that documentation alone never does.</span></li>
+        <li><span class="li-n">03</span><span><strong>Track adoption as a product metric</strong> — system usage was measured alongside product health metrics, making it a quantified goal rather than a feeling with no accountability.</span></li>
+      </ul>
+      <p class="te-body" style="margin-top:8px;">Six months post-launch, the majority of new UI work across the product was built from system components.</p>
+    </div>
+  </div>
+
+  <!-- 33: Long-term Impact -->
+  <div class="slide slide--split flip" data-index="33">
+    <div class="sp-content">
+      <span class="sp-ghost">34</span>
+      <span class="sp-chapter">Design System</span>
+      <span class="sp-eyebrow">Long-term Impact</span>
+      <h2 class="sp-title">Long-term<br>Impact.</h2>
+      <p class="sp-body">The lasting impact of a design system is measured not in components but in <strong>decisions that didn't have to be made</strong>. Every time a team reached for a system component instead of building from scratch, that was a conversation that didn't need to happen, a decision saved for something that actually required thought.</p>
+      <p class="sp-body">The system also changed how the team thought: from individual decisions to shared infrastructure, from "what should this look like?" to "what's the right system pattern here?" That shift — from creating to curating — was the design system's most significant and lasting outcome.</p>
+      <div class="te-quote" style="border-left:2px solid var(--accent);padding:6px 0 6px 24px;margin:24px 0 0;"><p style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(18px,2vw,24px);font-weight:500;letter-spacing:0.02em;text-transform:uppercase;color:var(--cream);line-height:1.3;">"You don't ship a design system. You grow one. It only works when teams believe in it more than their own workarounds."</p></div>
+    </div>
+    <div class="sp-image">
+      <img loading="lazy" src="images/ds-dashboard.webp" alt="Design system — in production across products">
     </div>
   </div>
 
 </div><!-- /slideshow -->
 
-<!-- NAV -->
 <nav class="deck-nav">
   <button class="nav-btn" id="btn-prev" onclick="prev()">← Prev</button>
   <span class="nav-counter" id="counter"></span>
   <button class="nav-btn" id="btn-next" onclick="next()">Next →</button>
 </nav>
 
-<!-- Chapter segments -->
 <div class="chapter-segments" id="ch-segs"></div>
 
 <script>
-  const TOTAL = 33;
-
+  const TOTAL = 34;
   const chapters = [
-    { name: 'Opening',          start: 0,  count: 3  },
-    { name: 'Sidebar Redesign', start: 3,  count: 10 },
-    { name: 'Noteworth',        start: 13, count: 10 },
-    { name: 'Design System',    start: 23, count: 10 },
+    { name:'Opening',          start:0,  count:3  },
+    { name:'Sidebar Redesign', start:3,  count:14 },
+    { name:'Noteworth',        start:17, count:7  },
+    { name:'Design System',    start:24, count:10 },
   ];
 
   const slides = document.querySelectorAll('.slide');
-  let current = 0;
-  let transitioning = false;
+  let current = 0, transitioning = false;
 
   function chapterOf(idx) {
-    for (let c of chapters) {
-      if (idx >= c.start && idx < c.start + c.count) {
+    for (let c of chapters)
+      if (idx >= c.start && idx < c.start + c.count)
         return { ...c, local: idx - c.start + 1 };
-      }
-    }
-    return chapters[0];
+    return { ...chapters[0], local: idx + 1 };
   }
 
   function goTo(idx) {
@@ -926,54 +731,40 @@
 
   function update() {
     const ch = chapterOf(current);
-
-    // Counter
-    const localStr  = String(ch.local).padStart(2, '0');
-    const totalStr  = String(ch.count).padStart(2, '0');
     document.getElementById('counter').innerHTML =
-      `<span>${ch.name}</span>&nbsp;&nbsp;·&nbsp;&nbsp;${localStr} / ${totalStr}`;
-
-    // Progress bar
-    document.getElementById('progress').style.width =
-      ((current + 1) / TOTAL * 100) + '%';
-
-    // Buttons
+      `<span>${ch.name}</span>&nbsp;&nbsp;·&nbsp;&nbsp;${String(ch.local).padStart(2,'0')} / ${String(ch.count).padStart(2,'0')}`;
+    document.getElementById('progress').style.width = ((current+1)/TOTAL*100)+'%';
     document.getElementById('btn-prev').disabled = current === 0;
-    document.getElementById('btn-next').disabled = current === TOTAL - 1;
-
-    // Chapter segments
-    document.querySelectorAll('.ch-seg').forEach((seg, i) => {
+    document.getElementById('btn-next').disabled = current === TOTAL-1;
+    document.querySelectorAll('.ch-seg').forEach((seg,i) => {
       const c = chapters[i];
       seg.classList.toggle('active', current >= c.start && current < c.start + c.count);
     });
   }
 
-  // Build chapter segments
   const segsEl = document.getElementById('ch-segs');
-  chapters.forEach((c, i) => {
+  chapters.forEach(c => {
     const seg = document.createElement('div');
     seg.className = 'ch-seg';
-    seg.style.width = (c.count / TOTAL * 220) + 'px';
+    seg.style.width = (c.count/TOTAL*240)+'px';
     seg.title = c.name;
     seg.onclick = () => goTo(c.start);
     segsEl.appendChild(seg);
   });
 
-  // Keyboard
   document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next();
-    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   prev();
+    if (e.key==='ArrowRight'||e.key==='ArrowDown') next();
+    if (e.key==='ArrowLeft' ||e.key==='ArrowUp')   prev();
   });
 
-  // Touch / swipe
   let tx = null;
-  document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
-  document.addEventListener('touchend', e => {
-    if (tx === null) return;
+  document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, {passive:true});
+  document.addEventListener('touchend',   e => {
+    if (tx===null) return;
     const dx = e.changedTouches[0].clientX - tx;
-    if (Math.abs(dx) > 50) dx < 0 ? next() : prev();
+    if (Math.abs(dx)>50) dx<0 ? next() : prev();
     tx = null;
-  }, { passive: true });
+  }, {passive:true});
 
   update();
 </script>
