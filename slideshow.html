@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trillion Nguyen — Portfolio Deck</title>
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Barlow:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f2eb; --bg2: #edeae0; --bg3: #e4e0d4;
+    --cream: #1a1814; --cream2: #3d3a32; --cream3: #585450;
+    --accent: #a84d1a; --accent2: #c4622d;
+    --border: rgba(26,24,20,0.09); --border2: rgba(26,24,20,0.16);
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; overflow: hidden; }
+  body { background: var(--bg); color: var(--cream); font-family: "Barlow", sans-serif; font-weight: 300; }
+
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E");
+    opacity: 0.032; pointer-events: none; z-index: 200;
+  }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    position: fixed; top: 0; left: 0; height: 2px;
+    background: var(--accent); z-index: 300;
+    transition: width 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  /* HEADER */
+  .deck-header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 48px;
+    pointer-events: none;
+  }
+  .deck-logo {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 13px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--cream2);
+    text-decoration: none; pointer-events: all;
+  }
+  .deck-back {
+    font-family: "DM Mono", monospace; font-size: 9px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--cream3); text-decoration: none;
+    pointer-events: all; transition: color 0.2s;
+  }
+  .deck-back:hover { color: var(--accent); }
+
+  /* SLIDESHOW */
+  .slideshow { position: fixed; inset: 0; }
+
+  /* SLIDES */
+  .slide {
+    position: absolute; inset: 0;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.55s cubic-bezier(0.23, 1, 0.32, 1),
+                transform 0.55s cubic-bezier(0.23, 1, 0.32, 1);
+    transform: translateY(12px);
+  }
+  .slide.active { opacity: 1; pointer-events: all; transform: translateY(0); }
+  .slide.exit { opacity: 0; transform: translateY(-12px); }
+
+  /* COVER SLIDE */
+  .slide--cover {
+    display: flex; flex-direction: column;
+    align-items: flex-start; justify-content: flex-end;
+    padding: 0 80px 120px;
+    background: var(--bg);
+  }
+  .cover-eyebrow {
+    font-family: "DM Mono", monospace; font-size: 9px;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 24px;
+  }
+  .cover-name {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: clamp(80px, 10vw, 140px);
+    font-weight: 700; line-height: 0.87; letter-spacing: 0.01em;
+    text-transform: uppercase; color: var(--cream);
+    margin-bottom: 40px;
+  }
+  .cover-name em {
+    font-style: normal; color: var(--cream3); font-weight: 300;
+  }
+  .cover-meta {
+    display: flex; align-items: center; gap: 40px;
+    border-top: 1px solid var(--border2); padding-top: 32px;
+    width: 100%;
+  }
+  .cover-role {
+    font-size: 15px; font-weight: 300; color: var(--cream3); line-height: 1.6;
+    max-width: 480px;
+  }
+  .cover-start {
+    margin-left: auto; flex-shrink: 0;
+    font-family: "DM Mono", monospace; font-size: 10px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent); border: 1px solid rgba(196,98,45,0.4);
+    padding: 10px 22px; border-radius: 100px; text-decoration: none;
+    background: transparent; cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .cover-start:hover { background: var(--accent); color: var(--bg); }
+
+  /* COVER DECORATIVE LINES */
+  .cover-line-v {
+    position: absolute; top: 0; right: 280px;
+    width: 1px; height: 100%; background: var(--border); pointer-events: none;
+  }
+  .cover-line-v2 {
+    position: absolute; top: 0; right: 560px;
+    width: 1px; height: 100%; background: var(--border);
+    opacity: 0.5; pointer-events: none;
+  }
+
+  /* PROJECT SLIDE */
+  .slide--project {
+    display: grid;
+    grid-template-columns: 45fr 55fr;
+  }
+  .slide--project.flipped {
+    grid-template-columns: 55fr 45fr;
+  }
+  .slide--project.flipped .slide-content { order: 2; }
+  .slide--project.flipped .slide-image  { order: 1; }
+
+  /* Content panel */
+  .slide-content {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 100px 64px 80px;
+    background: var(--bg); position: relative; overflow: hidden;
+  }
+  .slide-num {
+    position: absolute; bottom: -24px; right: -16px;
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 220px; font-weight: 700; line-height: 1;
+    letter-spacing: -0.02em; color: rgba(26,24,20,0.04);
+    pointer-events: none; user-select: none;
+  }
+  .slide-eyebrow {
+    font-family: "DM Mono", monospace; font-size: 9px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 20px; display: block;
+  }
+  .slide-title {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: clamp(48px, 5.5vw, 80px);
+    font-weight: 700; line-height: 0.9; letter-spacing: 0.02em;
+    text-transform: uppercase; color: var(--cream);
+    margin-bottom: 24px;
+  }
+  .slide-intro {
+    font-size: 15px; font-weight: 300; color: var(--cream3);
+    line-height: 1.8; max-width: 380px; margin-bottom: 36px;
+  }
+  .slide-stats {
+    display: flex; gap: 0; margin-bottom: 40px;
+    border-top: 1px solid var(--border);
+  }
+  .slide-stat {
+    padding: 16px 24px 0 0; margin-right: 24px;
+    border-right: 1px solid var(--border);
+  }
+  .slide-stat:last-child { border-right: none; }
+  .slide-stat-num {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 28px; font-weight: 600; color: var(--cream);
+    display: block; line-height: 1;
+  }
+  .slide-stat-label {
+    font-family: "DM Mono", monospace; font-size: 8px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--cream3); display: block; margin-top: 4px;
+  }
+  .slide-cta {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: "DM Mono", monospace; font-size: 10px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent); border: 1px solid rgba(196,98,45,0.4);
+    padding: 10px 22px; border-radius: 100px; text-decoration: none;
+    width: fit-content; transition: background 0.2s, color 0.2s;
+  }
+  .slide-cta:hover { background: var(--accent); color: var(--bg); }
+
+  /* Image panel */
+  .slide-image {
+    position: relative; overflow: hidden;
+    background: var(--bg3);
+  }
+  .slide-image img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: top center;
+    display: block;
+  }
+  /* Subtle edge gradient to blend toward content */
+  .slide--project:not(.flipped) .slide-image::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(to left, transparent 70%, var(--bg) 100%);
+    opacity: 0.35; pointer-events: none;
+  }
+  .slide--project.flipped .slide-image::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(to right, transparent 70%, var(--bg) 100%);
+    opacity: 0.35; pointer-events: none;
+  }
+
+  /* CLOSING SLIDE */
+  .slide--closing {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 80px;
+    background: var(--bg);
+  }
+  .closing-label {
+    font-family: "DM Mono", monospace; font-size: 9px;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 24px;
+  }
+  .closing-title {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: clamp(52px, 7vw, 96px);
+    font-weight: 700; line-height: 0.9; letter-spacing: 0.02em;
+    text-transform: uppercase; color: var(--cream);
+    margin-bottom: 40px;
+  }
+  .closing-links {
+    display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+    justify-content: center;
+  }
+  .closing-link-primary {
+    font-family: "DM Mono", monospace; font-size: 10px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    background: var(--accent); color: var(--bg);
+    padding: 12px 28px; border-radius: 100px; text-decoration: none;
+    transition: background 0.2s;
+  }
+  .closing-link-primary:hover { background: var(--accent2); }
+  .closing-link-secondary {
+    font-family: "DM Mono", monospace; font-size: 10px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent); border: 1px solid rgba(196,98,45,0.4);
+    padding: 12px 28px; border-radius: 100px; text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+  .closing-link-secondary:hover { background: var(--accent); color: var(--bg); }
+
+  /* NAV */
+  .deck-nav {
+    position: fixed; bottom: 40px; left: 0; right: 0;
+    display: flex; align-items: center; justify-content: center;
+    gap: 24px; z-index: 100;
+  }
+  .nav-btn {
+    font-family: "DM Mono", monospace; font-size: 9px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--cream3); background: transparent;
+    border: 1px solid var(--border2); padding: 8px 18px;
+    border-radius: 100px; cursor: pointer;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+  }
+  .nav-btn:hover { color: var(--cream); border-color: var(--cream3); }
+  .nav-btn:disabled { opacity: 0.3; pointer-events: none; }
+  .nav-counter {
+    font-family: "DM Mono", monospace; font-size: 9px;
+    letter-spacing: 0.18em; color: var(--cream3);
+    min-width: 56px; text-align: center;
+  }
+
+  /* DOTS */
+  .deck-dots {
+    position: fixed; bottom: 44px; right: 48px;
+    display: flex; gap: 6px; z-index: 100;
+  }
+  .dot {
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--cream3); opacity: 0.3;
+    transition: opacity 0.3s, transform 0.3s;
+    cursor: pointer;
+  }
+  .dot.active { opacity: 1; transform: scale(1.4); background: var(--accent); }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    .slide--project, .slide--project.flipped {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 1fr;
+    }
+    .slide--project.flipped .slide-content { order: 2; }
+    .slide--project.flipped .slide-image { order: 1; }
+    .slide-content { padding: 48px 32px 32px; }
+    .slide--cover { padding: 0 32px 100px; }
+    .deck-header { padding: 20px 24px; }
+    .deck-dots { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Progress bar -->
+<div class="progress-bar" id="progress"></div>
+
+<!-- Header -->
+<header class="deck-header">
+  <a href="index.html" class="deck-logo">Trillion Nguyen</a>
+  <a href="index.html" class="deck-back">← Back to Portfolio</a>
+</header>
+
+<!-- Slideshow -->
+<div class="slideshow" id="slideshow">
+
+  <!-- 0: Cover -->
+  <div class="slide slide--cover active" data-index="0">
+    <div class="cover-line-v"></div>
+    <div class="cover-line-v2"></div>
+    <span class="cover-eyebrow">Product Designer · Ontario, CA · 2024–2026</span>
+    <h1 class="cover-name">Trillion<br><em>Nguyen.</em></h1>
+    <div class="cover-meta">
+      <p class="cover-role">Design systems, mobile, and interaction design — built for the humans using them.</p>
+      <button class="cover-start" onclick="goTo(1)">View Work →</button>
+    </div>
+  </div>
+
+  <!-- 1: Wallpaper -->
+  <div class="slide slide--project" data-index="1">
+    <div class="slide-content">
+      <span class="slide-num">01</span>
+      <span class="slide-eyebrow">Side Project · AI-Assisted Development · 2024</span>
+      <h2 class="slide-title">Wallpaper</h2>
+      <p class="slide-intro">An AI meeting intelligence tool I built for myself — because I kept missing tasks and context in every meeting I joined.</p>
+      <div class="slide-stats">
+        <div class="slide-stat">
+          <span class="slide-stat-num">Daily</span>
+          <span class="slide-stat-label">Personal usage</span>
+        </div>
+        <div class="slide-stat">
+          <span class="slide-stat-num">3</span>
+          <span class="slide-stat-label">AI output tabs</span>
+        </div>
+        <div class="slide-stat">
+          <span class="slide-stat-num">0</span>
+          <span class="slide-stat-label">Bots required</span>
+        </div>
+      </div>
+      <a href="wallpaper.html" class="slide-cta" target="_blank">View Case Study →</a>
+    </div>
+    <div class="slide-image">
+      <img loading="lazy" src="images/wallpaper-cover.webp" alt="Wallpaper — AI meeting intelligence tool">
+    </div>
+  </div>
+
+  <!-- 2: DesignSpec (flipped) -->
+  <div class="slide slide--project flipped" data-index="2">
+    <div class="slide-content">
+      <span class="slide-num">02</span>
+      <span class="slide-eyebrow">Side Project · AI-Assisted Development · 2025</span>
+      <h2 class="slide-title">DesignSpec</h2>
+      <p class="slide-intro">A searchable encyclopedia of UX principles for UI components — built because designers deserve to understand what they build, not just copy it.</p>
+      <div class="slide-stats">
+        <div class="slide-stat">
+          <span class="slide-stat-num">43</span>
+          <span class="slide-stat-label">Components</span>
+        </div>
+        <div class="slide-stat">
+          <span class="slide-stat-num">8.7k</span>
+          <span class="slide-stat-label">Organic impressions</span>
+        </div>
+        <div class="slide-stat">
+          <span class="slide-stat-num">0</span>
+          <span class="slide-stat-label">Paid promotion</span>
+        </div>
+      </div>
+      <a href="designspec.html" class="slide-cta" target="_blank">View Case Study →</a>
+    </div>
+    <div class="slide-image">
+      <img loading="lazy" src="images/designspec-screenshot.webp" alt="DesignSpec — component documentation">
+    </div>
+  </div>
+
+  <!-- 3: NDV Performance -->
+  <div class="slide slide--project" data-index="3">
+    <div class="slide-content">
+      <span class="slide-num">03</span>
+      <span class="slide-eyebrow">Web Design · Brand · Dark UI · Freelance · 2019</span>
+      <h2 class="slide-title">NDV<br>Performance</h2>
+      <p class="slide-intro">A bold, dark-palette website redesign for a performance training brand — dynamic, fast, and built to reflect their identity.</p>
+      <a href="ndv.html" class="slide-cta" target="_blank">View Case Study →</a>
+    </div>
+    <div class="slide-image">
+      <img loading="lazy" src="images/ndv-cover.webp" alt="NDV Performance — website redesign">
+    </div>
+  </div>
+
+  <!-- 4: Goals & Action Plan (flipped) -->
+  <div class="slide slide--project flipped" data-index="4">
+    <div class="slide-content">
+      <span class="slide-num">04</span>
+      <span class="slide-eyebrow">Product Design · Mobile · Healthcare · 2019–2020</span>
+      <h2 class="slide-title">Goals &<br>Action Plan</h2>
+      <p class="slide-intro">An accordion-based goal-setting system letting clinicians define patient goals and actionable steps — built for mobile-first workflows.</p>
+      <a href="goals.html" class="slide-cta" target="_blank">View Case Study →</a>
+    </div>
+    <div class="slide-image">
+      <img loading="lazy" src="images/goals-cover.webp" alt="Goals & Action Plan — healthcare mobile design">
+    </div>
+  </div>
+
+  <!-- 5: Content Hub -->
+  <div class="slide slide--project" data-index="5">
+    <div class="slide-content">
+      <span class="slide-num">05</span>
+      <span class="slide-eyebrow">UI/UX · Content Strategy · Teamworks · 2022–2023</span>
+      <h2 class="slide-title">Content<br>Hub</h2>
+      <p class="slide-intro">Redesigned an outdated gallery module to drive user engagement — larger imagery, cleaner upload flows, and a design-system-aligned experience.</p>
+      <a href="content-hub.html" class="slide-cta" target="_blank">View Case Study →</a>
+    </div>
+    <div class="slide-image">
+      <img loading="lazy" src="images/hub-cover.webp" alt="Content Hub — gallery redesign">
+    </div>
+  </div>
+
+  <!-- 6: Activity Tracker (flipped) -->
+  <div class="slide slide--project flipped" data-index="6">
+    <div class="slide-content">
+      <span class="slide-num">06</span>
+      <span class="slide-eyebrow">Mobile · Data Visualization · Healthcare · 2019–2020</span>
+      <h2 class="slide-title">Activity<br>Tracker</h2>
+      <p class="slide-intro">A patient goal tracking system built for simplicity — giving clinicians and patients a clear, shared view of health progress.</p>
+      <a href="activity-tracker.html" class="slide-cta" target="_blank">View Case Study →</a>
+    </div>
+    <div class="slide-image">
+      <img loading="lazy" src="images/activity-cover.webp" alt="Activity Tracker — healthcare data visualization">
+    </div>
+  </div>
+
+  <!-- 7: Design System -->
+  <div class="slide slide--project" data-index="7">
+    <div class="slide-content">
+      <span class="slide-num">07</span>
+      <span class="slide-eyebrow">Design Systems · Tokens · Components · Teamworks · 2021–2022</span>
+      <h2 class="slide-title">Design<br>System</h2>
+      <p class="slide-intro">Built and led adoption of a scalable design system from the ground up — from token architecture to cross-team implementation across multiple products.</p>
+      <a href="design-system.html" class="slide-cta" target="_blank">View Case Study →</a>
+    </div>
+    <div class="slide-image">
+      <img loading="lazy" src="images/ds-cover.webp" alt="Design System — Teamworks">
+    </div>
+  </div>
+
+  <!-- 8: Sidebar Redesign (flipped) -->
+  <div class="slide slide--project flipped" data-index="8">
+    <div class="slide-content">
+      <span class="slide-num">08</span>
+      <span class="slide-eyebrow">Navigation · Interaction Design · Aspect · 2024–2025</span>
+      <h2 class="slide-title">Sidebar<br>Redesign</h2>
+      <p class="slide-intro">Redesign of a collapsible sidebar from a floating action bar — rethinking how navigation should coexist with content as a product scales.</p>
+      <a href="sidebar-redesign.html" class="slide-cta" target="_blank">View Case Study →</a>
+    </div>
+    <div class="slide-image">
+      <img loading="lazy" src="images/sidebar-cover.webp" alt="Sidebar Redesign — Aspect">
+    </div>
+  </div>
+
+  <!-- 9: Closing -->
+  <div class="slide slide--closing" data-index="9">
+    <span class="closing-label">That's the work.</span>
+    <h2 class="closing-title">Let's Build<br>Something.</h2>
+    <div class="closing-links">
+      <a href="mailto:trillionnguyen@gmail.com" class="closing-link-primary">Get in Touch</a>
+      <a href="https://www.linkedin.com/in/trillionnguyen/" target="_blank" rel="noopener" class="closing-link-secondary">LinkedIn</a>
+      <a href="index.html" class="closing-link-secondary">Full Portfolio</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- Navigation -->
+<nav class="deck-nav">
+  <button class="nav-btn" id="btn-prev" onclick="prev()">← Prev</button>
+  <span class="nav-counter" id="counter">01 / 10</span>
+  <button class="nav-btn" id="btn-next" onclick="next()">Next →</button>
+</nav>
+
+<!-- Dots -->
+<div class="deck-dots" id="dots"></div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let current = 0;
+  let transitioning = false;
+
+  function goTo(index) {
+    if (transitioning || index === current) return;
+    transitioning = true;
+
+    slides[current].classList.remove('active');
+    slides[current].classList.add('exit');
+
+    setTimeout(() => {
+      slides[current].classList.remove('exit');
+      current = index;
+      slides[current].classList.add('active');
+      update();
+      setTimeout(() => { transitioning = false; }, 550);
+    }, 280);
+  }
+
+  function next() { if (current < total - 1) goTo(current + 1); }
+  function prev() { if (current > 0) goTo(current - 1); }
+
+  function update() {
+    // Counter
+    document.getElementById('counter').textContent =
+      String(current + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+
+    // Progress bar
+    document.getElementById('progress').style.width =
+      ((current + 1) / total * 100) + '%';
+
+    // Buttons
+    document.getElementById('btn-prev').disabled = current === 0;
+    document.getElementById('btn-next').disabled = current === total - 1;
+
+    // Dots
+    document.querySelectorAll('.dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  // Build dots
+  const dotsEl = document.getElementById('dots');
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  });
+
+  // Keyboard nav
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next();
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   prev();
+  });
+
+  // Touch / swipe
+  let touchX = null;
+  document.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', e => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 50) dx < 0 ? next() : prev();
+    touchX = null;
+  }, { passive: true });
+
+  update();
+</script>
+</body>
+</html>
