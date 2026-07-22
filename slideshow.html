@@ -83,10 +83,8 @@
   .sp-meta-value{font-size:13px;font-weight:400;color:var(--cream2);}
   .sp-cta{display:inline-flex;align-items:center;gap:8px;font-family:"DM Mono",monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(196,98,45,0.4);padding:9px 18px;border-radius:100px;text-decoration:none;width:fit-content;transition:background 0.2s,color 0.2s;}
   .sp-cta:hover{background:var(--accent);color:var(--bg);}
-  .sp-image{position:relative;overflow:hidden;background:var(--bg3);}
-  .sp-image img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
-  .slide--split:not(.flip) .sp-image::after{content:"";position:absolute;inset:0;background:linear-gradient(to left,transparent 70%,var(--bg) 100%);opacity:0.3;pointer-events:none;}
-  .slide--split.flip .sp-image::after{content:"";position:absolute;inset:0;background:linear-gradient(to right,transparent 70%,var(--bg) 100%);opacity:0.3;pointer-events:none;}
+  .sp-image{display:flex;align-items:center;justify-content:center;padding:72px 48px;background:var(--bg2);overflow:hidden;}
+  .sp-image img{width:100%;max-width:640px;height:auto;object-fit:contain;display:block;border:1px solid var(--border);}
 
   /* NAV */
   .deck-nav{position:fixed;bottom:36px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:20px;z-index:100;}
@@ -522,11 +520,31 @@
   </div>
 
   <!-- ══════════════════════════════════════
-       DESIGN SYSTEM  ·  24–33
+       DESIGN SYSTEM  ·  24–34
   ══════════════════════════════════════ -->
 
-  <!-- 24: Why a Design System -->
-  <div class="slide slide--text" data-index="24">
+  <!-- 24: Design System Cover -->
+  <div class="slide slide--split" data-index="24">
+    <div class="sp-content">
+      <span class="sp-ghost">25</span>
+      <span class="sp-chapter">Design System</span>
+      <span class="sp-eyebrow">Component Library · Tokens · Teamworks · 2021–2022</span>
+      <h2 class="sp-title">Aspect<br>Design<br>System</h2>
+      <div class="sp-meta">
+        <div class="sp-meta-cell"><span class="sp-meta-label">Role</span><span class="sp-meta-value">Lead Product Designer</span></div>
+        <div class="sp-meta-cell"><span class="sp-meta-label">Company</span><span class="sp-meta-value">Teamworks</span></div>
+        <div class="sp-meta-cell"><span class="sp-meta-label">Year</span><span class="sp-meta-value">2021–2022</span></div>
+      </div>
+      <p class="sp-body">Building a shared design language from scratch across a fragmented multi-product ecosystem — tokens, components, documentation, and the governance to make it last.</p>
+      <a href="design-system.html" class="sp-cta" target="_blank">Full Case Study →</a>
+    </div>
+    <div class="sp-image">
+      <img loading="lazy" src="images/ds-cover.webp" alt="Aspect Design System">
+    </div>
+  </div>
+
+  <!-- 25: Why a Design System -->
+  <div class="slide slide--text" data-index="25">
     <div class="te-left">
       <div class="te-ghost">25</div>
       <span class="te-chapter">Design System</span>
@@ -540,10 +558,10 @@
     </div>
   </div>
 
-  <!-- 25: Auditing Inconsistencies -->
-  <div class="slide slide--split" data-index="25">
+  <!-- 26: Auditing Inconsistencies -->
+  <div class="slide slide--split" data-index="26">
     <div class="sp-content">
-      <span class="sp-ghost">26</span>
+      <span class="sp-ghost">27</span>
       <span class="sp-chapter">Design System</span>
       <span class="sp-eyebrow">Auditing Inconsistencies</span>
       <h2 class="sp-title">Auditing<br>Inconsistencies.</h2>
@@ -555,10 +573,10 @@
     </div>
   </div>
 
-  <!-- 26: Component Strategy -->
-  <div class="slide slide--text" data-index="26">
+  <!-- 27: Component Strategy -->
+  <div class="slide slide--text" data-index="27">
     <div class="te-left">
-      <div class="te-ghost">27</div>
+      <div class="te-ghost">28</div>
       <span class="te-chapter">Design System</span>
       <span class="te-label">Component Strategy</span>
     </div>
@@ -574,10 +592,10 @@
     </div>
   </div>
 
-  <!-- 27: Tokens -->
-  <div class="slide slide--split flip" data-index="27">
+  <!-- 28: Tokens -->
+  <div class="slide slide--split flip" data-index="28">
     <div class="sp-content">
-      <span class="sp-ghost">28</span>
+      <span class="sp-ghost">29</span>
       <span class="sp-chapter">Design System</span>
       <span class="sp-eyebrow">Tokens</span>
       <h2 class="sp-title">Tokens.</h2>
@@ -589,10 +607,10 @@
     </div>
   </div>
 
-  <!-- 28: Accessibility -->
-  <div class="slide slide--text" data-index="28">
+  <!-- 29: Accessibility -->
+  <div class="slide slide--text" data-index="29">
     <div class="te-left">
-      <div class="te-ghost">29</div>
+      <div class="te-ghost">30</div>
       <span class="te-chapter">Design System</span>
       <span class="te-label">Accessibility</span>
     </div>
@@ -604,10 +622,10 @@
     </div>
   </div>
 
-  <!-- 29: Documentation -->
-  <div class="slide slide--text" data-index="29">
+  <!-- 30: Documentation -->
+  <div class="slide slide--text" data-index="30">
     <div class="te-left">
-      <div class="te-ghost">30</div>
+      <div class="te-ghost">31</div>
       <span class="te-chapter">Design System</span>
       <span class="te-label">Documentation</span>
     </div>
@@ -619,10 +637,10 @@
     </div>
   </div>
 
-  <!-- 30: Governance -->
-  <div class="slide slide--text" data-index="30">
+  <!-- 31: Governance -->
+  <div class="slide slide--text" data-index="31">
     <div class="te-left">
-      <div class="te-ghost">31</div>
+      <div class="te-ghost">32</div>
       <span class="te-chapter">Design System</span>
       <span class="te-label">Governance</span>
     </div>
@@ -633,10 +651,10 @@
     </div>
   </div>
 
-  <!-- 31: Developer Collaboration -->
-  <div class="slide slide--split" data-index="31">
+  <!-- 32: Developer Collaboration -->
+  <div class="slide slide--split" data-index="32">
     <div class="sp-content">
-      <span class="sp-ghost">32</span>
+      <span class="sp-ghost">33</span>
       <span class="sp-chapter">Design System</span>
       <span class="sp-eyebrow">Developer Collaboration</span>
       <h2 class="sp-title">Developer<br>Collaboration.</h2>
@@ -648,10 +666,10 @@
     </div>
   </div>
 
-  <!-- 32: Adoption -->
-  <div class="slide slide--text" data-index="32">
+  <!-- 33: Adoption -->
+  <div class="slide slide--text" data-index="33">
     <div class="te-left">
-      <div class="te-ghost">33</div>
+      <div class="te-ghost">34</div>
       <span class="te-chapter">Design System</span>
       <span class="te-label">Adoption</span>
     </div>
@@ -667,10 +685,10 @@
     </div>
   </div>
 
-  <!-- 33: Long-term Impact -->
-  <div class="slide slide--split flip" data-index="33">
+  <!-- 34: Long-term Impact -->
+  <div class="slide slide--split flip" data-index="34">
     <div class="sp-content">
-      <span class="sp-ghost">34</span>
+      <span class="sp-ghost">35</span>
       <span class="sp-chapter">Design System</span>
       <span class="sp-eyebrow">Long-term Impact</span>
       <h2 class="sp-title">Long-term<br>Impact.</h2>
@@ -694,12 +712,12 @@
 <div class="chapter-segments" id="ch-segs"></div>
 
 <script>
-  const TOTAL = 34;
+  const TOTAL = 35;
   const chapters = [
     { name:'Opening',          start:0,  count:3  },
     { name:'Sidebar Redesign', start:3,  count:14 },
     { name:'Noteworth',        start:17, count:7  },
-    { name:'Design System',    start:24, count:10 },
+    { name:'Design System',    start:24, count:11 },
   ];
 
   const slides = document.querySelectorAll('.slide');
